@@ -1,0 +1,97 @@
+/* lib */
+
+.full-width {
+  width: 100%;
+}
+
+.full-height {
+  height: 100%;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-column-bottom {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-space-between {
+  justify-content: space-between;
+}
+
+.flex-right {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.flex-left {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.flex-fixed {
+  flex: none;
+}
+
+.flex-grow {
+  flex: 1 1 auto;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-vertical {
+  flex-direction: column;
+}
+
+.z-bump {
+  z-index: 1;
+}
+
+.select-none {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.margin-bottom-sml {
+  margin-bottom: 20px;
+}
+
+.margin-bottom-med {
+  margin-bottom: 40px;
+}
+
+.margin-right-left {
+  margin: 0 20px;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.font-small {
+  font-size: 12px;
+}
