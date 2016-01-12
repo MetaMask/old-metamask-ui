@@ -11,6 +11,7 @@
 html, body {
   /*font-family: 'Open Sans', Arial, sans-serif;*/
   font-family: 'Roboto', 'Noto', sans-serif;
+  color: #4D4D4D;
   font-weight: 300;
   line-height: 1.4em;
 }
@@ -182,7 +183,7 @@ react toggle
   transition: all 0.2s ease;
 }
 
-.react-toggle:hover .react-toggle-track {
+.react-toggle:hover:not(.react-toggle--disabled) .react-toggle-track {
   background-color: #000000;
 }
 
@@ -190,7 +191,7 @@ react toggle
   background-color: rgb(255, 174, 41);
 }
 
-.react-toggle.react-toggle--checked:hover .react-toggle-track {
+.react-toggle.react-toggle--checked:hover:not(.react-toggle--disabled) .react-toggle-track {
   background-color: rgb(243, 151, 0);
 }
 

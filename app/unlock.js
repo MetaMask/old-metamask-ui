@@ -31,6 +31,7 @@ UnlockScreen.prototype.render = function() {
       h('input', {
         type: 'password',
         id: 'password-box',
+        onKeyPress: this.onKeyPress.bind(this),
         onInput: this.inputChanged.bind(this),
         onFocus: this.emitAnim.bind(this, 'setFollowMouse', false),
         onBlur: this.emitAnim.bind(this, 'setFollowMouse', true),
@@ -39,6 +40,18 @@ UnlockScreen.prototype.render = function() {
     ])
 
   )
+}
+
+UnlockScreen.prototype.onKeyPress = function(event) {
+  if (event.key === 'Enter') {
+    this.submitPassword(event)
+  }
+}
+
+UnlockScreen.prototype.submitPassword = function(event){
+  var element = event.target
+  var password = element.value
+  this.props.submitPassword(password)
 }
 
 UnlockScreen.prototype.inputChanged = function(event){

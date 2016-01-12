@@ -36,6 +36,7 @@ function mapStateToProps(state) {
 
 App.prototype.render = function() {
   // const { selectedReddit, posts, isFetching, lastUpdated } = this.props
+  var state = this.props
   return (
 
     h('.flex-column.flex-grow.full-height', [
@@ -47,9 +48,7 @@ App.prototype.render = function() {
       ]),
 
       // panel content
-      h('.app-primary.flex-row.flex-grow', panelContent({
-        identities: this.props.identities,
-      })),
+      h('.app-primary.flex-row.flex-grow', this.renderPrimary()),
 
       // footer
       h('.app-footer.flex-row.flex-space-around', [
@@ -58,7 +57,7 @@ App.prototype.render = function() {
         // toggle
         onOffToggle({
           toggleMetamaskActive: this.toggleMetamaskActive.bind(this),
-          isActive: this.props.isActive,
+          isActive: state.isActive,
         }),
         // help
         'help',
@@ -70,15 +69,39 @@ App.prototype.render = function() {
 }
 
 App.prototype.toggleMetamaskActive = function(){
-  this.props.dispatch(actions.setMetamaskActive(!this.props.isActive))  
+  if (!this.props.isActive) {
+    // currently inactive: redirect to password box
+    var passwordBox = document.querySelector('input[type=password]')
+    if (!passwordBox) return
+    passwordBox.focus()
+  } else {
+    // currently active: deactivate
+    this.props.dispatch(actions.setMetamaskActive(false))
+  }
 }
 
-function panelContent(state){
-  return [
+App.prototype.unlockWithPassword = function(password){
+  if (password === 'test') {
+    this.props.dispatch(actions.setMetamaskActive(true))
+  } else {
+    console.log('incorrect password. try "test".')
+  }
+}
 
-    h(UnlockScreen)
+App.prototype.renderPrimary = function(state){
+  var state = this.props
+  var content = null
 
-  ]
+  if (state.isActive) {
+    content = h('span', 'unlocked!')
+  } else {
+    content = h(UnlockScreen, {
+      submitPassword: this.unlockWithPassword.bind(this),
+    })
+  }
+
+  return [content]
+
     // h('.flex-row.flex-space-between', [
     //   h('span.bold', 'Your Wallets'),
     //   h('button', '+ NEW'),
@@ -89,14 +112,17 @@ function panelContent(state){
 
 function onOffToggle(state){
   return (
+    
     h('.app-toggle.flex-row.flex-center', [
       h('label', 'OFF'),
       h(Toggle, {
-        defaultChecked: state.isActive,
+        checked: state.isActive,
+        // disabled: !state.isActive,
         onChange: state.toggleMetamaskActive,
       }),
       h('label', 'ON'),
     ])
+
   )
 }
 
