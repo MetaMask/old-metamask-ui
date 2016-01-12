@@ -28,7 +28,7 @@
     ]
   },
   "dependencies": {
-    "metamask-logo": "^1.0.0",
+    "metamask-logo": "^1.1.0",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
     "react-hyperscript": "^2.2.2",
