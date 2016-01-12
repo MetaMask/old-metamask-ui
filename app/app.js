@@ -8,6 +8,7 @@ const extend = require('xtend')
 const Toggle = require('react-toggle')
 const actions = require('./actions')
 const UnlockScreen = require('./unlock')
+const AccountsScreen = require('./accounts')
 // const selectReddit = require('../actions').selectReddit
 // const fetchPostsIfNeeded = require('../actions').fetchPostsIfNeeded
 // const invalidateReddit = require('../actions').invalidateReddit
@@ -29,7 +30,11 @@ function App() { Component.call(this) }
 
 function mapStateToProps(state) {
   return {
+    // state from plugin
     isActive: state.pluginState.isActive,
+    currentView: state.pluginState.currentView,
+    activeAddress: state.pluginState.activeAddress,
+    // models
     identities: state.identities,
   }
 }
@@ -48,7 +53,7 @@ App.prototype.render = function() {
       ]),
 
       // panel content
-      h('.app-primary.flex-row.flex-grow', this.renderPrimary()),
+      h('.app-primary.flex-grow', this.renderPrimary()),
 
       // footer
       h('.app-footer.flex-row.flex-space-around', [
@@ -93,7 +98,13 @@ App.prototype.renderPrimary = function(state){
   var content = null
 
   if (state.isActive) {
-    content = h('span', 'unlocked!')
+
+    content = h(AccountsScreen, {
+      // this doesnt do anything
+      // overridden by AccountsScreen connect(mapStateToProps)
+      identities: state.identities,
+      activeAddress: state.activeAddress,
+    })
   } else {
     content = h(UnlockScreen, {
       submitPassword: this.unlockWithPassword.bind(this),
@@ -101,13 +112,6 @@ App.prototype.renderPrimary = function(state){
   }
 
   return [content]
-
-    // h('.flex-row.flex-space-between', [
-    //   h('span.bold', 'Your Wallets'),
-    //   h('button', '+ NEW'),
-    // ]),
-
-    // h('section.identity-section.flex-column', valuesFor(state.identities).map(identityPanel)),
 }
 
 function onOffToggle(state){
@@ -117,45 +121,12 @@ function onOffToggle(state){
       h('label', 'OFF'),
       h(Toggle, {
         checked: state.isActive,
-        // disabled: !state.isActive,
         onChange: state.toggleMetamaskActive,
       }),
       h('label', 'ON'),
     ])
 
   )
-}
-
-function identityPanel(identity){
-  return (
-
-    h('.identity-panel.flex-row.flex-space-between', [
-      
-      h('span.bold', identity.name),
-
-      h('.flex-column.flex-space-between', [
-        h('.flex-row.flex-left.flex-space-between', [
-          h('span.font-small', 'ADDRESS'),
-          h('span.font-small', addressSummary(identity.address)),
-        ]),
-        h('.flex-row.flex-left.flex-space-between', [
-          h('span.font-small', 'BALANCE'),
-          h('span.font-small', identity.balance.toString()+' ETH'),
-        ]),
-      ]),
-
-    ])
-
-  )
-}
-
-function valuesFor(obj) {
-  return Object.keys(obj)
-    .map(function(key){ return obj[key] })
-}
-
-function addressSummary(address) {
-  return address.slice(0,8)+'...'+address.slice(-4)
 }
 
 // class AsyncApp extends Component {

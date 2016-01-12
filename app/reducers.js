@@ -13,15 +13,43 @@ module.exports = combineReducers({
 })
 
 function pluginState(state, action) {
+
+  // clone + defaults
   state = extend({
-    isActive: false,
+    isActive: true,
+    activeAccount: null,
+    currentView: {
+      view: 'acccounts',
+    },
   }, state)
 
   switch (action.type) {
+  
   case actions.SET_METAMASK_ACTIVE:
     return extend(state, {
-      isActive: action.isActive,
+      isActive: action.value,
+      currentView: {
+        view: 'acccounts',
+      },
     })
+
+  case actions.SELECT_ACTIVE_ACCOUNT:
+    // abort if not active
+    if (!state.isActive) return state
+    return extend(state, {
+      activeAddress: action.value,
+    })
+
+  case actions.SHOW_ACCOUNT_DETAIL:
+    // abort if not active
+    if (!state.isActive) return state
+    return extend(state, {
+      currentView: {
+        view: 'acccountDetail',
+        context: action.value,
+      },
+    })
+
   default:
     return state
   }
@@ -30,13 +58,11 @@ function pluginState(state, action) {
 function identities(state, action) {
   state = extend({
     '0x18a3462427bcc9133bb46e88bcbe39cd7ef0e761': {
-      name: 'wrankletonn',
       address: '0x18a3462427bcc9133bb46e88bcbe39cd7ef0e761',
       balance: 220,
       txCount: 4,
     },
     '0x8a3462427bcc9133bb46e88bcbe39cd7ef0e7618': {
-      name: '$nake_b!te',
       address: '0x8a3462427bcc9133bb46e88bcbe39cd7ef0e7618',
       balance: 10.005,
       txCount: 16,
