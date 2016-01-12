@@ -7,6 +7,7 @@ const h = require('react-hyperscript')
 const extend = require('xtend')
 const Toggle = require('react-toggle')
 const actions = require('./actions')
+const UnlockScreen = require('./unlock')
 // const selectReddit = require('../actions').selectReddit
 // const fetchPostsIfNeeded = require('../actions').fetchPostsIfNeeded
 // const invalidateReddit = require('../actions').invalidateReddit
@@ -37,31 +38,31 @@ App.prototype.render = function() {
   // const { selectedReddit, posts, isFetching, lastUpdated } = this.props
   return (
 
-    h('.flex-column', [
+    h('.flex-column.flex-grow.full-height', [
       
       // top row
-      h('.flex-row.flex-center.metamask-name', [
+      h('.app-header.flex-column.flex-center', [
         h('h1', 'MetaMask'),
+        h('h2', 'Welcome!'),
       ]),
 
       // panel content
-      h('.flex-row.flex-center.margin-bottom-med', [
-        h('span.margin-right-left', 'OFF'),
-        h(Toggle, {
-          defaultChecked: this.props.isActive,
-          onChange: this.toggleMetamaskActive.bind(this),
-        }),
-        h('span.margin-right-left', 'ON'),
-      ]),
-
-      h('.flex-row.flex-space-between', [
-        h('span.bold', 'Your Wallets'),
-        h('button', '+ NEW'),
-      ]),
-
-      h('section.identity-section.flex-column', valuesFor(this.props.identities).map(identityPanel)),
+      h('.app-primary.flex-row.flex-grow', panelContent({
+        identities: this.props.identities,
+      })),
 
       // footer
+      h('.app-footer.flex-row.flex-space-around', [
+        // settings
+        'settings',
+        // toggle
+        onOffToggle({
+          toggleMetamaskActive: this.toggleMetamaskActive.bind(this),
+          isActive: this.props.isActive,
+        }),
+        // help
+        'help',
+      ]),
       
     ])
 
@@ -70,6 +71,33 @@ App.prototype.render = function() {
 
 App.prototype.toggleMetamaskActive = function(){
   this.props.dispatch(actions.setMetamaskActive(!this.props.isActive))  
+}
+
+function panelContent(state){
+  return [
+
+    h(UnlockScreen)
+
+  ]
+    // h('.flex-row.flex-space-between', [
+    //   h('span.bold', 'Your Wallets'),
+    //   h('button', '+ NEW'),
+    // ]),
+
+    // h('section.identity-section.flex-column', valuesFor(state.identities).map(identityPanel)),
+}
+
+function onOffToggle(state){
+  return (
+    h('.app-toggle.flex-row.flex-center', [
+      h('label', 'OFF'),
+      h(Toggle, {
+        defaultChecked: state.isActive,
+        onChange: state.toggleMetamaskActive,
+      }),
+      h('label', 'ON'),
+    ])
+  )
 }
 
 function identityPanel(identity){

@@ -1,6 +1,7 @@
 /* Fonts */
-@import url(https://fonts.googleapis.com/css?family=Arvo:400,700);
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,700italic,400italic,300,300italic);
+@import url(https://fonts.googleapis.com/css?family=Roboto:300,500);
+/*@import url(https://fonts.googleapis.com/css?family=Arvo:400,700);*/
+/*@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,700italic,400italic,300,300italic);*/
 /*@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css);*/
 
 * {
@@ -8,7 +9,9 @@
 }
 
 html, body {
-  font-family: 'Open Sans', Arial, sans-serif;
+  /*font-family: 'Open Sans', Arial, sans-serif;*/
+  font-family: 'Roboto', 'Noto', sans-serif;
+  font-weight: 300;
   line-height: 1.4em;
 }
 
@@ -17,10 +20,6 @@ html, body {
   min-width: 357px;
   width: 360px;
   height: 500px;
-}
-
-h1, h2, h3, h4, h5 {
-  font-family: 'Arvo', Arial, sans-serif;
 }
 
 button {
@@ -58,9 +57,61 @@ debug / dev
 app
 */
 
-.metamask-name {
+.app-header {
+  padding-top: 10px;
+}
+
+.app-header h1 {
   font-size: 2em;
+  font-weight: 300;
   height: 42px;
+}
+
+.app-header h2 {
+  font-size: 1em;
+  font-weight: 500;
+  height: 24px;
+  color: #F3C83E;
+}
+
+
+.app-primary {
+
+}
+
+.app-footer {
+  padding-bottom: 10px;
+}
+
+.app-footer .app-toggle {
+  font-size: 12px;
+}
+
+.app-footer .app-toggle label {
+  margin: 0 8px;
+}
+
+/*
+app sections
+*/
+
+.unlock-screen label {
+  color: #F3C83E;
+  font-weight: 500;
+}
+
+.unlock-screen input[type=password] {
+  width: 60%;
+  height: 22px;
+  padding: 2px;
+  border-radius: 4px;
+  border: 2px solid #F3C83E;
+  background: #FAF6F0;
+}
+
+.unlock-screen input[type=password]:focus {
+  outline: none;
+  border: 3px solid #F3C83E;
 }
 
 .identity-section {

@@ -27,6 +27,10 @@
   justify-content: space-between;
 }
 
+.flex-space-around {
+  justify-content: space-around;
+}
+
 .flex-right {
   display: flex;
   flex-direction: row;
@@ -55,6 +59,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.flex-self-end {
+  align-self: flex-end;
+}
+
+.flex-self-stretch {
+  align-self: stretch;
 }
 
 .flex-vertical {
