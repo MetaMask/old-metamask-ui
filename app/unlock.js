@@ -51,6 +51,7 @@ UnlockScreen.prototype.onKeyPress = function(event) {
 UnlockScreen.prototype.submitPassword = function(event){
   var element = event.target
   var password = element.value
+  element.value = ''
   this.props.submitPassword(password)
 }
 
