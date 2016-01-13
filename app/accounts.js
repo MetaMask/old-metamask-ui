@@ -58,7 +58,6 @@ function identityPanel(props, identity){
   var imgSrc = identity.address.slice(2,3)>'7' ? 
     './app/img/identicon-walrus.png' :
     './app/img/identicon-tardigrade.png'
-    console.log(identity.address, props.activeAddress)
   var isSelected = (identity.address === props.activeAddress)
 
   return (
