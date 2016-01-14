@@ -57,8 +57,16 @@
 
 .flex-center {
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+}
+
+.flex-justify-center {
+  justify-content: center;
+}
+
+.flex-align-center {
+  align-items: center;
 }
 
 .flex-self-end {

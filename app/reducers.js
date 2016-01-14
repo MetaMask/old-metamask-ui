@@ -19,8 +19,10 @@ function pluginState(state, action) {
     isActive: true,
     activeAccount: null,
     currentView: {
-      view: 'acccounts',
+      viewName: 'accountDetail',
+      context: '0x1113462427bcc9133bb46e88bcbe39cd7ef0e111',
     },
+    currentDomain: 'meteor-dapp-boardroom.meteor.com',
   }, state)
 
   switch (action.type) {
@@ -29,26 +31,43 @@ function pluginState(state, action) {
     return extend(state, {
       isActive: action.value,
       currentView: {
-        view: 'acccounts',
+        viewName: 'accounts',
       },
     })
 
-  case actions.SELECT_ACTIVE_ACCOUNT:
+  case actions.TOGGLE_ACCOUNT_ACTIVE:
     // abort if not active
     if (!state.isActive) return state
-    return extend(state, {
-      activeAddress: action.value,
-    })
+    // deselect
+    if (state.activeAddress === action.value) {
+      return extend(state, {
+        activeAddress: null,
+      })
+    // select
+    } else {
+      return extend(state, {
+        activeAddress: action.value,
+      })
+    }
 
   case actions.SHOW_ACCOUNT_DETAIL:
     // abort if not active
     if (!state.isActive) return state
     return extend(state, {
       currentView: {
-        view: 'acccountDetail',
+        viewName: 'accountDetail',
         context: action.value,
       },
     })
+
+  case actions.SHOW_ACCOUNTS_PAGE:
+     // abort if not active
+    if (!state.isActive) return state
+    return extend(state, {
+      currentView: {
+        viewName: 'accounts',
+      },
+    }) 
 
   default:
     return state
@@ -57,15 +76,26 @@ function pluginState(state, action) {
 
 function identities(state, action) {
   state = extend({
-    '0x18a3462427bcc9133bb46e88bcbe39cd7ef0e761': {
-      address: '0x18a3462427bcc9133bb46e88bcbe39cd7ef0e761',
+    '0x1113462427bcc9133bb46e88bcbe39cd7ef0e111': {
+      name: 'Walrus',
+      img: './app/img/identicon-walrus.png',
+      address: '0x1113462427bcc9133bb46e88bcbe39cd7ef0e111',
       balance: 220,
       txCount: 4,
     },
-    '0x8a3462427bcc9133bb46e88bcbe39cd7ef0e7618': {
-      address: '0x8a3462427bcc9133bb46e88bcbe39cd7ef0e7618',
+    '0x222462427bcc9133bb46e88bcbe39cd7ef0e7222': {
+      name: 'Tardus',
+      img: './app/img/identicon-tardigrade.png',
+      address: '0x222462427bcc9133bb46e88bcbe39cd7ef0e7222',
       balance: 10.005,
       txCount: 16,
+    },
+    '0x333462427bcc9133bb46e88bcbe39cd7ef0e7333': {
+      name: 'Gambler',
+      img: './app/img/identicon-walrus.png',
+      address: '0x333462427bcc9133bb46e88bcbe39cd7ef0e7333',
+      balance: 0.000001,
+      txCount: 1,
     }
   }, state)
 

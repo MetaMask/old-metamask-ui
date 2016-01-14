@@ -20,6 +20,8 @@ UnlockScreen.prototype.render = function() {
     
     h('.unlock-screen.flex-column.flex-center.flex-grow', [
 
+      h('h2.page-subtitle', 'Welcome!'),
+
       h(Mascot, {
         animationEventEmitter: this.animationEventEmitter,
       }),

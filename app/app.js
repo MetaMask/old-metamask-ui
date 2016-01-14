@@ -9,6 +9,7 @@ const Toggle = require('react-toggle')
 const actions = require('./actions')
 const UnlockScreen = require('./unlock')
 const AccountsScreen = require('./accounts')
+const AccountDetailScreen = require('./account-detail')
 // const selectReddit = require('../actions').selectReddit
 // const fetchPostsIfNeeded = require('../actions').fetchPostsIfNeeded
 // const invalidateReddit = require('../actions').invalidateReddit
@@ -49,7 +50,6 @@ App.prototype.render = function() {
       // top row
       h('.app-header.flex-column.flex-center', [
         h('h1', 'MetaMask'),
-        h('h2', 'Welcome!'),
       ]),
 
       // panel content
@@ -58,14 +58,14 @@ App.prototype.render = function() {
       // footer
       h('.app-footer.flex-row.flex-space-around', [
         // settings
-        'settings',
+        h('i.fa.fa-cog.fa-lg'),
         // toggle
         onOffToggle({
           toggleMetamaskActive: this.toggleMetamaskActive.bind(this),
           isActive: state.isActive,
         }),
         // help
-        'help',
+        h('i.fa.fa-question.fa-lg'),
       ]),
       
     ])
@@ -95,23 +95,27 @@ App.prototype.unlockWithPassword = function(password){
 
 App.prototype.renderPrimary = function(state){
   var state = this.props
-  var content = null
 
-  if (state.isActive) {
-
-    content = h(AccountsScreen, {
-      // this doesnt do anything
-      // overridden by AccountsScreen connect(mapStateToProps)
-      identities: state.identities,
-      activeAddress: state.activeAddress,
-    })
-  } else {
-    content = h(UnlockScreen, {
+  if (!state.isActive) {
+    var content = h(UnlockScreen, {
       submitPassword: this.unlockWithPassword.bind(this),
     })
+    return [content]
   }
 
-  return [content]
+  switch (state.currentView.viewName) {
+    
+    case 'accounts':
+      var content = h(AccountsScreen)
+      return [content]
+
+    case 'accountDetail':
+      var content = h(AccountDetailScreen)
+      return [content]
+
+  }
+
+  return []
 }
 
 function onOffToggle(state){
