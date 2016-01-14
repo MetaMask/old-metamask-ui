@@ -58,14 +58,14 @@ App.prototype.render = function() {
       // footer
       h('.app-footer.flex-row.flex-space-around', [
         // settings
-        h('i.fa.fa-cog.fa-lg'),
+        h('i.fa.fa-cog.fa-lg.cursor-pointer'),
         // toggle
         onOffToggle({
           toggleMetamaskActive: this.toggleMetamaskActive.bind(this),
           isActive: state.isActive,
         }),
         // help
-        h('i.fa.fa-question.fa-lg'),
+        h('i.fa.fa-question.fa-lg.cursor-pointer'),
       ]),
       
     ])
