@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "beefy example.js:bundle.js --live --open"
+    "start": "beefy example.js:bundle.js --live --open",
+    "build": "browserify example.js -g uglifyify -o bundle.js"
   },
   "author": "",
   "license": "ISC",
@@ -13,7 +14,8 @@
     "babel-preset-es2015": "^6.3.13",
     "babelify": "^7.2.0",
     "beefy": "^2.1.5",
-    "browserify": "^12.0.1"
+    "browserify": "^12.0.1",
+    "uglifyify": "^3.0.1"
   },
   "browserify": {
     "transform": [

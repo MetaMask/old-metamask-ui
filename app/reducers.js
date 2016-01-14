@@ -19,8 +19,7 @@ function pluginState(state, action) {
     isActive: true,
     activeAccount: null,
     currentView: {
-      viewName: 'accountDetail',
-      context: '0x1113462427bcc9133bb46e88bcbe39cd7ef0e111',
+      viewName: 'accounts',
     },
     currentDomain: 'meteor-dapp-boardroom.meteor.com',
   }, state)
