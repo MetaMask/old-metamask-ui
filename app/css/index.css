@@ -1,8 +1,6 @@
-/* Fonts */
-@import url(https://fonts.googleapis.com/css?family=Roboto:300,500);
-/*@import url(https://fonts.googleapis.com/css?family=Arvo:400,700);*/
-/*@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,700italic,400italic,300,300italic);*/
-@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css);
+/*
+application specific styles
+*/
 
 * {
   box-sizing: border-box;
@@ -35,28 +33,6 @@ a {
 
 a:hover{
   color: #df6b0e;
-}
-
-/*
-debug / dev
-*/
-
-#app-content {
-  border: 2px solid green;
-}
-
-#design-container {
-  position: absolute;
-  left: 360px;
-  top: -42px;
-  width: calc(100vw - 360px);
-  height: 100vh;
-  overflow: scroll;
-}
-
-#design-container img {
-  width: 2000px;
-  margin-right: 600px;
 }
 
 /*

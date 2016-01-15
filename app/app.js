@@ -32,11 +32,9 @@ function App() { Component.call(this) }
 function mapStateToProps(state) {
   return {
     // state from plugin
-    isActive: state.pluginState.isActive,
-    currentView: state.pluginState.currentView,
-    activeAddress: state.pluginState.activeAddress,
-    // models
-    identities: state.identities,
+    isUnlocked: state.metamask.isUnlocked,
+    currentView: state.appState.currentView,
+    activeAddress: state.appState.activeAddress,
   }
 }
 
@@ -62,7 +60,7 @@ App.prototype.render = function() {
         // toggle
         onOffToggle({
           toggleMetamaskActive: this.toggleMetamaskActive.bind(this),
-          isActive: state.isActive,
+          isUnlocked: state.isUnlocked,
         }),
         // help
         h('i.fa.fa-question.fa-lg.cursor-pointer'),
@@ -74,29 +72,25 @@ App.prototype.render = function() {
 }
 
 App.prototype.toggleMetamaskActive = function(){
-  if (!this.props.isActive) {
+  if (!this.props.isUnlocked) {
     // currently inactive: redirect to password box
     var passwordBox = document.querySelector('input[type=password]')
     if (!passwordBox) return
     passwordBox.focus()
   } else {
     // currently active: deactivate
-    this.props.dispatch(actions.setMetamaskActive(false))
+    this.props.dispatch(actions.lockMetamask(false))
   }
 }
 
 App.prototype.unlockWithPassword = function(password){
-  if (password === 'test') {
-    this.props.dispatch(actions.setMetamaskActive(true))
-  } else {
-    console.log('incorrect password. try "test".')
-  }
+  this.props.dispatch(actions.tryUnlockMetamask(password))
 }
 
 App.prototype.renderPrimary = function(state){
   var state = this.props
 
-  if (!state.isActive) {
+  if (!state.isUnlocked) {
     var content = h(UnlockScreen, {
       submitPassword: this.unlockWithPassword.bind(this),
     })
@@ -124,7 +118,7 @@ function onOffToggle(state){
     h('.app-toggle.flex-row.flex-center', [
       h('label', 'OFF'),
       h(Toggle, {
-        checked: state.isActive,
+        checked: state.isUnlocked,
         onChange: state.toggleMetamaskActive,
       }),
       h('label', 'ON'),

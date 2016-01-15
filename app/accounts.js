@@ -11,9 +11,9 @@ module.exports = connect(mapStateToProps)(AccountsScreen)
 
 function mapStateToProps(state) {
   return {
-    identities: state.identities,
-    activeAddress: state.pluginState.activeAddress,
-    currentDomain: state.pluginState.currentDomain,
+    identities: state.metamask.identities,
+    selectedAddress: state.metamask.selectedAddress,
+    currentDomain: state.appState.currentDomain,
   }
 }
 
@@ -25,7 +25,7 @@ function AccountsScreen() {
 
 AccountsScreen.prototype.render = function() {
   var state = this.props
-  var identities = valuesFor(state.identities)
+  var identityList = valuesFor(state.identities)
   var actions = {
     onSelect: this.onSelect.bind(this),
     onShowDetail: this.onShowDetail.bind(this),
@@ -47,7 +47,7 @@ AccountsScreen.prototype.render = function() {
 
       // identity selection
       h('section.identity-section.flex-column',
-        identities.map(renderAccountPanel)
+        identityList.map(renderAccountPanel)
       ),
 
     ])
@@ -55,15 +55,20 @@ AccountsScreen.prototype.render = function() {
   )
 
   function renderAccountPanel(identity){
-    var isSelected = state.activeAddress === identity.address
-    var componentState = extend(identity, actions, { isSelected: isSelected })
+    var isSelected = state.selectedAddress === identity.address
+    var componentState = extend(actions, {
+      identity: identity,
+      isSelected: isSelected,
+    })
     return h(AccountPanel, componentState)
   }
 }
 
 AccountsScreen.prototype.onSelect = function(address, event){
   event.stopPropagation()
-  this.props.dispatch(actions.selectActiveAccount(address))
+  // if already selected, deselect
+  if (this.props.selectedAddress === address) address = null
+  this.props.dispatch(actions.setSelectedAddress(address))
 }
 
 AccountsScreen.prototype.onShowDetail = function(address, event){

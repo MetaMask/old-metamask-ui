@@ -1,30 +1,92 @@
-const SET_METAMASK_ACTIVE = 'SET_METAMASK_ACTIVE'
-const TOGGLE_ACCOUNT_ACTIVE = 'TOGGLE_ACCOUNT_ACTIVE'
+const UNLOCK_METAMASK = 'UNLOCK_METAMASK'
+const UNLOCK_IN_PROGRESS = 'UNLOCK_IN_PROGRESS'
+const UNLOCK_FAILED = 'UNLOCK_FAILED'
+const UPDATE_METAMASK_STATE = 'UPDATE_METAMASK_STATE'
+const LOCK_METAMASK = 'LOCK_METAMASK'
+const SET_SELECTED_ACCOUNT = 'SET_SELECTED_ACCOUNT'
 const SHOW_ACCOUNT_DETAIL = 'SHOW_ACCOUNT_DETAIL'
 const SHOW_ACCOUNTS_PAGE = 'SHOW_ACCOUNTS_PAGE'
 
 module.exports = {
-  SET_METAMASK_ACTIVE: SET_METAMASK_ACTIVE,
-  TOGGLE_ACCOUNT_ACTIVE: TOGGLE_ACCOUNT_ACTIVE,
+  UPDATE_METAMASK_STATE: UPDATE_METAMASK_STATE,
+  UNLOCK_IN_PROGRESS: UNLOCK_IN_PROGRESS,
+  UNLOCK_FAILED: UNLOCK_FAILED,
+  UNLOCK_METAMASK: UNLOCK_METAMASK,
+  LOCK_METAMASK: LOCK_METAMASK,
+  SET_SELECTED_ACCOUNT: SET_SELECTED_ACCOUNT,
   SHOW_ACCOUNT_DETAIL: SHOW_ACCOUNT_DETAIL,
   SHOW_ACCOUNTS_PAGE: SHOW_ACCOUNTS_PAGE,
-  setMetamaskActive: setMetamaskActive,
-  selectActiveAccount: selectActiveAccount,
+  tryUnlockMetamask: tryUnlockMetamask,
+  lockMetamask: lockMetamask,
+  setSelectedAddress: setSelectedAddress,
   showAccountDetail: showAccountDetail,
   showAccountsPage: showAccountsPage,
+  // hacky - need a way to get a reference to account manager
+  _setAccountManager: _setAccountManager,
 }
 
-function setMetamaskActive(value) {
-  return {
-    type: SET_METAMASK_ACTIVE,
-    value: value,
+
+var _accountManager = null
+function _setAccountManager(accountManager){
+  _accountManager = accountManager
+}
+
+// async actions
+
+function tryUnlockMetamask(password) {
+  return function(dispatch) {
+    dispatch(unlockInProgress())
+    _accountManager.submitPassword(password, function(err, newState){
+      if (err) {
+        dispatch(unlockFailed())
+      } else {
+        dispatch(unlockMetamask())
+        dispatch(updateMetamaskState(newState))
+      }
+    })
   }
 }
 
-function selectActiveAccount(address) {
+function setSelectedAddress(address) {
+  return function(dispatch) {
+    _accountManager.setSelectedAddress(address, function(err, newState){
+      if (err) return console.error(err.message)
+      dispatch(updateMetamaskState(newState))
+    })
+  }
+}
+
+// actions
+
+function unlockInProgress() {
   return {
-    type: TOGGLE_ACCOUNT_ACTIVE,
-    value: address,
+    type: UNLOCK_IN_PROGRESS,
+  }
+}
+
+function unlockFailed() {
+  return {
+    type: UNLOCK_FAILED,
+  }
+}
+
+function unlockMetamask() {
+  return {
+    type: UNLOCK_METAMASK,
+  }
+}
+
+function updateMetamaskState(newState) {
+  return {
+    type: UPDATE_METAMASK_STATE,
+    value: newState,
+  }
+}
+
+function lockMetamask() {
+  _accountManager.setLocked()
+  return {
+    type: LOCK_METAMASK,
   }
 }
 
