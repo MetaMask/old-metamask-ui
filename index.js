@@ -28,7 +28,7 @@ function startApp(metamaskState, accountManager, opts){
     metamask: metamaskState,
   })
 
-  accountManager.subscribe(function(metamaskState){
+  accountManager.on('update', function(metamaskState){
     store.dispatch(actions.updateMetamaskState(metamaskState))
   })
 
