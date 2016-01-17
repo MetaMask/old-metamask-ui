@@ -34,6 +34,7 @@
   "dependencies": {
     "brfs": "^1.4.2",
     "copy-to-clipboard": "^1.1.1",
+    "ethereumjs-util": "^2.6.0",
     "metamask-logo": "^1.1.0",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",

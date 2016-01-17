@@ -1,4 +1,5 @@
 const inherits = require('util').inherits
+const ethUtil = require('ethereumjs-util')
 const Component = require('react').Component
 const h = require('react-hyperscript')
 
@@ -64,5 +65,7 @@ function addressSummary(address) {
 }
 
 function formatBalance(balance) {
-  return balance ? balance.toFixed(6)+' ETH' : '...'
+  if (!balance) return
+  var num = parseInt(balance)/1e18
+  return num.toFixed(6)+' ETH'
 }

@@ -22,6 +22,7 @@ module.exports = {
   showAccountDetail: showAccountDetail,
   showAccountsPage: showAccountsPage,
   // hacky - need a way to get a reference to account manager
+  updateMetamaskState: updateMetamaskState,
   _setAccountManager: _setAccountManager,
 }
 

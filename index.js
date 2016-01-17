@@ -16,16 +16,20 @@ function launchApp(opts) {
   // check if we are unlocked first
   accountManager.getState(function(err, metamaskState){
     if (err) throw err
-    startApp(metamaskState, opts)
+    startApp(metamaskState, accountManager, opts)
   })
 
 }
 
-function startApp(metamaskState, opts){
+function startApp(metamaskState, accountManager, opts){
 
   // parse opts
   var store = configureStore({
     metamask: metamaskState,
+  })
+
+  accountManager.subscribe(function(metamaskState){
+    store.dispatch(actions.updateMetamaskState(metamaskState))
   })
 
   // start app

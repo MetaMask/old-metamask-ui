@@ -44,6 +44,10 @@ UnlockScreen.prototype.render = function() {
   )
 }
 
+UnlockScreen.prototype.componentDidMount = function(){
+  document.getElementById('password-box').focus()
+}
+
 UnlockScreen.prototype.onKeyPress = function(event) {
   if (event.key === 'Enter') {
     this.submitPassword(event)
