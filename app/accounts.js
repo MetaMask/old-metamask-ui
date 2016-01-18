@@ -26,6 +26,7 @@ function AccountsScreen() {
 AccountsScreen.prototype.render = function() {
   var state = this.props
   var identityList = valuesFor(state.identities)
+  var unconfTxList = valuesFor(state.unconfTxs)
   var actions = {
     onSelect: this.onSelect.bind(this),
     onShowDetail: this.onShowDetail.bind(this),

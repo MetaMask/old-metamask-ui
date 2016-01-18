@@ -63,8 +63,9 @@ function metamask(state, action) {
   // clone + defaults
   state = extend({
     isUnlocked: false,
-    currentDomain: 'meteor-dapp-boardroom.meteor.com',
+    currentDomain: 'example.com',
     identities: {},
+    unconfTxs: {},
   }, state)
 
   switch (action.type) {
