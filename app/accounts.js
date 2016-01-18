@@ -12,6 +12,7 @@ module.exports = connect(mapStateToProps)(AccountsScreen)
 function mapStateToProps(state) {
   return {
     identities: state.metamask.identities,
+    unconfTxs: state.metamask.unconfTxs,
     selectedAddress: state.metamask.selectedAddress,
     currentDomain: state.appState.currentDomain,
   }
@@ -78,6 +79,7 @@ AccountsScreen.prototype.onShowDetail = function(address, event){
 }
 
 function valuesFor(obj) {
+  if (!obj) return []
   return Object.keys(obj)
     .map(function(key){ return obj[key] })
 }

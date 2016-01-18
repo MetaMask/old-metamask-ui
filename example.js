@@ -1,6 +1,7 @@
 const injectCss = require('inject-css')
 const MetaMaskUi = require('./index.js')
 const MetaMaskUiCss = require('./css.js')
+const EventEmitter = require('events').EventEmitter
 
 // account management
 
@@ -39,28 +40,39 @@ function getState(){
   }
 }
 
-var accountManager = {
-  getState: function(cb){
+var accountManager = new EventEmitter()
+
+accountManager.getState = function(cb){
+  cb(null, getState())
+}
+
+accountManager.setLocked = function(){
+  isUnlocked = false
+  this._didUpdate()
+}
+
+accountManager.submitPassword = function(password, cb){
+  if (password === 'test') {
+    isUnlocked = true
     cb(null, getState())
-  },
-  setLocked: function(){
-    isUnlocked = false
-  },
-  submitPassword: function(password, cb){
-    if (password === 'test') {
-      isUnlocked = true
-      cb(null, getState())
-    } else {
-      cb(new Error('Bad password -- try "test"'))
-    }
-  },
-  setSelectedAddress: function(address, cb){
-    selectedAddress = address
-    cb(null, getState())
-  },
-  signTransaction: function(txParams, cb){
-    alert('signing tx....')
-  },
+    this._didUpdate()
+  } else {
+    cb(new Error('Bad password -- try "test"'))
+  }
+}
+
+accountManager.setSelectedAddress = function(address, cb){
+  selectedAddress = address
+  cb(null, getState())
+  this._didUpdate()
+}
+
+accountManager.signTransaction = function(txParams, cb){
+  alert('signing tx....')
+}
+
+accountManager._didUpdate = function(){
+  this.emit('update', getState())
 }
 
 // start app
