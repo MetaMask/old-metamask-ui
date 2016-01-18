@@ -3,6 +3,7 @@ const Component = require('react').Component
 const h = require('react-hyperscript')
 const metamaskLogo = require('metamask-logo')
 const getCaretCoordinates = require('textarea-caret')
+const debounce = require('debounce')
 
 module.exports = Mascot
 
@@ -16,6 +17,8 @@ function Mascot() {
     width: 200,
     height: 200,
   })
+  this.refollowMouse = debounce(this.logo.setFollowMouse.bind(this.logo, true), 1000)
+  this.unfollowMouse = this.logo.setFollowMouse.bind(this.logo, false)
 }
 
 
@@ -51,5 +54,7 @@ Mascot.prototype.handleAnimationEvents = function(){
 }
 
 Mascot.prototype.lookAt = function(target){
+  this.unfollowMouse()
   this.logo.lookAt(target)
+  this.refollowMouse()
 }

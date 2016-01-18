@@ -3,7 +3,7 @@ const EventEmitter = require('events').EventEmitter
 const Component = require('react').Component
 const h = require('react-hyperscript')
 const getCaretCoordinates = require('textarea-caret')
-const Mascot = require('./mascot')
+const Mascot = require('./components/mascot')
 
 module.exports = UnlockScreen
 
@@ -35,8 +35,6 @@ UnlockScreen.prototype.render = function() {
         id: 'password-box',
         onKeyPress: this.onKeyPress.bind(this),
         onInput: this.inputChanged.bind(this),
-        onFocus: this.emitAnim.bind(this, 'setFollowMouse', false),
-        onBlur: this.emitAnim.bind(this, 'setFollowMouse', true),
       }),
 
     ])
@@ -62,6 +60,7 @@ UnlockScreen.prototype.submitPassword = function(event){
 }
 
 UnlockScreen.prototype.inputChanged = function(event){
+  // tell mascot to look at page action
   var element = event.target
   var boundingRect = element.getBoundingClientRect()
   var coordinates = getCaretCoordinates(element, element.selectionEnd)
