@@ -20,7 +20,7 @@ function appState(state, action) {
     currentView: {
       viewName: 'accounts',
     },
-    currentDomain: 'meteor-dapp-boardroom.meteor.com',
+    currentDomain: 'example.com',
   }, state)
 
   switch (action.type) {
