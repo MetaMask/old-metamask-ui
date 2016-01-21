@@ -36,7 +36,7 @@
     "copy-to-clipboard": "^1.1.1",
     "debounce": "^1.0.0",
     "ethereumjs-util": "^2.6.0",
-    "metamask-logo": "^1.1.0",
+    "metamask-logo": "^1.1.1",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
     "react-hyperscript": "^2.2.2",
