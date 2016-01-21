@@ -5,6 +5,7 @@ const connect = require('react-redux').connect
 const extend = require('xtend')
 const actions = require('./actions')
 const AccountPanel = require('./components/account-panel')
+const valuesFor = require('./util').valuesFor
 
 module.exports = connect(mapStateToProps)(AccountsScreen)
 
@@ -52,6 +53,20 @@ AccountsScreen.prototype.render = function() {
         identityList.map(renderAccountPanel)
       ),
 
+      unconfTxList.length ? (
+        
+        h('.flex-column.flex-center', [
+          h('span', 'Unconfirmed Txs'),
+          h('i.fa.fa-arrow-right.fa-lg.cursor-pointer', {
+            onClick: this.navigateToConfTx.bind(this),
+          }),
+        ])
+        
+      ) : (
+        null
+      ),
+      
+
     ])
     
   )
@@ -66,6 +81,11 @@ AccountsScreen.prototype.render = function() {
   }
 }
 
+AccountsScreen.prototype.navigateToConfTx = function(){
+  event.stopPropagation()
+  this.props.dispatch(actions.showConfTxPage())
+}
+
 AccountsScreen.prototype.onSelect = function(address, event){
   event.stopPropagation()
   // if already selected, deselect
@@ -76,10 +96,4 @@ AccountsScreen.prototype.onSelect = function(address, event){
 AccountsScreen.prototype.onShowDetail = function(address, event){
   event.stopPropagation()
   this.props.dispatch(actions.showAccountDetail(address))
-}
-
-function valuesFor(obj) {
-  if (!obj) return []
-  return Object.keys(obj)
-    .map(function(key){ return obj[key] })
 }

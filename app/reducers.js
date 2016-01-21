@@ -52,6 +52,14 @@ function appState(state, action) {
       },
     }) 
 
+  case actions.SHOW_CONF_TX_PAGE:
+    return extend(state, {
+      currentView: {
+        viewName: 'confTx',
+        context: 0,
+      },
+    }) 
+
   default:
     return state
 

@@ -2,6 +2,8 @@ const inherits = require('util').inherits
 const ethUtil = require('ethereumjs-util')
 const Component = require('react').Component
 const h = require('react-hyperscript')
+const addressSummary = require('../util').addressSummary
+const formatBalance = require('../util').formatBalance
 
 module.exports = AccountPanel
 
@@ -58,14 +60,4 @@ AccountPanel.prototype.render = function() {
     ])
 
   )
-}
-
-function addressSummary(address) {
-  return address ? address.slice(0,2+6)+'...'+address.slice(-4) : '...'
-}
-
-function formatBalance(balance) {
-  if (!balance) return
-  var num = parseInt(balance)/1e18
-  return num.toFixed(6)+' ETH'
 }

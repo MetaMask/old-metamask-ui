@@ -24,7 +24,6 @@ function AccountDetailScreen() {
 AccountDetailScreen.prototype.render = function() {
   var state = this.props
   var identity = state.identities[state.address]
-  console.log('account detail for:', state.address)
   return (
 
     h('.account-detail-section.flex-column.flex-grow', [

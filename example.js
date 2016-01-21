@@ -29,6 +29,29 @@ var identities = {
   }
 }
 
+var unconfTxs = {}
+addUnconfTx({
+  from: '0x222462427bcc9133bb46e88bcbe39cd7ef0e7222',
+  to: '0x1113462427bcc9133bb46e88bcbe39cd7ef0e111',
+  value: '0x123',
+})
+addUnconfTx({
+  from: '0x1113462427bcc9133bb46e88bcbe39cd7ef0e111',
+  to: '0x333462427bcc9133bb46e88bcbe39cd7ef0e7333',
+  value: '0x0000',
+  data: '0x000462427bcc9133bb46e88bcbe39cd7ef0e7000',
+})
+
+function addUnconfTx(txParams){
+  var time = (new Date()).getTime()
+  var id = createRandomId()
+  unconfTxs[id] = {
+    id: id,
+    txParams: txParams,
+    time: time,
+  }
+}
+
 var isUnlocked = false
 var selectedAddress = null
 
@@ -36,6 +59,7 @@ function getState(){
   return {
     isUnlocked: isUnlocked,
     identities: isUnlocked ? identities : {},
+    unconfTxs: isUnlocked ? unconfTxs : {},
     selectedAddress: selectedAddress,
   }
 }
@@ -86,3 +110,14 @@ var app = MetaMaskUi({
   container: container,
   accountManager: accountManager
 })
+
+// util
+
+function createRandomId(){
+  // 13 time digits
+  var datePart = new Date().getTime()*Math.pow(10, 3)
+  // 3 random digits
+  var extraPart = Math.floor(Math.random()*Math.pow(10, 3))
+  // 16 digits
+  return datePart+extraPart
+}

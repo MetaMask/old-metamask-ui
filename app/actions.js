@@ -6,6 +6,7 @@ const LOCK_METAMASK = 'LOCK_METAMASK'
 const SET_SELECTED_ACCOUNT = 'SET_SELECTED_ACCOUNT'
 const SHOW_ACCOUNT_DETAIL = 'SHOW_ACCOUNT_DETAIL'
 const SHOW_ACCOUNTS_PAGE = 'SHOW_ACCOUNTS_PAGE'
+const SHOW_CONF_TX_PAGE = 'SHOW_CONF_TX_PAGE'
 
 module.exports = {
   UPDATE_METAMASK_STATE: UPDATE_METAMASK_STATE,
@@ -16,11 +17,17 @@ module.exports = {
   SET_SELECTED_ACCOUNT: SET_SELECTED_ACCOUNT,
   SHOW_ACCOUNT_DETAIL: SHOW_ACCOUNT_DETAIL,
   SHOW_ACCOUNTS_PAGE: SHOW_ACCOUNTS_PAGE,
+  SHOW_CONF_TX_PAGE: SHOW_CONF_TX_PAGE,
+  // remote messages
   tryUnlockMetamask: tryUnlockMetamask,
   lockMetamask: lockMetamask,
   setSelectedAddress: setSelectedAddress,
+  confirmTx: confirmTx,
+  cancelTx: cancelTx,
+  // app messages
   showAccountDetail: showAccountDetail,
   showAccountsPage: showAccountsPage,
+  showConfTxPage: showConfTxPage,
   // hacky - need a way to get a reference to account manager
   updateMetamaskState: updateMetamaskState,
   _setAccountManager: _setAccountManager,
@@ -51,6 +58,25 @@ function tryUnlockMetamask(password) {
 function setSelectedAddress(address) {
   return function(dispatch) {
     _accountManager.setSelectedAddress(address, function(err, newState){
+      if (err) return console.error(err.message)
+      dispatch(updateMetamaskState(newState))
+    })
+  }
+}
+
+function confirmTx(password, txData){
+  return function(dispatch) {
+    _accountManager.signTransaction(password, txData.id, function(err, newState){
+      if (err) return console.error(err.message)
+      dispatch(showAccountsPage())
+      dispatch(updateMetamaskState(newState))
+    })
+  }
+}
+
+function cancelTx(txData){
+  return function(dispatch) {
+    _accountManager.cancelTransaction(txData.id, function(err, newState){
       if (err) return console.error(err.message)
       dispatch(updateMetamaskState(newState))
     })
@@ -101,5 +127,11 @@ function showAccountDetail(address) {
 function showAccountsPage() {
   return {
     type: SHOW_ACCOUNTS_PAGE,
+  }
+}
+
+function showConfTxPage() {
+  return {
+    type: SHOW_CONF_TX_PAGE,
   }
 }

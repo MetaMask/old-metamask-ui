@@ -10,6 +10,7 @@ const actions = require('./actions')
 const UnlockScreen = require('./unlock')
 const AccountsScreen = require('./accounts')
 const AccountDetailScreen = require('./account-detail')
+const ConfirmTxScreen = require('./conf-tx')
 // const selectReddit = require('../actions').selectReddit
 // const fetchPostsIfNeeded = require('../actions').fetchPostsIfNeeded
 // const invalidateReddit = require('../actions').invalidateReddit
@@ -105,6 +106,10 @@ App.prototype.renderPrimary = function(state){
 
     case 'accountDetail':
       var content = h(AccountDetailScreen)
+      return [content]
+
+    case 'confTx':
+      var content = h(ConfirmTxScreen)
       return [content]
 
   }
