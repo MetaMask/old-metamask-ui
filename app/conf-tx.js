@@ -33,7 +33,7 @@ ConfirmTxScreen.prototype.render = function() {
   var txData = unconfTxList[state.index]
   var txParams = txData.txParams
   var address =  txParams.from || state.selectedAddress
-  var identity = state.identities[address]
+  var identity = state.identities[address] || { address: address }
   console.log(txParams.from, state.selectedAddress, address)
   return (
 
