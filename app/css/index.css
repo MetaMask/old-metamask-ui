@@ -161,6 +161,15 @@ app sections
   border-color: orange;
 }
 
+/* account detail screen */
+
+.account-detail-section {
+  margin: 0 20px;
+}
+
+.account-detail-section .fa-arrow-left {
+  margin: 0px 8px 0px -8px;
+}
 
 /*
 react toggle
