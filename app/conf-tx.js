@@ -15,6 +15,7 @@ module.exports = connect(mapStateToProps)(ConfirmTxScreen)
 function mapStateToProps(state) {
   return {
     identities: state.metamask.identities,
+    accounts: state.metamask.accounts,
     selectedAddress: state.metamask.selectedAddress,
     unconfTxs: state.metamask.unconfTxs,
     index: state.appState.currentView.context,
@@ -30,10 +31,11 @@ function ConfirmTxScreen() {
 ConfirmTxScreen.prototype.render = function() {
   var state = this.props
   var unconfTxList = valuesFor(state.unconfTxs)
-  var txData = unconfTxList[state.index]
-  var txParams = txData.txParams
+  var txData = unconfTxList[state.index] || {}
+  var txParams = txData.txParams || {}
   var address =  txParams.from || state.selectedAddress
   var identity = state.identities[address] || { address: address }
+  var account = state.accounts[address] || { address: address }
   console.log(txParams.from, state.selectedAddress, address)
   return (
 
@@ -51,6 +53,7 @@ ConfirmTxScreen.prototype.render = function() {
       h(AccountPanel, {
         showFullAddress: true,
         identity: identity,
+        account: account,
       }),
 
       // tx data

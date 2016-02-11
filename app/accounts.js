@@ -12,6 +12,7 @@ module.exports = connect(mapStateToProps)(AccountsScreen)
 
 function mapStateToProps(state) {
   return {
+    accounts: state.metamask.accounts,
     identities: state.metamask.identities,
     unconfTxs: state.metamask.unconfTxs,
     selectedAddress: state.metamask.selectedAddress,
@@ -73,8 +74,10 @@ AccountsScreen.prototype.render = function() {
 
   function renderAccountPanel(identity){
     var isSelected = state.selectedAddress === identity.address
+    var account = state.accounts[identity.address]
     var componentState = extend(actions, {
       identity: identity,
+      account: account,
       isSelected: isSelected,
     })
     return h(AccountPanel, componentState)

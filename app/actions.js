@@ -44,12 +44,11 @@ function _setAccountManager(accountManager){
 function tryUnlockMetamask(password) {
   return function(dispatch) {
     dispatch(unlockInProgress())
-    _accountManager.submitPassword(password, function(err, newState){
+    _accountManager.submitPassword(password, function(err){
       if (err) {
         dispatch(unlockFailed())
       } else {
         dispatch(unlockMetamask())
-        dispatch(updateMetamaskState(newState))
       }
     })
   }
@@ -57,28 +56,23 @@ function tryUnlockMetamask(password) {
 
 function setSelectedAddress(address) {
   return function(dispatch) {
-    _accountManager.setSelectedAddress(address, function(err, newState){
-      if (err) return console.error(err.message)
-      dispatch(updateMetamaskState(newState))
-    })
+    _accountManager.setSelectedAddress(address)
   }
 }
 
 function confirmTx(password, txData){
   return function(dispatch) {
-    _accountManager.signTransaction(password, txData.id, function(err, newState){
+    _accountManager.signTransaction(password, txData.id, function(err){
       if (err) return console.error(err.message)
       dispatch(showAccountsPage())
-      dispatch(updateMetamaskState(newState))
     })
   }
 }
 
 function cancelTx(txData){
   return function(dispatch) {
-    _accountManager.cancelTransaction(txData.id, function(err, newState){
+    _accountManager.cancelTransaction(txData.id, function(err){
       if (err) return console.error(err.message)
-      dispatch(updateMetamaskState(newState))
     })
   }
 }

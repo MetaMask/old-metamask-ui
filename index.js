@@ -28,6 +28,11 @@ function startApp(metamaskState, accountManager, opts){
     metamask: metamaskState,
   })
 
+  // if unconfirmed txs, start on txConf page
+  if (Object.keys(metamaskState.unconfTxs || {}).length) {
+    store.dispatch(actions.showConfTxPage())
+  }
+
   accountManager.on('update', function(metamaskState){
     store.dispatch(actions.updateMetamaskState(metamaskState))
   })

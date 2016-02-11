@@ -16,6 +16,7 @@ function AccountPanel() {
 AccountPanel.prototype.render = function() {
   var state = this.props
   var identity = state.identity
+  var account = state.account
 
   return (
 
@@ -41,7 +42,7 @@ AccountPanel.prototype.render = function() {
         
         h('.flex-row.flex-space-between', [
           h('label.font-small', 'BALANCE'),
-          h('span.font-small', formatBalance(identity.balance)),
+          h('span.font-small', formatBalance(account.balance)),
         ]),
 
         // outlet for inserting additional stuff

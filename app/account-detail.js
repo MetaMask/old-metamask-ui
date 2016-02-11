@@ -11,6 +11,7 @@ module.exports = connect(mapStateToProps)(AccountDetailScreen)
 function mapStateToProps(state) {
   return {
     identities: state.metamask.identities,
+    accounts: state.metamask.accounts,
     address: state.appState.currentView.context,
   }
 }
@@ -24,6 +25,7 @@ function AccountDetailScreen() {
 AccountDetailScreen.prototype.render = function() {
   var state = this.props
   var identity = state.identities[state.address]
+  var account = state.accounts[state.address]
   return (
 
     h('.account-detail-section.flex-column.flex-grow', [
@@ -40,6 +42,7 @@ AccountDetailScreen.prototype.render = function() {
       h(AccountPanel, {
         showFullAddress: true,
         identity: identity,
+        account: account,
       }, [
         h('.flex-row.flex-space-around', [
           h('button', 'GET ETH'),
@@ -53,7 +56,7 @@ AccountDetailScreen.prototype.render = function() {
       ]),
 
       // transaction table
-      h('section.identity-section.flex-column', [
+      h('section.flex-column', [
         h('span', 'your transaction history goes here...'),
       ]),
 
