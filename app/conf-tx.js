@@ -36,7 +36,6 @@ ConfirmTxScreen.prototype.render = function() {
   var address =  txParams.from || state.selectedAddress
   var identity = state.identities[address] || { address: address }
   var account = state.accounts[address] || { address: address }
-  console.log(txParams.from, state.selectedAddress, address)
   return (
 
     h('.account-detail-section.flex-column.flex-grow', [
@@ -86,9 +85,9 @@ ConfirmTxScreen.prototype.render = function() {
       }),
 
       // confirm cancel
-      h('.flex-row', [        
+      h('.flex-row', [
         h('button', {
-          disabled: true,
+          onClick: this.cancelTransaction.bind(this, txData),
         }, 'Cancel'),
         h('button', {
           onClick: this.sendTransaction.bind(this, txData),
@@ -103,6 +102,11 @@ ConfirmTxScreen.prototype.render = function() {
 ConfirmTxScreen.prototype.sendTransaction = function(txData, event){
   event.stopPropagation()
   this.props.dispatch(actions.confirmTx('password_goes_here', txData))
+}
+
+ConfirmTxScreen.prototype.cancelTransaction = function(txData, event){
+  event.stopPropagation()
+  this.props.dispatch(actions.cancelTx(txData))
 }
 
 ConfirmTxScreen.prototype.navigateToAccounts = function(event){

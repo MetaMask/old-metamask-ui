@@ -71,9 +71,8 @@ function confirmTx(password, txData){
 
 function cancelTx(txData){
   return function(dispatch) {
-    _accountManager.cancelTransaction(txData.id, function(err){
-      if (err) return console.error(err.message)
-    })
+    _accountManager.cancelTransaction(txData.id)
+    dispatch(showAccountsPage())
   }
 }
 
