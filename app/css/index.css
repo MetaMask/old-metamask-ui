@@ -87,7 +87,7 @@ app sections
 /* unlock */
 
 .section-title .fa-arrow-left {
-  margin: 0px 8px 0px -8px;
+  margin: -2px 8px 0px -8px;
 }
 
 .unlock-screen label {
@@ -117,6 +117,11 @@ app sections
 
 .current-domain-panel {
   border: 1px solid #B7B7B7;
+}
+
+.unconftx-link {
+  margin-top: 24px;
+  cursor: pointer;
 }
 
 .unconftx-link .fa-arrow-right {
@@ -181,7 +186,7 @@ app sections
 
 /* tx confirm */
 
-.unconftx-section-section {
+.unconftx-section {
   margin: 0 20px;
 }
 
