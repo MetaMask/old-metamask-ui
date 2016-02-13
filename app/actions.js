@@ -22,7 +22,8 @@ module.exports = {
   tryUnlockMetamask: tryUnlockMetamask,
   lockMetamask: lockMetamask,
   setSelectedAddress: setSelectedAddress,
-  confirmTx: confirmTx,
+  sendTx: sendTx,
+  signTx: signTx,
   cancelTx: cancelTx,
   // app messages
   showAccountDetail: showAccountDetail,
@@ -60,9 +61,18 @@ function setSelectedAddress(address) {
   }
 }
 
-function confirmTx(password, txData){
+function signTx(password, txData){
   return function(dispatch) {
     _accountManager.signTransaction(password, txData.id, function(err){
+      if (err) return console.error(err.message)
+      // dispatch(showAccountsPage())
+    })
+  }
+}
+
+function sendTx(txData){
+  return function(dispatch) {
+    _accountManager.sendTransaction(txData.id, function(err){
       if (err) return console.error(err.message)
       dispatch(showAccountsPage())
     })

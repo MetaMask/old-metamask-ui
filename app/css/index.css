@@ -84,6 +84,12 @@ h2.page-subtitle {
 app sections
 */
 
+/* unlock */
+
+.section-title .fa-arrow-left {
+  margin: 0px 8px 0px -8px;
+}
+
 .unlock-screen label {
   color: #F3C83E;
   font-weight: 500;
@@ -103,12 +109,18 @@ app sections
   border: 3px solid #F3C83E;
 }
 
+/* accounts */
+
 .accounts-section {
   margin: 0 20px;
 }
 
 .current-domain-panel {
   border: 1px solid #B7B7B7;
+}
+
+.unconftx-link .fa-arrow-right {
+  margin: 0px -8px 0px 8px;
 }
 
 /* identity panel */
@@ -167,9 +179,22 @@ app sections
   margin: 0 20px;
 }
 
-.account-detail-section .fa-arrow-left {
-  margin: 0px 8px 0px -8px;
+/* tx confirm */
+
+.unconftx-section-section {
+  margin: 0 20px;
 }
+
+.unconftx-section input[type=password] {
+  height: 22px;
+  padding: 2px;
+  margin: 12px;
+  margin-bottom: 24px;
+  border-radius: 4px;
+  border: 2px solid #F3C83E;
+  background: #FAF6F0;
+}
+
 
 /*
 react toggle

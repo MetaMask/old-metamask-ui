@@ -31,7 +31,7 @@ AccountDetailScreen.prototype.render = function() {
     h('.account-detail-section.flex-column.flex-grow', [
 
       // subtitle and nav
-      h('.flex-row.flex-center', [
+      h('.section-title.flex-row.flex-center', [
         h('i.fa.fa-arrow-left.fa-lg.cursor-pointer', {
           onClick: this.navigateToAccounts.bind(this),
         }),

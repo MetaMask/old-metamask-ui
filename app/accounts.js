@@ -39,7 +39,7 @@ AccountsScreen.prototype.render = function() {
     h('.accounts-section.flex-column.flex-grow', [
 
       // subtitle and nav
-      h('.flex-column.flex-center', [
+      h('.section-title.flex-column.flex-center', [
         h('h2.page-subtitle', 'Accounts'),
         h('h3', 'Selected Address is visible to website below'),
       ]),
@@ -56,11 +56,11 @@ AccountsScreen.prototype.render = function() {
 
       unconfTxList.length ? (
         
-        h('.flex-column.flex-center', [
+        h('.unconftx-link.flex-row.flex-center', {
+          onClick: this.navigateToConfTx.bind(this),
+        }, [
           h('span', 'Unconfirmed Txs'),
-          h('i.fa.fa-arrow-right.fa-lg.cursor-pointer', {
-            onClick: this.navigateToConfTx.bind(this),
-          }),
+          h('i.fa.fa-arrow-right.fa-lg.cursor-pointer'),
         ])
         
       ) : (

@@ -33,15 +33,17 @@ ConfirmTxScreen.prototype.render = function() {
   var unconfTxList = valuesFor(state.unconfTxs)
   var txData = unconfTxList[state.index] || {}
   var txParams = txData.txParams || {}
+  var isSigned = (txData.status === 'signed')
   var address =  txParams.from || state.selectedAddress
   var identity = state.identities[address] || { address: address }
   var account = state.accounts[address] || { address: address }
+  console.log('txData:', txData)
   return (
 
-    h('.account-detail-section.flex-column.flex-grow', [
+    h('.unconftx-section.flex-column.flex-grow', [
 
       // subtitle and nav
-      h('.flex-row.flex-center', [
+      h('.section-title.flex-row.flex-center', [
         h('i.fa.fa-arrow-left.fa-lg.cursor-pointer', {
           onClick: this.navigateToAccounts.bind(this),
         }),
@@ -77,19 +79,19 @@ ConfirmTxScreen.prototype.render = function() {
 
       // password
       h('input', {
-        disabled: true,
         type: 'password',
         id: 'password-box',
-        // onKeyPress: this.onKeyPress.bind(this),
-        // onInput: this.inputChanged.bind(this),
+        onKeyPress: this.onKeyPress.bind(this, txData),
+        disabled: isSigned,
       }),
-
-      // confirm cancel
-      h('.flex-row', [
+      
+      // send + cancel
+      h('.flex-row.flex-space-around', [
         h('button', {
           onClick: this.cancelTransaction.bind(this, txData),
         }, 'Cancel'),
         h('button', {
+          disabled: !isSigned,
           onClick: this.sendTransaction.bind(this, txData),
         }, 'Send'),
       ]),
@@ -99,9 +101,27 @@ ConfirmTxScreen.prototype.render = function() {
   )
 }
 
+ConfirmTxScreen.prototype.componentDidMount = function(){
+  document.getElementById('password-box').focus()
+}
+
+ConfirmTxScreen.prototype.onKeyPress = function(txData, event) {
+  if (event.key === 'Enter') {
+    var element = event.target
+    var password = element.value
+    // element.value = ''
+    console.log('SUBMIT!', password)
+    this.signTransaction(password, txData)
+  }
+}
+
+ConfirmTxScreen.prototype.signTransaction = function(password, txData){
+  this.props.dispatch(actions.signTx(password, txData))
+}
+
 ConfirmTxScreen.prototype.sendTransaction = function(txData, event){
   event.stopPropagation()
-  this.props.dispatch(actions.confirmTx('password_goes_here', txData))
+  this.props.dispatch(actions.sendTx(txData))
 }
 
 ConfirmTxScreen.prototype.cancelTransaction = function(txData, event){
