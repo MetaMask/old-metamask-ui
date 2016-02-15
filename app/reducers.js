@@ -2,43 +2,68 @@ const combineReducers = require('redux').combineReducers
 const actions = require('./actions')
 const extend = require('xtend')
 
-// require {
-//   SELECT_REDDIT, INVALIDATE_REDDIT,
-//   REQUEST_POSTS, RECEIVE_POSTS
-// } from './actions'
+module.exports = rootReducer
 
-module.exports = combineReducers({
-  appState: appState,
-  metamask: metamask,
-  identities: identities,
-})
 
-function appState(state, action) {
+function rootReducer(state, action) {
 
-  // clone + defaults
-  state = extend({
+  // clone
+  state = extend(state)
+
+  //
+  // Identities
+  //
+
+  state.identities = reduceIdentities(state, action)
+
+  //
+  // MetaMask
+  //
+
+  state.metamask = reduceMetamask(state, action)
+
+  //
+  // AppState
+  //
+
+  state.appState = reduceApp(state, action)
+
+
+  return state
+  
+}
+
+//
+// Sub-Reducers take in the complete state and return their sub-state
+//
+
+function reduceApp(state, action) {
+   
+   // clone + defaults
+  var appState = extend({
     currentView: {
       viewName: 'accounts',
     },
     currentDomain: 'example.com',
-  }, state)
+  }, state.appState)
 
   switch (action.type) {
   
   case actions.UNLOCK_METAMASK:
-    return extend(state, {
+    console.log('was unlocked...')
+    return extend(appState, {
       currentView: {
         viewName: 'accounts',
       },
     })
 
   case actions.SET_SELECTED_ACCOUNT:
-    return extend(state, {
+    return extend(appState, {
       activeAddress: action.value,
     })
 
   case actions.SHOW_ACCOUNT_DETAIL:
-    return extend(state, {
+    return extend(appState, {
       currentView: {
         viewName: 'accountDetail',
         context: action.value,
@@ -46,70 +71,68 @@ function appState(state, action) {
     })
 
   case actions.SHOW_ACCOUNTS_PAGE:
-    return extend(state, {
+    return extend(appState, {
       currentView: {
         viewName: 'accounts',
       },
-    }) 
+    })
 
   case actions.SHOW_CONF_TX_PAGE:
-    return extend(state, {
+    return extend(appState, {
       currentView: {
         viewName: 'confTx',
         context: 0,
       },
-    }) 
+    })
 
   default:
-    return state
+    return appState
 
   }
 }
 
-function metamask(state, action) {
+function reduceMetamask(state, action) {
 
   // clone + defaults
-  state = extend({
+  var metamaskState = extend({
+    isInitialized: false,
     isUnlocked: false,
     currentDomain: 'example.com',
     identities: {},
     unconfTxs: {},
-  }, state)
+  }, state.metamask)
 
   switch (action.type) {
 
   case actions.UPDATE_METAMASK_STATE:
-    return extend(state, action.value)
+    return extend(metamaskState, action.value)
 
   case actions.UNLOCK_METAMASK:
-    return extend(state, {
+    return extend(metamaskState, {
       isUnlocked: true,
     })
 
   case actions.LOCK_METAMASK:
-    return extend(state, {
+    return extend(metamaskState, {
       isUnlocked: false,
     })
 
   default:
-    return state
+    return metamaskState
 
   }
 }
 
-function identities(state, action) {
-  state = extend({
+function reduceIdentities(state, action) {
+  
+  // clone + defaults
+  var idState = extend({
 
-  }, state)
+  }, state.identities)
 
   switch (action.type) {
-    // case INVALIDATE_REDDIT:
-    // case RECEIVE_POSTS:
-    // case REQUEST_POSTS:
-    //   return Object.assign({}, state, {
-    //     [action.reddit]: posts(state[action.reddit], action)
-    //   })
     default:
-      return state
+      return idState
   }
+
 }
