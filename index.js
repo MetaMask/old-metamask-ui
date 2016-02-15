@@ -26,6 +26,9 @@ function startApp(metamaskState, accountManager, opts){
   // parse opts
   var store = configureStore({
     metamask: metamaskState,
+    appState: {
+      currentDomain: opts.currentDomain,
+    }
   })
 
   // if unconfirmed txs, start on txConf page
