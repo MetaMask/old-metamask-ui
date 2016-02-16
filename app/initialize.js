@@ -81,7 +81,13 @@ InitializeScreen.prototype.renderCreateVault = function() {
     
     h('.initialize-screen.flex-column.flex-center.flex-grow', [
 
-      h('h2.page-subtitle', 'Create Vault'),
+      // subtitle and nav
+      h('.section-title.flex-row.flex-center', [
+        h('i.fa.fa-arrow-left.fa-lg.cursor-pointer', {
+          onClick: this.showInitializeMenu.bind(this),
+        }),
+        h('h2.page-subtitle', 'Create Vault'),
+      ]),
 
     ])
 
@@ -94,11 +100,21 @@ InitializeScreen.prototype.renderRestoreVault = function() {
     
     h('.initialize-screen.flex-column.flex-center.flex-grow', [
 
-      h('h2.page-subtitle', 'Restore Vault'),
+      // subtitle and nav
+      h('.section-title.flex-row.flex-center', [
+        h('i.fa.fa-arrow-left.fa-lg.cursor-pointer', {
+          onClick: this.showInitializeMenu.bind(this),
+        }),
+        h('h2.page-subtitle', 'Create Vault'),
+      ]),
 
     ])
 
   ) 
+}
+
+InitializeScreen.prototype.showInitializeMenu = function() {
+  this.props.dispatch(actions.showInitializeMenu())
 }
 
 InitializeScreen.prototype.showCreateVault = function() {

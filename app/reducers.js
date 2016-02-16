@@ -38,12 +38,14 @@ function rootReducer(state, action) {
 //
 
 function reduceApp(state, action) {
-   
-   // clone + defaults
+  
+  // clone and defaults
+  var defaultView = {
+    name: 'accounts',
+  }
+
   var appState = extend({
-    currentView: {
-      name: 'accounts',
-    },
+    currentView: defaultView,
     currentDomain: 'example.com',
   }, state.appState)
 
@@ -63,14 +65,12 @@ function reduceApp(state, action) {
     })
   case actions.SHOW_INIT_MENU:
     return extend(appState, {
-      currentView: null,
+      currentView: defaultView,
     })
   
   case actions.UNLOCK_METAMASK:
     return extend(appState, {
-      currentView: {
-        name: 'accounts',
-      },
+      currentView: defaultView,
     })
 
   case actions.SET_SELECTED_ACCOUNT:
