@@ -42,18 +42,34 @@ function reduceApp(state, action) {
    // clone + defaults
   var appState = extend({
     currentView: {
-      viewName: 'accounts',
+      name: 'accounts',
     },
     currentDomain: 'example.com',
   }, state.appState)
 
   switch (action.type) {
-  
-  case actions.UNLOCK_METAMASK:
-    console.log('was unlocked...')
+
+  case actions.SHOW_CREATE_VAULT:
     return extend(appState, {
       currentView: {
-        viewName: 'accounts',
+        name: 'createVault',
+      }
+    })
+  case actions.SHOW_RESTORE_VAULT:
+    return extend(appState, {
+      currentView: {
+        name: 'restoreVault',
+      }
+    })
+  case actions.SHOW_INIT_MENU:
+    return extend(appState, {
+      currentView: null,
+    })
+  
+  case actions.UNLOCK_METAMASK:
+    return extend(appState, {
+      currentView: {
+        name: 'accounts',
       },
     })
 
@@ -65,7 +81,7 @@ function reduceApp(state, action) {
   case actions.SHOW_ACCOUNT_DETAIL:
     return extend(appState, {
       currentView: {
-        viewName: 'accountDetail',
+        name: 'accountDetail',
         context: action.value,
       },
     })
@@ -73,14 +89,14 @@ function reduceApp(state, action) {
   case actions.SHOW_ACCOUNTS_PAGE:
     return extend(appState, {
       currentView: {
-        viewName: 'accounts',
+        name: 'accounts',
       },
     })
 
   case actions.SHOW_CONF_TX_PAGE:
     return extend(appState, {
       currentView: {
-        viewName: 'confTx',
+        name: 'confTx',
         context: 0,
       },
     })

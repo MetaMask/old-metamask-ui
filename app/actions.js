@@ -7,30 +7,42 @@ const SET_SELECTED_ACCOUNT = 'SET_SELECTED_ACCOUNT'
 const SHOW_ACCOUNT_DETAIL = 'SHOW_ACCOUNT_DETAIL'
 const SHOW_ACCOUNTS_PAGE = 'SHOW_ACCOUNTS_PAGE'
 const SHOW_CONF_TX_PAGE = 'SHOW_CONF_TX_PAGE'
+const SHOW_CREATE_VAULT = 'SHOW_CREATE_VAULT'
+const SHOW_RESTORE_VAULT = 'SHOW_RESTORE_VAULT'
+const SHOW_INIT_MENU = 'SHOW_INIT_MENU'
 
 module.exports = {
+  // remote state
   UPDATE_METAMASK_STATE: UPDATE_METAMASK_STATE,
+  updateMetamaskState: updateMetamaskState,
+  // intialize screen
+  SHOW_CREATE_VAULT: SHOW_CREATE_VAULT,
+  SHOW_RESTORE_VAULT: SHOW_RESTORE_VAULT,
+  SHOW_INIT_MENU: SHOW_INIT_MENU,
+  showCreateVault: showCreateVault,
+  showRestoreVault: showRestoreVault,
+  showInitializeMenu: showInitializeMenu,
+  // unlock screen
   UNLOCK_IN_PROGRESS: UNLOCK_IN_PROGRESS,
   UNLOCK_FAILED: UNLOCK_FAILED,
   UNLOCK_METAMASK: UNLOCK_METAMASK,
   LOCK_METAMASK: LOCK_METAMASK,
+  tryUnlockMetamask: tryUnlockMetamask,
+  lockMetamask: lockMetamask,
+  // accounts screen
   SET_SELECTED_ACCOUNT: SET_SELECTED_ACCOUNT,
   SHOW_ACCOUNT_DETAIL: SHOW_ACCOUNT_DETAIL,
   SHOW_ACCOUNTS_PAGE: SHOW_ACCOUNTS_PAGE,
   SHOW_CONF_TX_PAGE: SHOW_CONF_TX_PAGE,
-  // remote messages
-  tryUnlockMetamask: tryUnlockMetamask,
-  lockMetamask: lockMetamask,
   setSelectedAddress: setSelectedAddress,
   sendTx: sendTx,
   signTx: signTx,
-  cancelTx: cancelTx,
+  cancelTx: cancelTx,  
   // app messages
   showAccountDetail: showAccountDetail,
   showAccountsPage: showAccountsPage,
   showConfTxPage: showConfTxPage,
   // hacky - need a way to get a reference to account manager
-  updateMetamaskState: updateMetamaskState,
   _setAccountManager: _setAccountManager,
 }
 
@@ -86,7 +98,32 @@ function cancelTx(txData){
   }
 }
 
-// actions
+//
+// initialize screen
+//
+
+
+function showCreateVault() {
+  return {
+    type: SHOW_CREATE_VAULT,
+  }
+}
+
+function showRestoreVault() {
+  return {
+    type: SHOW_RESTORE_VAULT,
+  }
+}
+
+function showInitializeMenu() {
+  return {
+    type: SHOW_INIT_MENU,
+  }
+}
+
+//
+// unlock screen
+//
 
 function unlockInProgress() {
   return {

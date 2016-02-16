@@ -39,6 +39,18 @@ a:hover{
 app
 */
 
+button.thin-btn {
+  border: 1px solid;
+  border-color: #4D4D4D;
+  color: #4D4D4D;
+  background: rgb(255, 174, 41);
+  border-radius: 4px;
+  min-width: 200px;
+  margin: 12px 0;
+  padding: 6px;
+  font-size: 13px;
+}
+
 .app-header {
   padding-top: 10px;
 }
@@ -83,6 +95,15 @@ h2.page-subtitle {
 /*
 app sections
 */
+
+/* initialize */
+
+.initialize-screen hr {
+  width: 60px;
+  margin: 12px;
+  border-color: #F3C83E;
+  border-style: solid;
+}
 
 /* unlock */
 

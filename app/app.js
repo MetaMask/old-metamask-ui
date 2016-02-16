@@ -7,6 +7,7 @@ const h = require('react-hyperscript')
 const extend = require('xtend')
 const Toggle = require('react-toggle')
 const actions = require('./actions')
+const InitializeScreen = require('./initialize')
 const UnlockScreen = require('./unlock')
 const AccountsScreen = require('./accounts')
 const AccountDetailScreen = require('./account-detail')
@@ -33,6 +34,7 @@ function App() { Component.call(this) }
 function mapStateToProps(state) {
   return {
     // state from plugin
+    isInitialized: state.metamask.isInitialized,
     isUnlocked: state.metamask.isUnlocked,
     currentView: state.appState.currentView,
     activeAddress: state.appState.activeAddress,
@@ -91,6 +93,15 @@ App.prototype.unlockWithPassword = function(password){
 App.prototype.renderPrimary = function(state){
   var state = this.props
 
+  // show initialize screen
+  if (!state.isInitialized) {
+    var content = h(InitializeScreen, {
+      // submitPassword: this.unlockWithPassword.bind(this),
+    })
+    return [content]
+  }
+
+  // show unlock screen
   if (!state.isUnlocked) {
     var content = h(UnlockScreen, {
       submitPassword: this.unlockWithPassword.bind(this),
@@ -98,7 +109,8 @@ App.prototype.renderPrimary = function(state){
     return [content]
   }
 
-  switch (state.currentView.viewName) {
+  // show current view
+  switch (state.currentView.name) {
     
     case 'accounts':
       var content = h(AccountsScreen)
