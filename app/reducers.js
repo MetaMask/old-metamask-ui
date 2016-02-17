@@ -51,27 +51,52 @@ function reduceApp(state, action) {
 
   switch (action.type) {
 
+  // intialize
+
   case actions.SHOW_CREATE_VAULT:
     return extend(appState, {
       currentView: {
         name: 'createVault',
       }
     })
+
   case actions.SHOW_RESTORE_VAULT:
     return extend(appState, {
       currentView: {
         name: 'restoreVault',
       }
     })
+
   case actions.SHOW_INIT_MENU:
     return extend(appState, {
       currentView: defaultView,
     })
+
+  case actions.CREATE_NEW_VAULT_IN_PROGRESS:
+    return extend(appState, {
+      currentView: {
+        name: 'createVault',
+        inProgress: true,
+      },
+    })
+
+  case actions.SHOW_NEW_VAULT_SEED:
+    return extend(appState, {
+      currentView: {
+        name: 'createVaultComplete',
+        context: action.value,
+      },
+    })
+
+
+  // unlock
   
   case actions.UNLOCK_METAMASK:
     return extend(appState, {
       currentView: defaultView,
     })
+
+  // accounts
 
   case actions.SET_SELECTED_ACCOUNT:
     return extend(appState, {

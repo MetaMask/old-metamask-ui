@@ -1,3 +1,5 @@
+const CREATE_NEW_VAULT_IN_PROGRESS = 'CREATE_NEW_VAULT_IN_PROGRESS'
+const SHOW_NEW_VAULT_SEED = 'SHOW_NEW_VAULT_SEED'
 const UNLOCK_METAMASK = 'UNLOCK_METAMASK'
 const UNLOCK_IN_PROGRESS = 'UNLOCK_IN_PROGRESS'
 const UNLOCK_FAILED = 'UNLOCK_FAILED'
@@ -16,12 +18,17 @@ module.exports = {
   UPDATE_METAMASK_STATE: UPDATE_METAMASK_STATE,
   updateMetamaskState: updateMetamaskState,
   // intialize screen
+  CREATE_NEW_VAULT_IN_PROGRESS: CREATE_NEW_VAULT_IN_PROGRESS,
   SHOW_CREATE_VAULT: SHOW_CREATE_VAULT,
   SHOW_RESTORE_VAULT: SHOW_RESTORE_VAULT,
   SHOW_INIT_MENU: SHOW_INIT_MENU,
+  SHOW_NEW_VAULT_SEED: SHOW_NEW_VAULT_SEED,
   showCreateVault: showCreateVault,
   showRestoreVault: showRestoreVault,
   showInitializeMenu: showInitializeMenu,
+  createNewVault: createNewVault,
+  createNewVaultInProgress: createNewVaultInProgress,
+  showNewVaultSeed: showNewVaultSeed,
   // unlock screen
   UNLOCK_IN_PROGRESS: UNLOCK_IN_PROGRESS,
   UNLOCK_FAILED: UNLOCK_FAILED,
@@ -63,6 +70,15 @@ function tryUnlockMetamask(password) {
       } else {
         dispatch(unlockMetamask())
       }
+    })
+  }
+}
+
+function createNewVault(password) {
+  return function(dispatch) {
+    dispatch(createNewVaultInProgress())
+    _accountManager.createNewVault(password, function(err, result){
+      dispatch(showNewVaultSeed(result))
     })
   }
 }
@@ -118,6 +134,19 @@ function showRestoreVault() {
 function showInitializeMenu() {
   return {
     type: SHOW_INIT_MENU,
+  }
+}
+
+function createNewVaultInProgress() {
+  return {
+    type: CREATE_NEW_VAULT_IN_PROGRESS,
+  }
+}
+
+function showNewVaultSeed(seed) {
+  return {
+    type: SHOW_NEW_VAULT_SEED,
+    value: seed,
   }
 }
 

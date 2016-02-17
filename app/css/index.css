@@ -1,4 +1,11 @@
 /*
+faint orange (textfield shades) #FAF6F0
+light orange (button shades): #F5C26D
+dark orange (text): #F5A623
+borders/font/any gray: #4A4A4A
+*/
+
+/*
 application specific styles
 */
 
@@ -39,7 +46,7 @@ a:hover{
 app
 */
 
-button.thin-btn {
+button.btn-thin {
   border: 1px solid;
   border-color: #4D4D4D;
   color: #4D4D4D;
@@ -92,6 +99,12 @@ h2.page-subtitle {
   border: 3px solid gray;
 }
 
+textarea.twelve-word-phrase {
+  margin-top: 20px;
+  width: 300px;
+  height: 330px;
+}
+
 /*
 app sections
 */
@@ -103,6 +116,24 @@ app sections
   margin: 12px;
   border-color: #F3C83E;
   border-style: solid;
+}
+
+.initialize-screen input[type="password"] {
+  width: 300px;
+  padding: 6px;
+  border-radius: 6px;
+  border-style: solid;
+  outline: none;
+  border: 1px solid #F5A623;
+  background: #FAF6F0;
+}
+
+.initialize-screen label {
+  margin-top: 20px;
+}
+
+.initialize-screen button.create-vault {
+  margin-top: 40px;
 }
 
 /* unlock */

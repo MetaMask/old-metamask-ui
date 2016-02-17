@@ -15,8 +15,8 @@ function AccountPanel() {
 
 AccountPanel.prototype.render = function() {
   var state = this.props
-  var identity = state.identity
-  var account = state.account
+  var identity = state.identity || {}
+  var account = state.account || {}
 
   return (
 

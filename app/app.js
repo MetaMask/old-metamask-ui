@@ -7,25 +7,19 @@ const h = require('react-hyperscript')
 const extend = require('xtend')
 const Toggle = require('react-toggle')
 const actions = require('./actions')
-const InitializeScreen = require('./initialize')
+// init
+const InitializeMenuScreen = require('./init-menu')
+const CreateVaultScreen = require('./create-vault')
+const CreateVaultCompleteScreen = require('./create-vault-complete')
+const RestoreVaultScreen = require('./restore-vault')
+// unlock
 const UnlockScreen = require('./unlock')
+// accounts
 const AccountsScreen = require('./accounts')
 const AccountDetailScreen = require('./account-detail')
 const ConfirmTxScreen = require('./conf-tx')
-// const selectReddit = require('../actions').selectReddit
-// const fetchPostsIfNeeded = require('../actions').fetchPostsIfNeeded
-// const invalidateReddit = require('../actions').invalidateReddit
-// const Picker = require('../components/Picker')
-// const Posts = require('../components/Posts')
 
 module.exports = connect(mapStateToProps)(App)
-
-
-
-// actions
-
-
-// actions end 
 
 
 inherits(App, Component)
@@ -54,7 +48,7 @@ App.prototype.render = function() {
       ]),
 
       // panel content
-      h('.app-primary.flex-grow', this.renderPrimary()),
+      h('.app-primary.flex-grow', [this.renderPrimary()]),
 
       // footer
       h('.app-footer.flex-row.flex-space-around', [
@@ -86,47 +80,53 @@ App.prototype.toggleMetamaskActive = function(){
   }
 }
 
-App.prototype.unlockWithPassword = function(password){
-  this.props.dispatch(actions.tryUnlockMetamask(password))
-}
-
 App.prototype.renderPrimary = function(state){
   var state = this.props
 
   // show initialize screen
   if (!state.isInitialized) {
-    var content = h(InitializeScreen, {
-      // submitPassword: this.unlockWithPassword.bind(this),
-    })
-    return [content]
+
+    // show current view
+    switch (state.currentView.name) {
+
+      case 'createVault':
+        return h(CreateVaultScreen)
+      
+      case 'restoreVault':
+        return h(RestoreVaultScreen)
+      
+      default:
+        return h(InitializeMenuScreen)
+
+    }
+
   }
 
   // show unlock screen
   if (!state.isUnlocked) {
-    var content = h(UnlockScreen, {
-      submitPassword: this.unlockWithPassword.bind(this),
-    })
-    return [content]
+    return h(UnlockScreen)
   }
 
   // show current view
   switch (state.currentView.name) {
+
+    case 'createVaultComplete':
+      return h(CreateVaultCompleteScreen)
     
     case 'accounts':
-      var content = h(AccountsScreen)
-      return [content]
+      return h(AccountsScreen)
 
     case 'accountDetail':
-      var content = h(AccountDetailScreen)
-      return [content]
+      return h(AccountDetailScreen)
 
     case 'confTx':
-      var content = h(ConfirmTxScreen)
-      return [content]
+      return h(ConfirmTxScreen)
+    
+    default:
+      return h(AccountsScreen)
 
   }
 
-  return []
 }
 
 function onOffToggle(state){
@@ -143,88 +143,3 @@ function onOffToggle(state){
 
   )
 }
-
-// class AsyncApp extends Component {
-//   constructor(props) {
-//     super(props)
-//     this.handleChange = this.handleChange.bind(this)
-//     this.handleRefreshClick = this.handleRefreshClick.bind(this)
-//   }
-
-//   componentDidMount() {
-//     const { dispatch, selectedReddit } = this.props
-//     dispatch(fetchPostsIfNeeded(selectedReddit))
-//   }
-
-//   componentWillReceiveProps(nextProps) {
-//     if (nextProps.selectedReddit !== this.props.selectedReddit) {
-//       const { dispatch, selectedReddit } = nextProps
-//       dispatch(fetchPostsIfNeeded(selectedReddit))
-//     }
-//   }
-
-//   handleChange(nextReddit) {
-//     this.props.dispatch(selectReddit(nextReddit))
-//   }
-
-//   handleRefreshClick(e) {
-//     e.preventDefault()
-
-//     const { dispatch, selectedReddit } = this.props
-//     dispatch(invalidateReddit(selectedReddit))
-//     dispatch(fetchPostsIfNeeded(selectedReddit))
-//   }
-
-//   render() {
-//     const { selectedReddit, posts, isFetching, lastUpdated } = this.props
-//     return (
-
-//       h('div', [
-//         h(Picker, {
-//           value: selectedReddit,
-//           onChange: this.handleChange,
-//           options: [ 'reactjs', 'frontend'],
-//         }),
-//         // h('p', [
-//         //   lastUpdated && h('span', `Last updated at ${new Date(lastUpdated).toLocaleTimeString()}`),
-//         //   !isFetching && h('a', { href: '#', onClick: this.handleRefreshClick }, 'Refresh'),
-//         // ]),
-//         isFetching && posts.length === 0 && h('h2', 'Loading...'),
-//         !isFetching && posts.length === 0 && h('h2', 'Empty.'),
-//         posts.length > 0 && h('div', { style: { opacity: isFetching ? 0.5 : 1 } }, [
-//           h(Posts, { posts: posts }),
-//         ]),
-//       ])
-
-//     )
-//   }
-// }
-
-// AsyncApp.propTypes = {
-//   selectedReddit: PropTypes.string.isRequired,
-//   posts: PropTypes.array.isRequired,
-//   isFetching: PropTypes.bool.isRequired,
-//   lastUpdated: PropTypes.number,
-//   dispatch: PropTypes.func.isRequired
-// }
-
-// function mapStateToProps(state) {
-//   const { selectedReddit, postsByReddit } = state
-//   const {
-//     isFetching,
-//     lastUpdated,
-//     items: posts
-//   } = postsByReddit[selectedReddit] || {
-//     isFetching: true,
-//     items: []
-//   }
-
-//   return {
-//     selectedReddit,
-//     posts,
-//     isFetching,
-//     lastUpdated
-//   }
-// }
-
-// export default connect(mapStateToProps)(AsyncApp)
