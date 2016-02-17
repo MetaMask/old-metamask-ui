@@ -1,11 +1,13 @@
 const inherits = require('util').inherits
-const EventEmitter = require('events').EventEmitter
 const Component = require('react').Component
 const h = require('react-hyperscript')
-const getCaretCoordinates = require('textarea-caret')
+const connect = require('react-redux').connect
+const actions = require('./actions')
 const Mascot = require('./components/mascot')
+const getCaretCoordinates = require('textarea-caret')
+const EventEmitter = require('events').EventEmitter
 
-module.exports = UnlockScreen
+module.exports = connect(mapStateToProps)(UnlockScreen)
 
 
 inherits(UnlockScreen, Component)
@@ -14,6 +16,9 @@ function UnlockScreen() {
   this.animationEventEmitter = new EventEmitter()
 }
 
+function mapStateToProps(state) {
+  return {}
+}
 
 UnlockScreen.prototype.render = function() {
   return (
@@ -55,8 +60,9 @@ UnlockScreen.prototype.onKeyPress = function(event) {
 UnlockScreen.prototype.submitPassword = function(event){
   var element = event.target
   var password = element.value
+  // reset input
   element.value = ''
-  this.props.submitPassword(password)
+  this.props.dispatch(actions.tryUnlockMetamask(password))
 }
 
 UnlockScreen.prototype.inputChanged = function(event){
