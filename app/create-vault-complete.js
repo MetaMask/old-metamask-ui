@@ -32,15 +32,15 @@ CreateVaultCompleteScreen.prototype.render = function() {
 
       h('h3', 'Wallet Seed'),
       h('textarea.twelve-word-phrase', {
-        value: state.seed,
-      }),
+        readOnly: true,
+      }, state.seed),
 
       h('button.btn-thin', {
         onClick: this.showAccounts.bind(this),
       }, 'I\'ve copied it somewhere safe.'),
 
       h('h4', 'Important'),
-      h('pre', 'These 12 words can recreate all of your MetaMask accounts for this vault.\nKeep them private and save them!'),
+      h('.warning', 'These 12 words can recreate all of your MetaMask accounts for this vault.\nKeep them private and save them!'),
 
     ])
 

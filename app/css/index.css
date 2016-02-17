@@ -102,7 +102,10 @@ h2.page-subtitle {
 textarea.twelve-word-phrase {
   margin-top: 20px;
   width: 300px;
-  height: 330px;
+  height: 180px;
+  font-size: 16px;
+  background: #FAF6F0;
+  resize: none;
 }
 
 /*
@@ -134,6 +137,11 @@ app sections
 
 .initialize-screen button.create-vault {
   margin-top: 40px;
+}
+
+.initialize-screen .warning {
+  font-size: 14px;
+  margin: 0 16px;
 }
 
 /* unlock */
