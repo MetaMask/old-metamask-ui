@@ -5,7 +5,6 @@ const PropTypes = require('react').PropTypes
 const connect = require('react-redux').connect
 const h = require('react-hyperscript')
 const extend = require('xtend')
-const Toggle = require('react-toggle')
 const actions = require('./actions')
 // init
 const InitializeMenuScreen = require('./first-time/init-menu')
