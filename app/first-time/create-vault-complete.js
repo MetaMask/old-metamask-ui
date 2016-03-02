@@ -2,7 +2,7 @@ const inherits = require('util').inherits
 const Component = require('react').Component
 const connect = require('react-redux').connect
 const h = require('react-hyperscript')
-const actions = require('./actions')
+const actions = require('../actions')
 
 module.exports = connect(mapStateToProps)(CreateVaultCompleteScreen)
 
@@ -21,7 +21,7 @@ function mapStateToProps(state) {
 CreateVaultCompleteScreen.prototype.render = function() {
   var state = this.props
   return (
-    
+
     h('.initialize-screen.flex-column.flex-center.flex-grow', [
 
       // subtitle and nav
@@ -44,7 +44,7 @@ CreateVaultCompleteScreen.prototype.render = function() {
 
     ])
 
-  ) 
+  )
 }
 
 CreateVaultCompleteScreen.prototype.showAccounts = function() {
