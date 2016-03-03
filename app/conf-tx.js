@@ -33,7 +33,6 @@ ConfirmTxScreen.prototype.render = function() {
   var unconfTxList = valuesFor(state.unconfTxs)
   var txData = unconfTxList[state.index] || {}
   var txParams = txData.txParams || {}
-  var isSigned = (txData.status === 'signed')
   var address =  txParams.from || state.selectedAddress
   var identity = state.identities[address] || { address: address }
   var account = state.accounts[address] || { address: address }
@@ -76,14 +75,6 @@ ConfirmTxScreen.prototype.render = function() {
         ]),
 
       ]),
-
-      // password
-      h('input', {
-        type: 'password',
-        id: 'password-box',
-        onKeyPress: this.onKeyPress.bind(this, txData),
-        disabled: isSigned,
-      }),
       
       // send + cancel
       h('.flex-row.flex-space-around', [
@@ -91,7 +82,6 @@ ConfirmTxScreen.prototype.render = function() {
           onClick: this.cancelTransaction.bind(this, txData),
         }, 'Cancel'),
         h('button', {
-          disabled: !isSigned,
           onClick: this.sendTransaction.bind(this, txData),
         }, 'Send'),
       ]),
@@ -99,24 +89,6 @@ ConfirmTxScreen.prototype.render = function() {
     ])
     
   )
-}
-
-ConfirmTxScreen.prototype.componentDidMount = function(){
-  document.getElementById('password-box').focus()
-}
-
-ConfirmTxScreen.prototype.onKeyPress = function(txData, event) {
-  if (event.key === 'Enter') {
-    var element = event.target
-    var password = element.value
-    // element.value = ''
-    console.log('SUBMIT!', password)
-    this.signTransaction(password, txData)
-  }
-}
-
-ConfirmTxScreen.prototype.signTransaction = function(password, txData){
-  this.props.dispatch(actions.signTx(password, txData))
 }
 
 ConfirmTxScreen.prototype.sendTransaction = function(txData, event){
