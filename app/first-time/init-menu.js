@@ -4,11 +4,10 @@ const Component = require('react').Component
 const connect = require('react-redux').connect
 const h = require('react-hyperscript')
 const getCaretCoordinates = require('textarea-caret')
-const Mascot = require('./components/mascot')
-const actions = require('./actions')
+const Mascot = require('../components/mascot')
+const actions = require('../actions')
 
 module.exports = connect(mapStateToProps)(InitializeMenuScreen)
-
 
 inherits(InitializeMenuScreen, Component)
 function InitializeMenuScreen() {
@@ -23,22 +22,20 @@ function mapStateToProps(state) {
   }
 }
 
-
-
 InitializeMenuScreen.prototype.render = function() {
   var state = this.props
 
   switch (state.currentView.name) {
-    
+
     case 'createVault':
       return h(CreateVaultPage)
-    
+
     case 'createVaultComplete':
       return this.renderCreateVaultComplete()
-    
+
     case 'restoreVault':
       return this.renderRestoreVault()
-    
+
     default:
       return this.renderMenu()
 
@@ -53,7 +50,7 @@ InitializeMenuScreen.prototype.render = function() {
 InitializeMenuScreen.prototype.renderMenu = function() {
   var state = this.props
   return (
-    
+
     h('.initialize-screen.flex-column.flex-center.flex-grow', [
 
       h('h2.page-subtitle', 'Welcome!'),
@@ -65,7 +62,7 @@ InitializeMenuScreen.prototype.renderMenu = function() {
       h('button.btn-thin', {
         onClick: this.showCreateVault.bind(this),
       }, 'Create New Vault'),
-      
+
       h('.flex-row.flex-center.flex-grow', [
         h('hr'),
         h('div', 'OR'),
@@ -78,13 +75,13 @@ InitializeMenuScreen.prototype.renderMenu = function() {
 
     ])
 
-  ) 
+  )
 }
 
 InitializeMenuScreen.prototype.renderCreateVault = function() {
   var state = this.props
   return (
-    
+
     h('.initialize-screen.flex-column.flex-center.flex-grow', [
 
       // subtitle and nav
@@ -125,20 +122,20 @@ InitializeMenuScreen.prototype.renderCreateVault = function() {
       }, 'OK'),
 
       this.props.warning && (
-        
+
         h('span', this.props.warning)
 
       ),
 
     ])
 
-  ) 
+  )
 }
 
 InitializeMenuScreen.prototype.renderCreateVaultComplete = function() {
   var state = this.props
   return (
-    
+
     h('.initialize-screen.flex-column.flex-center.flex-grow', [
 
       // subtitle and nav
@@ -161,13 +158,13 @@ InitializeMenuScreen.prototype.renderCreateVaultComplete = function() {
 
     ])
 
-  ) 
+  )
 }
 
 InitializeMenuScreen.prototype.renderRestoreVault = function() {
   var state = this.props
   return (
-    
+
     h('.initialize-screen.flex-column.flex-center.flex-grow', [
 
       // subtitle and nav
@@ -186,7 +183,7 @@ InitializeMenuScreen.prototype.renderRestoreVault = function() {
 
     ])
 
-  ) 
+  )
 }
 
 // InitializeMenuScreen.prototype.splitWor = function() {

@@ -5,13 +5,12 @@ const PropTypes = require('react').PropTypes
 const connect = require('react-redux').connect
 const h = require('react-hyperscript')
 const extend = require('xtend')
-const Toggle = require('react-toggle')
 const actions = require('./actions')
 // init
-const InitializeMenuScreen = require('./init-menu')
-const CreateVaultScreen = require('./create-vault')
-const CreateVaultCompleteScreen = require('./create-vault-complete')
-const RestoreVaultScreen = require('./restore-vault')
+const InitializeMenuScreen = require('./first-time/init-menu')
+const CreateVaultScreen = require('./first-time/create-vault')
+const CreateVaultCompleteScreen = require('./first-time/create-vault-complete')
+const RestoreVaultScreen = require('./first-time/restore-vault')
 // unlock
 const UnlockScreen = require('./unlock')
 // accounts
@@ -41,7 +40,7 @@ App.prototype.render = function() {
   return (
 
     h('.flex-column.flex-grow.full-height', [
-      
+
       // top row
       h('.app-header.flex-column.flex-center', [
         h('h1', 'MetaMask'),
@@ -62,7 +61,7 @@ App.prototype.render = function() {
         // help
         h('i.fa.fa-question.fa-lg.cursor-pointer'),
       ]),
-      
+
     ])
 
   )
@@ -91,10 +90,10 @@ App.prototype.renderPrimary = function(state){
 
       case 'createVault':
         return h(CreateVaultScreen)
-      
+
       case 'restoreVault':
         return h(RestoreVaultScreen)
-      
+
       default:
         return h(InitializeMenuScreen)
 
@@ -112,7 +111,7 @@ App.prototype.renderPrimary = function(state){
 
     case 'createVaultComplete':
       return h(CreateVaultCompleteScreen)
-    
+
     case 'accounts':
       return h(AccountsScreen)
 
@@ -121,7 +120,7 @@ App.prototype.renderPrimary = function(state){
 
     case 'confTx':
       return h(ConfirmTxScreen)
-    
+
     default:
       return h(AccountsScreen)
 
@@ -130,15 +129,36 @@ App.prototype.renderPrimary = function(state){
 }
 
 function onOffToggle(state){
+  var buttonSize = '50px';
+  var lockWidth = '20px';
   return (
-    
-    h('.app-toggle.flex-row.flex-center', [
-      h('label', 'OFF'),
-      h(Toggle, {
-        checked: state.isUnlocked,
-        onChange: state.toggleMetamaskActive,
-      }),
-      h('label', 'ON'),
+    h('.app-toggle.flex-row.flex-center.lock' + (state.isUnlocked ? '.unlocked' : '.locked'), {
+      width: buttonSize,
+      height: buttonSize,
+    }, [
+      h('div', {
+        onClick: state.toggleMetamaskActive,
+        style: {
+          width: lockWidth,
+          height: '' + parseInt(lockWidth) * 1.5 + 'px',
+          position: 'relative',
+        }
+      }, [
+        h('img.lock-top', {
+          src: 'images/lock-top.png',
+          style: {
+            width: lockWidth,
+            position: 'absolute',
+          }
+        }),
+        h('img', {
+          src: 'images/lock-base.png',
+          style: {
+            width: lockWidth,
+            position: 'absolute',
+          }
+        }),
+      ])
     ])
 
   )
