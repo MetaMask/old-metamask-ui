@@ -142,13 +142,24 @@ app sections
   height: 50px;
 }
 
+.lock.locked {
+  transform: scale(1.5);
+  opacity: 0.0;
+  transition: opacity 400ms ease-in, transform 400ms ease-in;
+}
+.lock.unlocked {
+  transform: scale(1);
+  opacity: 1;
+  transition: opacity 500ms ease-out, transform 500ms ease-out, background 200ms ease-in;
+}
+
 .lock.locked .lock-top {
   transform: scaleX(1) translateX(0);
-  transition: transform 300ms ease-in;
+  transition: transform 250ms ease-in;
 }
 .lock.unlocked .lock-top {
   transform: scaleX(-1) translateX(-12px);
-  transition: transform 300ms ease-in;
+  transition: transform 250ms ease-in;
 }
 .lock.unlocked:hover {
   border-radius: 4px;
