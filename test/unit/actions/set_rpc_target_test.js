@@ -6,7 +6,7 @@ var path = require('path')
 var actions = require(path.join(__dirname, '..', '..', '..', 'app', 'actions.js'))
 var reducers = require(path.join(__dirname, '..', '..', '..', 'app', 'reducers.js'))
 
-describe('SET_RPC_ADDRESS', function() {
+describe('SET_RPC_TARGET', function() {
 
   it('sets the state.appState.activeRpcTarget property of the state to the action.value', function() {
     var initialState = {
