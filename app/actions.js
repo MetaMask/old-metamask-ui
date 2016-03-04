@@ -13,6 +13,7 @@ const SHOW_CREATE_VAULT = 'SHOW_CREATE_VAULT'
 const SHOW_RESTORE_VAULT = 'SHOW_RESTORE_VAULT'
 const SHOW_INIT_MENU = 'SHOW_INIT_MENU'
 const SET_RPC_TARGET = 'SET_RPC_TARGET'
+const SHOW_CONFIG_PAGE = 'SHOW_CONFIG_PAGE'
 
 module.exports = {
   // remote state
@@ -52,6 +53,8 @@ module.exports = {
   // hacky - need a way to get a reference to account manager
   _setAccountManager: _setAccountManager,
   // config screen
+  showConfigPage: showConfigPage,
+  SHOW_CONFIG_PAGE: SHOW_CONFIG_PAGE,
   SET_RPC_TARGET: SET_RPC_TARGET,
 }
 
@@ -195,5 +198,11 @@ function showAccountsPage() {
 function showConfTxPage() {
   return {
     type: SHOW_CONF_TX_PAGE,
+  }
+}
+
+function showConfigPage() {
+  return {
+    type: SHOW_CONFIG_PAGE,
   }
 }

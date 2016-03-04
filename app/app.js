@@ -52,7 +52,12 @@ App.prototype.render = function() {
       // footer
       h('.app-footer.flex-row.flex-space-around', [
         // settings
-        h('i.fa.fa-cog.fa-lg.cursor-pointer'),
+        h('i.fa.fa-cog.fa-lg.cursor-pointer', {
+          onClick: function(ev) {
+            state.dispatch(actions.showConfigPage())
+          },
+        }),
+
         // toggle
         onOffToggle({
           toggleMetamaskActive: this.toggleMetamaskActive.bind(this),

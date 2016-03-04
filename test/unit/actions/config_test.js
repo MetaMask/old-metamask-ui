@@ -6,23 +6,36 @@ var path = require('path')
 var actions = require(path.join(__dirname, '..', '..', '..', 'app', 'actions.js'))
 var reducers = require(path.join(__dirname, '..', '..', '..', 'app', 'reducers.js'))
 
-describe('SET_RPC_TARGET', function() {
+describe ('config view actions', function() {
 
-  it('sets the state.appState.activeRpcTarget property of the state to the action.value', function() {
-    var initialState = {
-      appState: {
-        activeRpcTarget: 'foo',
+  var initialState = {
+    appState: {
+      activeRpcTarget: 'foo',
+      currentView: {
+        name: 'accounts',
       }
     }
-    freeze(initialState)
+  }
+  freeze(initialState)
 
-    const action = {
-      type: actions.SET_RPC_TARGET,
-      value: 'bar',
-    }
-    freeze(action)
+  describe('SHOW_CONFIG_PAGE', function() {
+    it('should set appState.currentView.name to config', function() {
+      var result = reducers(initialState, actions.showConfigPage())
+      assert.equal(result.appState.currentView.name, 'config')
+    })
+  })
 
-    var resultingState = reducers(initialState, action)
-    assert.equal(resultingState.appState.activeRpcTarget, action.value)
-  });
-});
+  describe('SET_RPC_TARGET', function() {
+
+    it('sets the state.appState.activeRpcTarget property of the state to the action.value', function() {
+      const action = {
+        type: actions.SET_RPC_TARGET,
+        value: 'bar',
+      }
+
+      var result = reducers(initialState, action)
+      assert.equal(result.appState.activeRpcTarget, action.value)
+    })
+  })
+})
+

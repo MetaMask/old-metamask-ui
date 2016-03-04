@@ -72,6 +72,13 @@ function reduceApp(state, action) {
       currentView: defaultView,
     })
 
+  case actions.SHOW_CONFIG_PAGE:
+    return extend(appState, {
+      currentView: {
+        name: 'config',
+      }
+    })
+
   case actions.CREATE_NEW_VAULT_IN_PROGRESS:
     return extend(appState, {
       currentView: {
