@@ -9,7 +9,7 @@ const configureStore = require('./app/store')
 module.exports = launchApp
 
 function launchApp(opts) {
-  
+
   var accountManager = opts.accountManager
   actions._setAccountManager(accountManager)
 
@@ -25,9 +25,14 @@ function startApp(metamaskState, accountManager, opts){
 
   // parse opts
   var store = configureStore({
+
+    // metamaskState represents the cross-tab state
     metamask: metamaskState,
+
+    // appState represents the current tab's popup state
     appState: {
       currentDomain: opts.currentDomain,
+      activeRpcAddress: 'https://rawtestrpc.metamask.io/'
     }
   })
 
