@@ -88,9 +88,9 @@ function reduceApp(state, action) {
       },
     })
 
-  case actions.SET_RPC_ADDRESS:
+  case actions.SET_RPC_TARGET:
     return extend(appState, {
-      activeRpcAddress: action.value,
+      activeRpcTarget: action.value,
     })
 
   // unlock

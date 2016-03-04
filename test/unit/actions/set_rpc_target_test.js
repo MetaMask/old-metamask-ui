@@ -8,21 +8,21 @@ var reducers = require(path.join(__dirname, '..', '..', '..', 'app', 'reducers.j
 
 describe('SET_RPC_ADDRESS', function() {
 
-  it('sets the state.appState.activeAddress property of the state to the action.value', function() {
+  it('sets the state.appState.activeRpcTarget property of the state to the action.value', function() {
     var initialState = {
       appState: {
-        activeRpcAddress: 'foo',
+        activeRpcTarget: 'foo',
       }
     }
     freeze(initialState)
 
     const action = {
-      type: actions.SET_RPC_ADDRESS,
+      type: actions.SET_RPC_TARGET,
       value: 'bar',
     }
     freeze(action)
 
     var resultingState = reducers(initialState, action)
-    assert.equal(resultingState.appState.activeRpcAddress, action.value)
+    assert.equal(resultingState.appState.activeRpcTarget, action.value)
   });
 });
