@@ -30,7 +30,7 @@ function rootReducer(state, action) {
 
 
   return state
-  
+
 }
 
 //
@@ -38,7 +38,7 @@ function rootReducer(state, action) {
 //
 
 function reduceApp(state, action) {
-  
+
   // clone and defaults
   var defaultView = {
     name: 'accounts',
@@ -88,9 +88,13 @@ function reduceApp(state, action) {
       },
     })
 
+  case actions.SET_RPC_TARGET:
+    return extend(appState, {
+      activeRpcTarget: action.value,
+    })
 
   // unlock
-  
+
   case actions.UNLOCK_METAMASK:
     return extend(appState, {
       currentView: defaultView,
@@ -165,7 +169,7 @@ function reduceMetamask(state, action) {
 }
 
 function reduceIdentities(state, action) {
-  
+
   // clone + defaults
   var idState = extend({
 

@@ -12,6 +12,7 @@ const SHOW_CONF_TX_PAGE = 'SHOW_CONF_TX_PAGE'
 const SHOW_CREATE_VAULT = 'SHOW_CREATE_VAULT'
 const SHOW_RESTORE_VAULT = 'SHOW_RESTORE_VAULT'
 const SHOW_INIT_MENU = 'SHOW_INIT_MENU'
+const SET_RPC_TARGET = 'SET_RPC_TARGET'
 
 module.exports = {
   // remote state
@@ -43,13 +44,15 @@ module.exports = {
   SHOW_CONF_TX_PAGE: SHOW_CONF_TX_PAGE,
   setSelectedAddress: setSelectedAddress,
   sendTx: sendTx,
-  cancelTx: cancelTx,  
+  cancelTx: cancelTx,
   // app messages
   showAccountDetail: showAccountDetail,
   showAccountsPage: showAccountsPage,
   showConfTxPage: showConfTxPage,
   // hacky - need a way to get a reference to account manager
   _setAccountManager: _setAccountManager,
+  // config screen
+  SET_RPC_TARGET: SET_RPC_TARGET,
 }
 
 
