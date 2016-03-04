@@ -3,10 +3,6 @@ const Component = require('react').Component
 const h = require('react-hyperscript')
 const connect = require('react-redux').connect
 const actions = require('./actions')
-const valuesFor = require('./util').valuesFor
-const addressSummary = require('./util').addressSummary
-const formatBalance = require('./util').formatBalance
-const dataSize = require('./util').dataSize
 
 module.exports = connect(mapStateToProps)(ConfigScreen)
 
@@ -42,7 +38,8 @@ ConfigScreen.prototype.render = function() {
       // conf view
       h('.flex-column.flex-justify-center.flex-grow.select-none', [
 
-        h('p', null, 'Hello!')
+        h('h3', null, 'Current RPC:')
+        h('p', null, rpc)
 
       ]),
     ])
