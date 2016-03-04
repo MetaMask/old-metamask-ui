@@ -17,6 +17,8 @@ const UnlockScreen = require('./unlock')
 const AccountsScreen = require('./accounts')
 const AccountDetailScreen = require('./account-detail')
 const ConfirmTxScreen = require('./conf-tx')
+// other views
+const ConfigScreen = require('./config')
 
 module.exports = connect(mapStateToProps)(App)
 
@@ -112,6 +114,7 @@ App.prototype.renderPrimary = function(state){
   }
 
   // show current view
+  console.log("Rendering %s", state.currentView.name)
   switch (state.currentView.name) {
 
     case 'createVaultComplete':
@@ -125,6 +128,10 @@ App.prototype.renderPrimary = function(state){
 
     case 'confTx':
       return h(ConfirmTxScreen)
+
+    case 'config':
+      console.log('Rendering config screen')
+      return h(ConfigScreen)
 
     default:
       return h(AccountsScreen)
