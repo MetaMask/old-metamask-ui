@@ -52,9 +52,19 @@ App.prototype.render = function() {
       h('.app-primary.flex-grow', [this.renderPrimary()]),
 
       // footer
-      h('.app-footer.flex-row.flex-space-around', [
-        // settings
+      h('.app-footer.flex-row.flex-space-around', {
+        style: {
+          'align-items': 'center',
+        }
+      }, [
+
+        // settings icon
         h('i.fa.fa-cog.fa-lg.cursor-pointer', {
+          style: {
+            opacity: state.isUnlocked ? '1.0' : '0.0',
+            transition: 'opacity 200ms ease-in',
+            //transform: `translateX(${state.isUnlocked ? '0px' : '-100px'})`,
+          },
           onClick: function(ev) {
             state.dispatch(actions.showConfigPage())
           },
@@ -65,6 +75,7 @@ App.prototype.render = function() {
           toggleMetamaskActive: this.toggleMetamaskActive.bind(this),
           isUnlocked: state.isUnlocked,
         }),
+
         // help
         h('i.fa.fa-question.fa-lg.cursor-pointer'),
       ]),
@@ -114,7 +125,6 @@ App.prototype.renderPrimary = function(state){
   }
 
   // show current view
-  console.log("Rendering %s", state.currentView.name)
   switch (state.currentView.name) {
 
     case 'createVaultComplete':
@@ -130,7 +140,6 @@ App.prototype.renderPrimary = function(state){
       return h(ConfirmTxScreen)
 
     case 'config':
-      console.log('Rendering config screen')
       return h(ConfigScreen)
 
     default:

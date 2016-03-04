@@ -38,8 +38,8 @@ ConfigScreen.prototype.render = function() {
       // conf view
       h('.flex-column.flex-justify-center.flex-grow.select-none', [
 
-        h('h3', null, 'Current RPC:')
-        h('p', null, rpc)
+        h('h3', 'Current RPC:'),
+        h('p', rpc)
 
       ]),
     ])
