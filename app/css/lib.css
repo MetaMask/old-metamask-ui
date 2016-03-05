@@ -98,7 +98,7 @@
   transform-origin: center center;
 }
 .cursor-pointer:hover {
-  transform: scale(1.05);
+  transform: scale(1.15);
 }
 .cursor-pointer:active {
   transform: scale(0.95);
