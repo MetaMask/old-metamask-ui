@@ -44,7 +44,7 @@ ConfigScreen.prototype.render = function() {
         }, [
 
           h('div', [
-            h('h3', {style: { 'font-weight': 'bold' }}, 'Current RPC'),
+            h('h3', {style: { fontWeight: 'bold' }}, 'Current RPC'),
             h('p', rpc)
           ]),
 
@@ -70,7 +70,7 @@ ConfigScreen.prototype.render = function() {
           h('div', [
             h('button', {
               style: {
-                'align-self': 'center',
+                alignSelf: 'center',
               },
               onClick(event) {
                 event.preventDefault()

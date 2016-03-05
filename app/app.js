@@ -39,6 +39,7 @@ function mapStateToProps(state) {
 App.prototype.render = function() {
   // const { selectedReddit, posts, isFetching, lastUpdated } = this.props
   var state = this.props
+  var view = state.currentView.name
   return (
 
     h('.flex-column.flex-grow.full-height', [
@@ -54,12 +55,12 @@ App.prototype.render = function() {
       // footer
       h('.app-footer.flex-row.flex-space-around', {
         style: {
-          'align-items': 'center',
+          alignItems: 'center',
         }
       }, [
 
         // settings icon
-        h('i.fa.fa-cog.fa-lg.cursor-pointer', {
+        h('i.fa.fa-cog.fa-lg' + (view  === 'config' ? '.active' : '.cursor-pointer'), {
           style: {
             opacity: state.isUnlocked ? '1.0' : '0.0',
             transition: 'opacity 200ms ease-in',

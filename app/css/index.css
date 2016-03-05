@@ -46,6 +46,10 @@ a:hover{
 app
 */
 
+.active {
+  color: #909090;
+}
+
 button.btn-thin {
   border: 1px solid;
   border-color: #4D4D4D;
