@@ -17,6 +17,8 @@ const UnlockScreen = require('./unlock')
 const AccountsScreen = require('./accounts')
 const AccountDetailScreen = require('./account-detail')
 const ConfirmTxScreen = require('./conf-tx')
+// other views
+const ConfigScreen = require('./config')
 
 module.exports = connect(mapStateToProps)(App)
 
@@ -37,6 +39,7 @@ function mapStateToProps(state) {
 App.prototype.render = function() {
   // const { selectedReddit, posts, isFetching, lastUpdated } = this.props
   var state = this.props
+  var view = state.currentView.name
   return (
 
     h('.flex-column.flex-grow.full-height', [
@@ -50,14 +53,30 @@ App.prototype.render = function() {
       h('.app-primary.flex-grow', [this.renderPrimary()]),
 
       // footer
-      h('.app-footer.flex-row.flex-space-around', [
-        // settings
-        h('i.fa.fa-cog.fa-lg.cursor-pointer'),
+      h('.app-footer.flex-row.flex-space-around', {
+        style: {
+          alignItems: 'center',
+        }
+      }, [
+
+        // settings icon
+        h('i.fa.fa-cog.fa-lg' + (view  === 'config' ? '.active' : '.cursor-pointer'), {
+          style: {
+            opacity: state.isUnlocked ? '1.0' : '0.0',
+            transition: 'opacity 200ms ease-in',
+            //transform: `translateX(${state.isUnlocked ? '0px' : '-100px'})`,
+          },
+          onClick: function(ev) {
+            state.dispatch(actions.showConfigPage())
+          },
+        }),
+
         // toggle
         onOffToggle({
           toggleMetamaskActive: this.toggleMetamaskActive.bind(this),
           isUnlocked: state.isUnlocked,
         }),
+
         // help
         h('i.fa.fa-question.fa-lg.cursor-pointer'),
       ]),
@@ -120,6 +139,9 @@ App.prototype.renderPrimary = function(state){
 
     case 'confTx':
       return h(ConfirmTxScreen)
+
+    case 'config':
+      return h(ConfigScreen)
 
     default:
       return h(AccountsScreen)
