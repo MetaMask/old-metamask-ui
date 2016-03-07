@@ -6,6 +6,7 @@ const connect = require('react-redux').connect
 const h = require('react-hyperscript')
 const extend = require('xtend')
 const actions = require('./actions')
+const ReactCSSTransitionGroup = require('react-addons-css-transition-group')
 // init
 const InitializeMenuScreen = require('./first-time/init-menu')
 const CreateVaultScreen = require('./first-time/create-vault')
@@ -50,7 +51,16 @@ App.prototype.render = function() {
       ]),
 
       // panel content
-      h('.app-primary.flex-grow', [this.renderPrimary()]),
+      h('.app-primary.flex-grow', [
+        h(ReactCSSTransitionGroup, {
+          transitionName: "main",
+          transitionAppear: true,
+          transitionEnterTimeout: 300,
+          transitionLeaveTimeout: 300,
+        }, [
+          this.renderPrimary(),
+        ]),
+      ]),
 
       // footer
       h('.app-footer.flex-row.flex-space-around', {
@@ -108,13 +118,13 @@ App.prototype.renderPrimary = function(state){
     switch (state.currentView.name) {
 
       case 'createVault':
-        return h(CreateVaultScreen)
+        return h(CreateVaultScreen, {key: 'create-vault'})
 
       case 'restoreVault':
-        return h(RestoreVaultScreen)
+        return h(RestoreVaultScreen, {key: 'restore-vault'})
 
       default:
-        return h(InitializeMenuScreen)
+        return h(InitializeMenuScreen, {key: 'initialize-menu'})
 
     }
 
@@ -122,29 +132,29 @@ App.prototype.renderPrimary = function(state){
 
   // show unlock screen
   if (!state.isUnlocked) {
-    return h(UnlockScreen)
+    return h(UnlockScreen, {key: 'unlocked'})
   }
 
   // show current view
   switch (state.currentView.name) {
 
     case 'createVaultComplete':
-      return h(CreateVaultCompleteScreen)
+      return h(CreateVaultCompleteScreen, {key: 'created-vault'})
 
     case 'accounts':
-      return h(AccountsScreen)
+      return h(AccountsScreen, {key: 'accounts'})
 
     case 'accountDetail':
-      return h(AccountDetailScreen)
+      return h(AccountDetailScreen, {key: 'account-detail'})
 
     case 'confTx':
-      return h(ConfirmTxScreen)
+      return h(ConfirmTxScreen, {key: 'confirm-tx'})
 
     case 'config':
-      return h(ConfigScreen)
+      return h(ConfigScreen, {key: 'config'})
 
     default:
-      return h(AccountsScreen)
+      return h(AccountsScreen, {key: 'accounts'})
 
   }
 

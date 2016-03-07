@@ -80,7 +80,41 @@ h2.page-subtitle {
 }
 
 .app-primary {
+}
 
+.app-primary > div {
+  float: left;
+  position: absolute;
+}
+.app-primary .main-appear {
+  transform: translateX(400px);
+  position: absolute;
+  transition: transform 300ms ease-in-out;
+}
+.app-primary .main-appear-active {
+  transform: translateX(0px);
+  position: absolute;
+  transition: transform 300ms ease-in-out;
+}
+.app-primary .main-enter {
+  transform: translateX(400px);
+  position: absolute;
+  transition: transform 300ms ease-in-out;
+}
+.app-primary .main-leave.main-leave-active {
+  transform: translateX(-400px);
+  position: absolute;
+  transition: transform 300ms ease-in-out;
+}
+.app-primary .main-enter.main-enter-active {
+  transform: translateX(0px);
+  position: absolute;
+  transition: transform 300ms ease-in-out;
+}
+.app-primary .main-leave {
+  transform: translateX(0px);
+  position: absolute;
+  transition: transform 300ms ease-in-out;
 }
 
 .app-footer {
