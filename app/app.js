@@ -54,7 +54,6 @@ App.prototype.render = function() {
       h('.app-primary.flex-grow', [
         h(ReactCSSTransitionGroup, {
           transitionName: "main",
-          transitionAppear: true,
           transitionEnterTimeout: 300,
           transitionLeaveTimeout: 300,
         }, [

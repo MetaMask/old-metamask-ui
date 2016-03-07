@@ -1,0 +1,23 @@
+.app-primary > div {
+  float: left;
+}
+.app-primary .main-enter {
+  transform: translateX(400px);
+  position: absolute;
+  transition: transform 300ms ease-in-out;
+}
+.app-primary .main-leave.main-leave-active {
+  transform: translateX(-400px);
+  position: absolute;
+  transition: transform 300ms ease-in-out;
+}
+.app-primary .main-enter.main-enter-active {
+  transform: translateX(0px);
+  position: absolute;
+  transition: transform 300ms ease-in-out;
+}
+.app-primary .main-leave {
+  transform: translateX(0px);
+  position: absolute;
+  transition: transform 300ms ease-in-out;
+}
