@@ -13,7 +13,7 @@ function reduceApp(state, action) {
   var appState = extend({
     currentView: defaultView,
     currentDomain: 'example.com',
-    routeStack: ['locked'],
+    transForward: true,
   }, state.appState)
 
   switch (action.type) {
@@ -25,7 +25,7 @@ function reduceApp(state, action) {
       currentView: {
         name: 'createVault',
       },
-      routeStack: appState.routeStack.concat('createVault'),
+      transForward: true,
     })
 
   case actions.SHOW_RESTORE_VAULT:
@@ -33,13 +33,13 @@ function reduceApp(state, action) {
       currentView: {
         name: 'restoreVault',
       },
-      routeStack: appState.routeStack.concat('restoreVault'),
+      transForward: true,
     })
 
   case actions.SHOW_INIT_MENU:
     return extend(appState, {
       currentView: defaultView,
-      routeStack: ['locked', defaultView.name],
+      transForward: false,
     })
 
   case actions.SHOW_CONFIG_PAGE:
@@ -47,7 +47,7 @@ function reduceApp(state, action) {
       currentView: {
         name: 'config',
       },
-      routeStack: appState.routeStack.concat('config'),
+      transForward: true,
     })
 
   case actions.CREATE_NEW_VAULT_IN_PROGRESS:
@@ -56,7 +56,7 @@ function reduceApp(state, action) {
         name: 'createVault',
         inProgress: true,
       },
-      routeStack: appState.routeStack.concat('createVault'),
+      transForward: true,
     })
 
   case actions.SHOW_NEW_VAULT_SEED:
@@ -65,7 +65,7 @@ function reduceApp(state, action) {
         name: 'createVaultComplete',
         context: action.value,
       },
-      routeStack: appState.routeStack.concat('createVaultComplete'),
+      transForward: true,
     })
 
   case actions.SET_RPC_TARGET:
@@ -78,12 +78,12 @@ function reduceApp(state, action) {
   case actions.UNLOCK_METAMASK:
     return extend(appState, {
       currentView: defaultView,
-      routeStack: appState.routeStack.concat(defaultView.name),
+      transForward: true,
     })
 
   case actions.LOCK_METAMASK:
     return extend(appState, {
-      routeStack: ['locked'],
+      transForward: false,
     })
 
   // accounts
@@ -99,7 +99,7 @@ function reduceApp(state, action) {
         name: 'accountDetail',
         context: action.value,
       },
-      routeStack: appState.routeStack.concat('accountDetail'),
+      transForward: true,
     })
 
   case actions.SHOW_ACCOUNTS_PAGE:
@@ -107,7 +107,7 @@ function reduceApp(state, action) {
       currentView: {
         name: 'accounts',
       },
-      routeStack: ['locked', 'accounts'],
+      transForward: appState.currentView.name == 'locked',
     })
 
   case actions.SHOW_CONF_TX_PAGE:
@@ -116,6 +116,7 @@ function reduceApp(state, action) {
         name: 'confTx',
         context: 0,
       },
+      transForward: true,
     })
 
   default:

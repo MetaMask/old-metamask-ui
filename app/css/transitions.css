@@ -1,23 +1,34 @@
-.app-primary .main-enter {
+/* initial positions */
+.app-primary.from-right .main-enter {
   transform: translateX(400px);
   position: absolute;
   width: 100%;
   transition: transform 300ms ease-in-out;
 }
-.app-primary .main-enter.main-enter-active {
-  transform: translateX(0px);
+.app-primary.from-left .main-enter {
+  transform: translateX(-400px);
   position: absolute;
   width: 100%;
   transition: transform 300ms ease-in-out;
 }
 
+/* center position */
+.app-primary .main-enter.main-enter-active,
 .app-primary .main-leave {
   transform: translateX(0px);
   position: absolute;
   width: 100%;
   transition: transform 300ms ease-in-out;
 }
-.app-primary .main-leave.main-leave-active {
+
+/* final positions */
+.app-primary.from-left .main-leave-active {
+  transform: translateX(400px);
+  position: absolute;
+  width: 100%;
+  transition: transform 300ms ease-in-out;
+}
+.app-primary.from-right .main-leave-active {
   transform: translateX(-400px);
   position: absolute;
   width: 100%;
