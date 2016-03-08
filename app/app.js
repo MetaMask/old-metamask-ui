@@ -47,15 +47,16 @@ App.prototype.render = function() {
 
       // top row
       h('.app-header.flex-column.flex-center', {
-        style: {
-          flex: '1 0 auto',
-        },
       }, [
         h('h1', 'MetaMask'),
       ]),
 
       // panel content
-      h('.app-primary.flex-grow', [
+      h('.app-primary.flex-grow', {
+        style: {
+          height: '380px',
+        }
+      }, [
         h(ReactCSSTransitionGroup, {
           transitionName: "main",
           transitionEnterTimeout: 300,
@@ -69,7 +70,7 @@ App.prototype.render = function() {
       h('.app-footer.flex-row.flex-space-around', {
         style: {
           alignItems: 'center',
-          flex: '1 0 auto',
+          height: '56px',
         }
       }, [
 

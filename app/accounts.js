@@ -50,7 +50,12 @@ AccountsScreen.prototype.render = function() {
       ]),
 
       // identity selection
-      h('section.identity-section.flex-column',
+      h('section.identity-section.flex-column', {
+        style: {
+          maxHeight: '290px',
+          overflowY: 'auto',
+        }
+      },
         identityList.map(renderAccountPanel)
       ),
 
