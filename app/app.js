@@ -34,6 +34,7 @@ function mapStateToProps(state) {
     isUnlocked: state.metamask.isUnlocked,
     currentView: state.appState.currentView,
     activeAddress: state.appState.activeAddress,
+    transForward: state.appState.transForward,
   }
 }
 
@@ -41,6 +42,8 @@ App.prototype.render = function() {
   // const { selectedReddit, posts, isFetching, lastUpdated } = this.props
   var state = this.props
   var view = state.currentView.name
+  var transForward = state.transForward
+
   return (
 
     h('.flex-column.flex-grow.full-height', [
@@ -52,7 +55,7 @@ App.prototype.render = function() {
       ]),
 
       // panel content
-      h('.app-primary.flex-grow', {
+      h('.app-primary.flex-grow' + (transForward ? '.from-right' : '.from-left'), {
         style: {
           height: '380px',
         }
