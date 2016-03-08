@@ -118,6 +118,11 @@ function reduceApp(state, action) {
       },
     })
 
+  case actions.UNLOCK_FAILED:
+    return extend(appState, {
+      passwordError: 'Incorrect password. Try again.'
+    })
+
   default:
     return appState
 
