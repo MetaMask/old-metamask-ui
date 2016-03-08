@@ -33,6 +33,16 @@ button {
   cursor: pointer;
 }
 
+button.primary {
+  margin: 10px;
+  padding: 6px;
+  border: none;
+  border-radius: 3px;
+  background: #F7861C;
+  font-weight: 500;
+  color: white;
+}
+
 a {
   text-decoration: none;
   color: inherit;
@@ -141,6 +151,9 @@ app sections
 }
 
 /* unlock */
+.error {
+  color: #E20202;
+}
 .lock {
   width: 50px;
   height: 50px;

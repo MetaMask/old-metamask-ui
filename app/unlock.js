@@ -17,10 +17,14 @@ function UnlockScreen() {
 }
 
 function mapStateToProps(state) {
-  return {}
+  return {
+    errorMessage: state.appState.passwordError,
+  }
 }
 
 UnlockScreen.prototype.render = function() {
+  const state = this.props
+  const error = state.errorMessage
   return (
 
     h('.unlock-screen.flex-column.flex-center.flex-grow', [
@@ -42,6 +46,16 @@ UnlockScreen.prototype.render = function() {
         onInput: this.inputChanged.bind(this),
       }),
 
+      h('.error', {
+        style: {
+          display: error ? 'block' : 'none',
+        }
+      }, error),
+
+      h('button.primary.cursor-pointer', {
+        onClick: this.onSubmit.bind(this),
+      }, 'Unlock'),
+
     ])
 
   )
@@ -49,6 +63,12 @@ UnlockScreen.prototype.render = function() {
 
 UnlockScreen.prototype.componentDidMount = function(){
   document.getElementById('password-box').focus()
+}
+
+UnlockScreen.prototype.onSubmit = function(event) {
+  const input = document.getElementById('password-box')
+  const password = input.value
+  this.props.dispatch(actions.tryUnlockMetamask(password))
 }
 
 UnlockScreen.prototype.onKeyPress = function(event) {
