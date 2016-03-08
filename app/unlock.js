@@ -41,6 +41,9 @@ UnlockScreen.prototype.render = function() {
         onKeyPress: this.onKeyPress.bind(this),
         onInput: this.inputChanged.bind(this),
       }),
+      h('button.primary.cursor-pointer', {
+        onClick: this.onSubmit.bind(this),
+      }, 'Unlock')
 
     ])
 
@@ -49,6 +52,12 @@ UnlockScreen.prototype.render = function() {
 
 UnlockScreen.prototype.componentDidMount = function(){
   document.getElementById('password-box').focus()
+}
+
+UnlockScreen.prototype.onSubmit = function(event) {
+  const input = document.getElementById('password-box')
+  const password = input.value
+  this.props.dispatch(actions.tryUnlockMetamask(password))
 }
 
 UnlockScreen.prototype.onKeyPress = function(event) {
