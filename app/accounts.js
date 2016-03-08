@@ -54,6 +54,7 @@ AccountsScreen.prototype.render = function() {
         style: {
           maxHeight: '290px',
           overflowY: 'auto',
+          overflowX: 'hidden',
         }
       },
         identityList.map(renderAccountPanel)
