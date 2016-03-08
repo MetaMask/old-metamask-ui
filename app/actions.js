@@ -50,12 +50,13 @@ module.exports = {
   showAccountDetail: showAccountDetail,
   showAccountsPage: showAccountsPage,
   showConfTxPage: showConfTxPage,
-  // hacky - need a way to get a reference to account manager
-  _setAccountManager: _setAccountManager,
   // config screen
-  showConfigPage: showConfigPage,
   SHOW_CONFIG_PAGE: SHOW_CONFIG_PAGE,
   SET_RPC_TARGET: SET_RPC_TARGET,
+  showConfigPage: showConfigPage,
+  setRpcTarget: setRpcTarget,
+  // hacky - need a way to get a reference to account manager
+  _setAccountManager: _setAccountManager,
 }
 
 
@@ -204,5 +205,17 @@ function showConfTxPage() {
 function showConfigPage() {
   return {
     type: SHOW_CONFIG_PAGE,
+  }
+}
+
+//
+// config
+//
+
+function setRpcTarget(newRpc) {
+  _accountManager.setRpcTarget(newRpc)
+  return {
+    type: SET_RPC_TARGET,
+    value: newRpc,
   }
 }

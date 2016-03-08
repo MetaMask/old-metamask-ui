@@ -10,6 +10,7 @@ function reduceMetamask(state, action) {
     isInitialized: false,
     isUnlocked: false,
     currentDomain: 'example.com',
+    rpcTarget: 'https://rawtestrpc.metamask.io/',
     identities: {},
     unconfTxs: {},
   }, state.metamask)
@@ -27,6 +28,11 @@ function reduceMetamask(state, action) {
   case actions.LOCK_METAMASK:
     return extend(metamaskState, {
       isUnlocked: false,
+    })
+
+  case actions.SET_RPC_TARGET:
+    return extend(metamaskState, {
+      rpcTarget: action.value,
     })
 
   default:

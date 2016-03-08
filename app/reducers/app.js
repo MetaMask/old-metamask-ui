@@ -68,11 +68,6 @@ function reduceApp(state, action) {
       transForward: true,
     })
 
-  case actions.SET_RPC_TARGET:
-    return extend(appState, {
-      activeRpcTarget: action.value,
-    })
-
   // unlock
 
   case actions.UNLOCK_METAMASK:
