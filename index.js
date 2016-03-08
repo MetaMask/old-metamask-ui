@@ -32,7 +32,6 @@ function startApp(metamaskState, accountManager, opts){
     // appState represents the current tab's popup state
     appState: {
       currentDomain: opts.currentDomain,
-      activeRpcTarget: 'https://rawtestrpc.metamask.io/'
     }
   })
 

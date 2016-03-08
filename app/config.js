@@ -8,7 +8,7 @@ module.exports = connect(mapStateToProps)(ConfigScreen)
 
 function mapStateToProps(state) {
   return {
-    rpc: state.appState.activeRpcTarget,
+    rpc: state.metamask.rpcTarget,
   }
 }
 
@@ -58,10 +58,7 @@ ConfigScreen.prototype.render = function() {
                 if (event.key === 'Enter') {
                   var element = event.target
                   var newRpc = element.value
-                  state.dispatch({
-                    type: actions.SET_RPC_TARGET,
-                    value: newRpc,
-                  })
+                  state.dispatch(actions.setRpcTarget(newRpc))
                 }
               }
             }),
@@ -74,10 +71,7 @@ ConfigScreen.prototype.render = function() {
               },
               onClick(event) {
                 event.preventDefault()
-                state.dispatch({
-                  type: actions.SET_RPC_TARGET,
-                  value: 'https://rawtestrpc.metamask.io/',
-                })
+                state.dispatch(actions.setRpcTarget('https://rawtestrpc.metamask.io/'))
               }
             }, 'Use Default (Test Network)')
           ])

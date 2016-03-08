@@ -9,8 +9,10 @@ var reducers = require(path.join(__dirname, '..', '..', '..', 'app', 'reducers.j
 describe ('config view actions', function() {
 
   var initialState = {
+    metamask: {
+      rpcTarget: 'foo',
+    },
     appState: {
-      activeRpcTarget: 'foo',
       currentView: {
         name: 'accounts',
       }
@@ -27,14 +29,14 @@ describe ('config view actions', function() {
 
   describe('SET_RPC_TARGET', function() {
 
-    it('sets the state.appState.activeRpcTarget property of the state to the action.value', function() {
+    it('sets the state.metamask.rpcTarget property of the state to the action.value', function() {
       const action = {
         type: actions.SET_RPC_TARGET,
         value: 'bar',
       }
 
       var result = reducers(initialState, action)
-      assert.equal(result.appState.activeRpcTarget, action.value)
+      assert.equal(result.metamask.rpcTarget, action.value)
     })
   })
 })
