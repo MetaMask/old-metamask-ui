@@ -50,26 +50,31 @@ AccountsScreen.prototype.render = function() {
       ]),
 
       // identity selection
-      h('section.identity-section.flex-column',
+      h('section.identity-section.flex-column', {
+        style: {
+          maxHeight: '290px',
+          overflowY: 'auto',
+        }
+      },
         identityList.map(renderAccountPanel)
       ),
 
       unconfTxList.length ? (
-        
+
         h('.unconftx-link.flex-row.flex-center', {
           onClick: this.navigateToConfTx.bind(this),
         }, [
           h('span', 'Unconfirmed Txs'),
-          h('i.fa.fa-arrow-right.fa-lg.cursor-pointer'),
+          h('i.fa.fa-arrow-right.fa-lg'),
         ])
-        
+
       ) : (
         null
       ),
-      
+
 
     ])
-    
+
   )
 
   function renderAccountPanel(identity){

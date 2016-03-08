@@ -6,6 +6,7 @@ const connect = require('react-redux').connect
 const h = require('react-hyperscript')
 const extend = require('xtend')
 const actions = require('./actions')
+const ReactCSSTransitionGroup = require('react-addons-css-transition-group')
 // init
 const InitializeMenuScreen = require('./first-time/init-menu')
 const CreateVaultScreen = require('./first-time/create-vault')
@@ -45,17 +46,31 @@ App.prototype.render = function() {
     h('.flex-column.flex-grow.full-height', [
 
       // top row
-      h('.app-header.flex-column.flex-center', [
+      h('.app-header.flex-column.flex-center', {
+      }, [
         h('h1', 'MetaMask'),
       ]),
 
       // panel content
-      h('.app-primary.flex-grow', [this.renderPrimary()]),
+      h('.app-primary.flex-grow', {
+        style: {
+          height: '380px',
+        }
+      }, [
+        h(ReactCSSTransitionGroup, {
+          transitionName: "main",
+          transitionEnterTimeout: 300,
+          transitionLeaveTimeout: 300,
+        }, [
+          this.renderPrimary(),
+        ]),
+      ]),
 
       // footer
       h('.app-footer.flex-row.flex-space-around', {
         style: {
           alignItems: 'center',
+          height: '56px',
         }
       }, [
 
@@ -108,13 +123,15 @@ App.prototype.renderPrimary = function(state){
     switch (state.currentView.name) {
 
       case 'createVault':
-        return h(CreateVaultScreen)
+        return h(CreateVaultScreen, {
+          key: 'createVault',
+        })
 
       case 'restoreVault':
-        return h(RestoreVaultScreen)
+        return h(RestoreVaultScreen, {key: 'restoreVault'})
 
       default:
-        return h(InitializeMenuScreen)
+        return h(InitializeMenuScreen, {key: 'createVaultComplete'})
 
     }
 
@@ -122,29 +139,29 @@ App.prototype.renderPrimary = function(state){
 
   // show unlock screen
   if (!state.isUnlocked) {
-    return h(UnlockScreen)
+    return h(UnlockScreen, {key: 'locked'})
   }
 
   // show current view
   switch (state.currentView.name) {
 
     case 'createVaultComplete':
-      return h(CreateVaultCompleteScreen)
+      return h(CreateVaultCompleteScreen, {key: 'created-vault'})
 
     case 'accounts':
-      return h(AccountsScreen)
+      return h(AccountsScreen, {key: 'accounts'})
 
     case 'accountDetail':
-      return h(AccountDetailScreen)
+      return h(AccountDetailScreen, {key: 'account-detail'})
 
     case 'confTx':
-      return h(ConfirmTxScreen)
+      return h(ConfirmTxScreen, {key: 'confirm-tx'})
 
     case 'config':
-      return h(ConfigScreen)
+      return h(ConfigScreen, {key: 'config'})
 
     default:
-      return h(AccountsScreen)
+      return h(AccountsScreen, {key: 'accounts'})
 
   }
 

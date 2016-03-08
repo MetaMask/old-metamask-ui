@@ -30,7 +30,7 @@ Mascot.prototype.render = function() {
   this.handleAnimationEvents()
 
   return (
-    
+
     h('#metamask-mascot-container')
 
   )

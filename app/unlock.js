@@ -22,7 +22,7 @@ function mapStateToProps(state) {
 
 UnlockScreen.prototype.render = function() {
   return (
-    
+
     h('.unlock-screen.flex-column.flex-center.flex-grow', [
 
       h('h2.page-subtitle', 'Welcome!'),

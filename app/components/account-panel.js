@@ -20,7 +20,10 @@ AccountPanel.prototype.render = function() {
 
   return (
 
-    h('.identity-panel.flex-row.flex-space-between.full-height'+(state.isSelected?'.selected':''), {
+    h('.identity-panel.flex-row.flex-space-between'+(state.isSelected?'.selected':''), {
+      style: {
+        flex: '1 0 auto',
+      },
       onClick: state.onSelect && state.onSelect.bind(null, identity.address),
     }, [
 
@@ -34,12 +37,12 @@ AccountPanel.prototype.render = function() {
 
       // account address, balance
       h('.identity-data.flex-column.flex-justify-center.flex-grow.select-none', [
-        
+
         h('.flex-row.flex-space-between', [
           h('label.font-small', 'ADDRESS'),
-          h('span.font-small.cursor-pointer', addressSummary(identity.address)),
+          h('span.font-small', addressSummary(identity.address)),
         ]),
-        
+
         h('.flex-row.flex-space-between', [
           h('label.font-small', 'BALANCE'),
           h('span.font-small', formatBalance(account.balance)),
