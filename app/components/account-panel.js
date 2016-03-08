@@ -40,7 +40,7 @@ AccountPanel.prototype.render = function() {
 
         h('.flex-row.flex-space-between', [
           h('label.font-small', 'ADDRESS'),
-          h('span.font-small.cursor-pointer', addressSummary(identity.address)),
+          h('span.font-small', addressSummary(identity.address)),
         ]),
 
         h('.flex-row.flex-space-between', [
