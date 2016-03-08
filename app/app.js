@@ -117,13 +117,15 @@ App.prototype.renderPrimary = function(state){
     switch (state.currentView.name) {
 
       case 'createVault':
-        return h(CreateVaultScreen, {key: 'create-vault'})
+        return h(CreateVaultScreen, {
+          key: 'createVault',
+        })
 
       case 'restoreVault':
-        return h(RestoreVaultScreen, {key: 'restore-vault'})
+        return h(RestoreVaultScreen, {key: 'restoreVault'})
 
       default:
-        return h(InitializeMenuScreen, {key: 'initialize-menu'})
+        return h(InitializeMenuScreen, {key: 'createVaultComplete'})
 
     }
 
@@ -131,7 +133,7 @@ App.prototype.renderPrimary = function(state){
 
   // show unlock screen
   if (!state.isUnlocked) {
-    return h(UnlockScreen, {key: 'unlocked'})
+    return h(UnlockScreen, {key: 'locked'})
   }
 
   // show current view

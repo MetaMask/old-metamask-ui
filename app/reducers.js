@@ -47,6 +47,7 @@ function reduceApp(state, action) {
   var appState = extend({
     currentView: defaultView,
     currentDomain: 'example.com',
+    routeStack: ['locked'],
   }, state.appState)
 
   switch (action.type) {
@@ -57,26 +58,30 @@ function reduceApp(state, action) {
     return extend(appState, {
       currentView: {
         name: 'createVault',
-      }
+      },
+      routeStack: appState.routeStack.concat('createVault'),
     })
 
   case actions.SHOW_RESTORE_VAULT:
     return extend(appState, {
       currentView: {
         name: 'restoreVault',
-      }
+      },
+      routeStack: appState.routeStack.concat('restoreVault'),
     })
 
   case actions.SHOW_INIT_MENU:
     return extend(appState, {
       currentView: defaultView,
+      routeStack: ['locked', defaultView.name],
     })
 
   case actions.SHOW_CONFIG_PAGE:
     return extend(appState, {
       currentView: {
         name: 'config',
-      }
+      },
+      routeStack: appState.routeStack.concat('config'),
     })
 
   case actions.CREATE_NEW_VAULT_IN_PROGRESS:
@@ -85,6 +90,7 @@ function reduceApp(state, action) {
         name: 'createVault',
         inProgress: true,
       },
+      routeStack: appState.routeStack.concat('createVault'),
     })
 
   case actions.SHOW_NEW_VAULT_SEED:
@@ -93,6 +99,7 @@ function reduceApp(state, action) {
         name: 'createVaultComplete',
         context: action.value,
       },
+      routeStack: appState.routeStack.concat('createVaultComplete'),
     })
 
   case actions.SET_RPC_TARGET:
@@ -105,6 +112,12 @@ function reduceApp(state, action) {
   case actions.UNLOCK_METAMASK:
     return extend(appState, {
       currentView: defaultView,
+      routeStack: appState.routeStack.concat(defaultView.name),
+    })
+
+  case actions.LOCK_METAMASK:
+    return extend(appState, {
+      routeStack: ['locked'],
     })
 
   // accounts
@@ -120,6 +133,7 @@ function reduceApp(state, action) {
         name: 'accountDetail',
         context: action.value,
       },
+      routeStack: appState.routeStack.concat('accountDetail'),
     })
 
   case actions.SHOW_ACCOUNTS_PAGE:
@@ -127,6 +141,7 @@ function reduceApp(state, action) {
       currentView: {
         name: 'accounts',
       },
+      routeStack: ['locked', 'accounts'],
     })
 
   case actions.SHOW_CONF_TX_PAGE:

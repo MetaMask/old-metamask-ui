@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test/**/**",
+    "test": "mocha test/**/*test.js",
+    "watch": "mocha watch test/**/*test.js",
     "start": "beefy example.js:bundle.js --live --open",
     "build": "browserify example.js -g uglifyify -o bundle.js"
   },
