@@ -46,7 +46,11 @@ App.prototype.render = function() {
     h('.flex-column.flex-grow.full-height', [
 
       // top row
-      h('.app-header.flex-column.flex-center', [
+      h('.app-header.flex-column.flex-center', {
+        style: {
+          flex: '1 0 auto',
+        },
+      }, [
         h('h1', 'MetaMask'),
       ]),
 
@@ -65,6 +69,7 @@ App.prototype.render = function() {
       h('.app-footer.flex-row.flex-space-around', {
         style: {
           alignItems: 'center',
+          flex: '1 0 auto',
         }
       }, [
 
