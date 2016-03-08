@@ -55,21 +55,21 @@ AccountsScreen.prototype.render = function() {
       ),
 
       unconfTxList.length ? (
-        
+
         h('.unconftx-link.flex-row.flex-center', {
           onClick: this.navigateToConfTx.bind(this),
         }, [
           h('span', 'Unconfirmed Txs'),
-          h('i.fa.fa-arrow-right.fa-lg.cursor-pointer'),
+          h('i.fa.fa-arrow-right.fa-lg'),
         ])
-        
+
       ) : (
         null
       ),
-      
+
 
     ])
-    
+
   )
 
   function renderAccountPanel(identity){
