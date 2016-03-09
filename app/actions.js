@@ -8,6 +8,7 @@ const LOCK_METAMASK = 'LOCK_METAMASK'
 const SET_SELECTED_ACCOUNT = 'SET_SELECTED_ACCOUNT'
 const SHOW_ACCOUNT_DETAIL = 'SHOW_ACCOUNT_DETAIL'
 const SHOW_ACCOUNTS_PAGE = 'SHOW_ACCOUNTS_PAGE'
+const SHOW_INFO_PAGE = 'SHOW_INFO_PAGE'
 const SHOW_CONF_TX_PAGE = 'SHOW_CONF_TX_PAGE'
 const SHOW_CREATE_VAULT = 'SHOW_CREATE_VAULT'
 const SHOW_RESTORE_VAULT = 'SHOW_RESTORE_VAULT'
@@ -25,12 +26,14 @@ module.exports = {
   SHOW_RESTORE_VAULT: SHOW_RESTORE_VAULT,
   SHOW_INIT_MENU: SHOW_INIT_MENU,
   SHOW_NEW_VAULT_SEED: SHOW_NEW_VAULT_SEED,
+  SHOW_INFO_PAGE: SHOW_INFO_PAGE,
   showCreateVault: showCreateVault,
   showRestoreVault: showRestoreVault,
   showInitializeMenu: showInitializeMenu,
   createNewVault: createNewVault,
   createNewVaultInProgress: createNewVaultInProgress,
   showNewVaultSeed: showNewVaultSeed,
+  showInfoPage: showInfoPage,
   // unlock screen
   UNLOCK_IN_PROGRESS: UNLOCK_IN_PROGRESS,
   UNLOCK_FAILED: UNLOCK_FAILED,
@@ -86,6 +89,12 @@ function createNewVault(password) {
     _accountManager.createNewVault(password, function(err, result){
       dispatch(showNewVaultSeed(result))
     })
+  }
+}
+
+function showInfoPage() {
+  return {
+    type: SHOW_INFO_PAGE,
   }
 }
 
