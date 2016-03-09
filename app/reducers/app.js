@@ -50,6 +50,14 @@ function reduceApp(state, action) {
       transForward: true,
     })
 
+  case actions.SHOW_INFO_PAGE:
+    return extend(appState, {
+      currentView: {
+        name: 'info',
+      },
+      transForward: true,
+    })
+
   case actions.CREATE_NEW_VAULT_IN_PROGRESS:
     return extend(appState, {
       currentView: {
