@@ -20,6 +20,7 @@ const AccountDetailScreen = require('./account-detail')
 const ConfirmTxScreen = require('./conf-tx')
 // other views
 const ConfigScreen = require('./config')
+const InfoScreen = require('./info')
 
 module.exports = connect(mapStateToProps)(App)
 
@@ -96,7 +97,12 @@ App.prototype.render = function() {
         }),
 
         // help
-        h('i.fa.fa-question.fa-lg.cursor-pointer'),
+        h('i.fa.fa-question.fa-lg.cursor-pointer', {
+          style: {
+            opacity: state.isUnlocked ? '1.0' : '0.0',
+          },
+          onClick() { state.dispatch(actions.showInfoPage()) }
+        }),
       ]),
 
     ])
@@ -162,6 +168,9 @@ App.prototype.renderPrimary = function(state){
 
     case 'config':
       return h(ConfigScreen, {key: 'config'})
+
+    case 'info':
+      return h(InfoScreen, {key: 'info'})
 
     default:
       return h(AccountsScreen, {key: 'accounts'})
