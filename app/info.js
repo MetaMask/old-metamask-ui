@@ -44,26 +44,29 @@ InfoScreen.prototype.render = function() {
             h('a', {
               href: 'https://consensys.slack.com/archives/team-metamask',
               target: '_blank',
+              onClick(event) { this.navigateTo(event.target.href) },
             }, 'Join the conversation on Slack'),
           ]),
 
           h('div', [
             h('a', {
-              href: 'https://metamask.io/'
+              href: 'https://metamask.io/',
               target: '_blank',
+              onClick(event) { this.navigateTo(event.target.href) },
             }, 'Visit our web site'),
           ]),
 
           h('div', [
             h('a', {
-              href: 'https://twitter.com/metamask_io'
+              href: 'https://twitter.com/metamask_io',
               target: '_blank',
+              onClick(event) { this.navigateTo(event.target.href) },
             }, 'Follow us on Twitter'),
           ]),
 
           h('div', [
             h('a', {
-              href: 'mailto:"hello@metamask.io?subject=Feedback"',
+              href: 'mailto:hello@metamask.io?subject=Feedback',
               target: '_blank',
             }, 'Email us any questions or comments!'),
           ]),
@@ -72,6 +75,7 @@ InfoScreen.prototype.render = function() {
             h('a', {
               href: 'https://github.com/metamask/talk/issues',
               target: '_blank',
+              onClick(event) { this.navigateTo(event.target.href) },
             }, 'Start a thread on Github'),
           ]),
 
@@ -81,3 +85,6 @@ InfoScreen.prototype.render = function() {
   )
 }
 
+InfoScreen.prototype.navigateTo = function(url) {
+  chrome.tabs.create({ url });
+}
