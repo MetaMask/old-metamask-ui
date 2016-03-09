@@ -43,30 +43,35 @@ InfoScreen.prototype.render = function() {
           h('div', [
             h('a', {
               href: 'https://consensys.slack.com/archives/team-metamask',
+              target: '_blank',
             }, 'Join the conversation on Slack'),
           ]),
 
           h('div', [
             h('a', {
               href: 'https://metamask.io/'
+              target: '_blank',
             }, 'Visit our web site'),
           ]),
 
           h('div', [
             h('a', {
               href: 'https://twitter.com/metamask_io'
+              target: '_blank',
             }, 'Follow us on Twitter'),
           ]),
 
           h('div', [
             h('a', {
               href: 'mailto:"hello@metamask.io?subject=Feedback"',
+              target: '_blank',
             }, 'Email us any questions or comments!'),
           ]),
 
           h('div', [
             h('a', {
               href: 'https://github.com/metamask/talk/issues',
+              target: '_blank',
             }, 'Start a thread on Github'),
           ]),
 
