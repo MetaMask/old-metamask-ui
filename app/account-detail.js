@@ -57,11 +57,9 @@ AccountDetailScreen.prototype.render = function() {
 
       // transaction table
       h('section.flex-column', [
-        h('span', 'your transaction history goes here...'),
+        h('span', 'your transaction history will go here.'),
       ]),
-
     ])
-    
   )
 }
 
