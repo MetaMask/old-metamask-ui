@@ -54,6 +54,7 @@ ConfirmTxScreen.prototype.render = function() {
       h('h3', {
         style: {
           alignSelf: 'center',
+          display: unconfTxList.length > 1 ? 'block' : 'none',
         },
       }, [
         h('i.fa.fa-arrow-left.fa-lg.cursor-pointer', {
