@@ -63,7 +63,7 @@ ConfirmTxScreen.prototype.render = function() {
           },
           onClick: () => state.dispatch(actions.previousTx()),
         }),
-        `Transaction ${state.index + 1} of ${unconfTxList.length}`,
+        ` Transaction ${state.index + 1} of ${unconfTxList.length} `,
         h('i.fa.fa-arrow-right.fa-lg.cursor-pointer', {
           style: {
             display: state.index + 1 === unconfTxList.length ? 'none' : 'inline-block',
