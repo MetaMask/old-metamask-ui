@@ -35,6 +35,18 @@ function reduceMetamask(state, action) {
       rpcTarget: action.value,
     })
 
+  case actions.COMPLETED_TX:
+    var stringId = String(action.id)
+    var newState = extend(metamaskState, {
+      unconfTxs: {}
+    })
+    for (var id in metamaskState.unconfTxs) {
+      if (id !== stringId) {
+        newState.unconfTxs[id] = metamaskState.unconfTxs[id]
+      }
+    }
+    return newState
+
   default:
     return metamaskState
 

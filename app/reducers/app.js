@@ -122,6 +122,27 @@ function reduceApp(state, action) {
       transForward: true,
     })
 
+  case actions.COMPLETED_TX:
+    var unconfTxs = Object.keys(state.metamask.unconfTxs).filter(tx => tx !== tx.id)
+    if (unconfTxs && unconfTxs.length > 0) {
+      return extend(appState)
+    } else {
+      return extend(appState, {
+        currentView: {
+          name: 'accounts',
+        },
+        transForward: false,
+      })
+    }
+
+  case actions.TRANSACTION_ERROR:
+    return extend(appState, {
+      currentView: {
+        name: 'confirmTx',
+        errorMessage: 'There was a problem submitting this transaction.',
+      }
+    })
+
   case actions.UNLOCK_FAILED:
     return extend(appState, {
       passwordError: 'Incorrect password. Try again.'
