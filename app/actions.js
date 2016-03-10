@@ -30,13 +30,18 @@ var actions = {
   SHOW_ACCOUNT_DETAIL: 'SHOW_ACCOUNT_DETAIL',
   SHOW_ACCOUNTS_PAGE: 'SHOW_ACCOUNTS_PAGE',
   SHOW_CONF_TX_PAGE: 'SHOW_CONF_TX_PAGE',
+  // tx conf screen
   COMPLETED_TX: 'COMPLETED_TX',
   TRANSACTION_ERROR: 'TRANSACTION_ERROR',
+  NEXT_TX: 'NEXT_TX',
+  PREVIOUS_TX: 'PREV_TX',
   setSelectedAddress: setSelectedAddress,
   sendTx: sendTx,
   cancelTx: cancelTx,
   completedTx: completedTx,
   txError: txError,
+  nextTx: nextTx,
+  previousTx: previousTx,
   // app messages
   showAccountDetail: showAccountDetail,
   showAccountsPage: showAccountsPage,
@@ -216,6 +221,18 @@ function showAccountsPage() {
 function showConfTxPage() {
   return {
     type: this.SHOW_CONF_TX_PAGE,
+  }
+}
+
+function nextTx() {
+  return {
+    type: this.NEXT_TX,
+  }
+}
+
+function previousTx() {
+  return {
+    type: this.PREVIOUS_TX,
   }
 }
 

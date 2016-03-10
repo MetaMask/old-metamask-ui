@@ -125,20 +125,46 @@ function reduceApp(state, action) {
   case actions.COMPLETED_TX:
     var unconfTxs = Object.keys(state.metamask.unconfTxs).filter(tx => tx !== tx.id)
     if (unconfTxs && unconfTxs.length > 0) {
-      return extend(appState)
+      return extend(appState, {
+        transForward: false,
+        currentView: {
+          name: 'confTx',
+          context: 0,
+        }
+      })
     } else {
       return extend(appState, {
+        transForward: false,
         currentView: {
           name: 'accounts',
+          context: 0,
         },
         transForward: false,
       })
     }
 
+  case actions.NEXT_TX:
+    return extend(appState, {
+      transForward: true,
+      currentView: {
+        name: 'confTx',
+        context: ++appState.currentView.context
+      }
+    })
+
+  case actions.PREVIOUS_TX:
+    return extend(appState, {
+      transForward: false,
+      currentView: {
+        name: 'confTx',
+        context: --appState.currentView.context
+      }
+    })
+
   case actions.TRANSACTION_ERROR:
     return extend(appState, {
       currentView: {
-        name: 'confirmTx',
+        name: 'confTx',
         errorMessage: 'There was a problem submitting this transaction.',
       }
     })

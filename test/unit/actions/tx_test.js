@@ -17,7 +17,7 @@ describe('tx confirmation screen', function() {
       initialState = {
         appState: {
           currentView: {
-            name: 'confirmTx',
+            name: 'confTx',
           },
         },
         metamask: {
@@ -74,7 +74,7 @@ describe('tx confirmation screen', function() {
         })
 
         it('should stay on the page', function() {
-          assert.equal(result.appState.currentView.name, 'confirmTx')
+          assert.equal(result.appState.currentView.name, 'confTx')
         })
 
         it('should set errorMessage on the currentView', function() {
@@ -111,7 +111,7 @@ describe('tx confirmation screen', function() {
         initialState = {
           appState: {
             currentView: {
-              name: 'confirmTx',
+              name: 'confTx',
             },
           },
           metamask: {
@@ -143,7 +143,11 @@ describe('tx confirmation screen', function() {
       })
 
       it('should stay on the confTx view', function() {
-        assert.equal(result.appState.currentView.name, 'confirmTx')
+        assert.equal(result.appState.currentView.name, 'confTx')
+      })
+
+      it('should transition to the first tx', function() {
+        assert.equal(result.appState.currentView.context, 0)
       })
 
       it('should only have one unconfirmed tx remaining', function() {
