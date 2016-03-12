@@ -1,3 +1,5 @@
+const ethUtil = require('ethereumjs-util')
+
 module.exports = {
   valuesFor: valuesFor,
   addressSummary: addressSummary,
@@ -5,6 +7,7 @@ module.exports = {
   dataSize: dataSize,
   readableDate: readableDate,
 }
+
 
 function valuesFor(obj) {
   if (!obj) return []
@@ -23,8 +26,8 @@ function formatBalance(balance) {
 }
 
 function dataSize(data) {
-  if (!data) return
-  return data
+  var size = data ? ethUtil.stripHexPrefix(data).length : 0
+  return size+' bytes'
 }
 
 function readableDate(ms) {
