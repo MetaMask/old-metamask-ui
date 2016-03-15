@@ -9,6 +9,8 @@ var actions = {
   SHOW_INIT_MENU: 'SHOW_INIT_MENU',
   SHOW_NEW_VAULT_SEED: 'SHOW_NEW_VAULT_SEED',
   SHOW_INFO_PAGE: 'SHOW_INFO_PAGE',
+  RECOVER_FROM_SEED: 'RECOVER_FROM_SEED',
+  recoverFromSeed: recoverFromSeed,
   unlockMetamask: unlockMetamask,
   showCreateVault: showCreateVault,
   showRestoreVault: showRestoreVault,
@@ -83,6 +85,16 @@ function createNewVault(password) {
     dispatch(this.createNewVaultInProgress())
     _accountManager.createNewVault(password, (err, result) => {
       dispatch(this.showNewVaultSeed(result))
+    })
+  }
+}
+
+function recoverFromSeed(password, seed) {
+  return (dispatch) => {
+    // dispatch(this.createNewVaultInProgress())
+    _accountManager.recoverFromSeed(password, seed, (err, result) => {
+      dispatch(this.unlockMetamask())
+      // dispatch(this.showNewVaultSeed(result))
     })
   }
 }
