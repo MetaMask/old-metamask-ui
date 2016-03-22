@@ -29,6 +29,9 @@ CreateVaultCompleteScreen.prototype.render = function() {
         h('h2.page-subtitle', 'Vault Created'),
       ]),
 
+      h('h4.error', 'Important'),
+      h('.warning', 'These 12 words can restore all of your MetaMask accounts for this vault.\nSave them somewhere safe and secret!'),
+
 
       h('h3', 'Wallet Seed'),
       h('textarea.twelve-word-phrase', {
@@ -38,9 +41,6 @@ CreateVaultCompleteScreen.prototype.render = function() {
       h('button.btn-thin', {
         onClick: this.showAccounts.bind(this),
       }, 'I\'ve copied it somewhere safe.'),
-
-      h('h4', 'Important'),
-      h('.warning', 'These 12 words can recreate all of your MetaMask accounts for this vault.\nKeep them private and save them!'),
 
     ])
 
