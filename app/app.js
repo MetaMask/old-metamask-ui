@@ -44,6 +44,13 @@ App.prototype.render = function() {
   var state = this.props
   var view = state.currentView.name
   var transForward = state.transForward
+  var shouldHaveFooter = true
+  switch (view) {
+    case 'restoreVault':
+      shouldHaveFooter = false;
+    case 'createVault':
+      shouldHaveFooter = false;
+  }
 
   return (
 
@@ -73,6 +80,7 @@ App.prototype.render = function() {
       // footer
       h('.app-footer.flex-row.flex-space-around', {
         style: {
+          display: shouldHaveFooter ? 'flex' : 'none',
           alignItems: 'center',
           height: '56px',
         }
@@ -143,7 +151,6 @@ App.prototype.renderPrimary = function(state){
         return h(InitializeMenuScreen, {key: 'createVaultComplete'})
 
     }
-
   }
 
   // show unlock screen
@@ -174,9 +181,7 @@ App.prototype.renderPrimary = function(state){
 
     default:
       return h(AccountsScreen, {key: 'accounts'})
-
   }
-
 }
 
 function onOffToggle(state){
@@ -211,6 +216,5 @@ function onOffToggle(state){
         }),
       ])
     ])
-
   )
 }
