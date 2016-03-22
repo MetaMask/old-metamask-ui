@@ -6,6 +6,7 @@ const h = require('react-hyperscript')
 const getCaretCoordinates = require('textarea-caret')
 const Mascot = require('../components/mascot')
 const actions = require('../actions')
+const CreateVaultScreen = require('./create-vault')
 
 module.exports = connect(mapStateToProps)(InitializeMenuScreen)
 
@@ -28,7 +29,7 @@ InitializeMenuScreen.prototype.render = function() {
   switch (state.currentView.name) {
 
     case 'createVault':
-      return h(CreateVaultPage)
+      return h(CreateVaultScreen)
 
     case 'createVaultComplete':
       return this.renderCreateVaultComplete()
