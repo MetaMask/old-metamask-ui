@@ -63,6 +63,8 @@ describe('tx confirmation screen', function() {
       describe('when there is an error', function() {
 
         before(function(done) {
+          alert = () => {/* noop */}
+
           actions._setAccountManager({
             approveTransaction(txId, cb) { cb('An error!') },
           })
