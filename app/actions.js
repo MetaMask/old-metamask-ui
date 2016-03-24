@@ -232,11 +232,11 @@ function showAccountDetail(address) {
 
 function confirmSeedWords() {
   return (dispatch) => {
-    dispatch(this.unlockMetamask())
     dispatch(this.showLoadingIndication())
     _accountManager.clearSeedWordCache((err) => {
       console.log('Seed word cache cleared.')
-      dispatch(this.showAccountsPage())
+      dispatch(this.hideLoadingIndication())
+      dispatch(this.lockMetamask())
     })
   }
 }
