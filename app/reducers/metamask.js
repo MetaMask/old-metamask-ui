@@ -17,6 +17,11 @@ function reduceMetamask(state, action) {
 
   switch (action.type) {
 
+  case actions.SHOW_ACCOUNTS_PAGE:
+    var state = extend(metamaskState)
+    delete state.seedWords
+    return state
+
   case actions.UPDATE_METAMASK_STATE:
     return extend(metamaskState, action.value)
 
@@ -45,6 +50,13 @@ function reduceMetamask(state, action) {
         newState.unconfTxs[id] = metamaskState.unconfTxs[id]
       }
     }
+    return newState
+
+  case actions.CLEAR_SEED_WORD_CACHE:
+    var newState = extend(metamaskState, {
+      isInitialized: true,
+    })
+    delete newState.seedWords
     return newState
 
   default:

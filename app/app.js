@@ -21,6 +21,7 @@ const ConfirmTxScreen = require('./conf-tx')
 // other views
 const ConfigScreen = require('./config')
 const InfoScreen = require('./info')
+const LoadingIndicator = require('./loading')
 
 module.exports = connect(mapStateToProps)(App)
 
@@ -36,6 +37,7 @@ function mapStateToProps(state) {
     currentView: state.appState.currentView,
     activeAddress: state.appState.activeAddress,
     transForward: state.appState.transForward,
+    seedWords: state.metamask.seedWords,
   }
 }
 
@@ -50,11 +52,15 @@ App.prototype.render = function() {
       shouldHaveFooter = false;
     case 'createVault':
       shouldHaveFooter = false;
+    case 'createVaultComplete':
+      shouldHaveFooter = false;
   }
 
   return (
 
     h('.flex-column.flex-grow.full-height', [
+
+      h(LoadingIndicator),
 
       // top row
       h('.app-header.flex-column.flex-center', {
@@ -133,6 +139,13 @@ App.prototype.toggleMetamaskActive = function(){
 App.prototype.renderPrimary = function(state){
   var state = this.props
 
+  // If seed words haven't been dismissed yet, show them still.
+  /*
+  if (state.seedWords) {
+    return h(CreateVaultCompleteScreen, {key: 'createVaultComplete'})
+  }
+  */
+
   // show initialize screen
   if (!state.isInitialized) {
 
@@ -148,7 +161,7 @@ App.prototype.renderPrimary = function(state){
         return h(RestoreVaultScreen, {key: 'restoreVault'})
 
       default:
-        return h(InitializeMenuScreen, {key: 'createVaultComplete'})
+        return h(InitializeMenuScreen, {key: 'menuScreenInit'})
 
     }
   }

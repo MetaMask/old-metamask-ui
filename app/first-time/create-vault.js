@@ -1,4 +1,5 @@
 const inherits = require('util').inherits
+
 const Component = require('react').Component
 const connect = require('react-redux').connect
 const h = require('react-hyperscript')
@@ -33,7 +34,7 @@ CreateVaultScreen.prototype.render = function() {
       // password
       h('label', {
         htmlFor: 'password-box',
-      }, 'New Password (min 8 chars):'),
+      }, 'Enter Password (min 8 chars):'),
 
       h('input', {
         type: 'password',
@@ -48,7 +49,18 @@ CreateVaultScreen.prototype.render = function() {
       h('input', {
         type: 'password',
         id: 'password-box-confirm',
-        onKeyPress: this.onMaybeCreate.bind(this),
+        onKeyPress: this.createVaultOnEnter.bind(this),
+      }),
+
+      // entropy
+      h('label', {
+        htmlFor: 'entropy-text-entry',
+      }, 'Enter random text (optional)'),
+
+      h('textarea', {
+        id: 'entropy-text-entry',
+        style: { resize: 'none' },
+        onKeyPress: this.createVaultOnEnter.bind(this),
       }),
 
       // submit
@@ -83,8 +95,9 @@ CreateVaultScreen.prototype.showInitializeMenu = function() {
 
 // create vault
 
-CreateVaultScreen.prototype.onMaybeCreate = function(event) {
+CreateVaultScreen.prototype.createVaultOnEnter = function(event) {
   if (event.key === 'Enter') {
+    event.preventDefault()
     this.createNewVault()
   }
 }
@@ -94,6 +107,8 @@ CreateVaultScreen.prototype.createNewVault = function(){
   var password = passwordBox.value
   var passwordConfirmBox = document.getElementById('password-box-confirm')
   var passwordConfirm = passwordConfirmBox.value
+  var entropy = document.getElementById('entropy-text-entry').value
+
   if (password.length < 8) {
     this.warning = 'password not long enough'
     return
@@ -102,5 +117,6 @@ CreateVaultScreen.prototype.createNewVault = function(){
     this.warning = 'passwords dont match'
     return
   }
-  this.props.dispatch(actions.createNewVault(password))
+
+  this.props.dispatch(actions.createNewVault(password, entropy))
 }

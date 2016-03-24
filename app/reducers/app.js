@@ -10,10 +10,17 @@ function reduceApp(state, action) {
     name: 'accounts',
   }
 
+  // confirm seed words
+  var seedConfView = {
+    name: 'createVaultComplete',
+  }
+  var seedWords = state.metamask.seedWords
+
   var appState = extend({
-    currentView: defaultView,
+    currentView: seedWords ? seedConfView : defaultView,
     currentDomain: 'example.com',
     transForward: true,
+    isLoading: false,
   }, state.appState)
 
   switch (action.type) {
@@ -65,6 +72,7 @@ function reduceApp(state, action) {
         inProgress: true,
       },
       transForward: true,
+      isLoading: true,
     })
 
   case actions.SHOW_NEW_VAULT_SEED:
@@ -74,6 +82,7 @@ function reduceApp(state, action) {
         context: action.value,
       },
       transForward: true,
+      isLoading: false,
     })
 
   // unlock
@@ -106,11 +115,13 @@ function reduceApp(state, action) {
     })
 
   case actions.SHOW_ACCOUNTS_PAGE:
+    var seedWords = state.metamask.seedWords
     return extend(appState, {
       currentView: {
-        name: 'accounts',
+        name: seedWords ? 'createVaultComplete' : 'accounts',
       },
       transForward: appState.currentView.name == 'locked',
+      isLoading: false,
     })
 
   case actions.SHOW_CONF_TX_PAGE:
@@ -172,6 +183,25 @@ function reduceApp(state, action) {
   case actions.UNLOCK_FAILED:
     return extend(appState, {
       passwordError: 'Incorrect password. Try again.'
+    })
+
+  case actions.SHOW_LOADING:
+    return extend(appState, {
+      isLoading: true,
+    })
+
+  case actions.HIDE_LOADING:
+    return extend(appState, {
+      isLoading: false,
+    })
+
+  case actions.CLEAR_SEED_WORD_CACHE:
+    return extend(appState, {
+      transForward: true,
+      currentView: {
+        name: 'accounts',
+      },
+      isLoading: false,
     })
 
   default:

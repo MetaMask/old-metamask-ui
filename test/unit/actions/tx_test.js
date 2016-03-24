@@ -39,6 +39,7 @@ describe('tx confirmation screen', function() {
         actions._setAccountManager({
           approveTransaction(txId, cb) { cb('An error!') },
           cancelTransaction(txId) { /* noop */ },
+          clearSeedWordCache(cb) { cb() },
         })
 
         actions.cancelTx({id: firstTxId})(function(action) {
@@ -63,6 +64,8 @@ describe('tx confirmation screen', function() {
       describe('when there is an error', function() {
 
         before(function(done) {
+          alert = () => {/* noop */}
+
           actions._setAccountManager({
             approveTransaction(txId, cb) { cb('An error!') },
           })

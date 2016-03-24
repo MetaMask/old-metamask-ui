@@ -10,6 +10,8 @@ var actions = {
   SHOW_NEW_VAULT_SEED: 'SHOW_NEW_VAULT_SEED',
   SHOW_INFO_PAGE: 'SHOW_INFO_PAGE',
   RECOVER_FROM_SEED: 'RECOVER_FROM_SEED',
+  CLEAR_SEED_WORD_CACHE: 'CLEAR_SEED_WORD_CACHE',
+  clearSeedWordCache: clearSeedWordCache,
   recoverFromSeed: recoverFromSeed,
   unlockMetamask: unlockMetamask,
   showCreateVault: showCreateVault,
@@ -48,6 +50,7 @@ var actions = {
   showAccountDetail: showAccountDetail,
   showAccountsPage: showAccountsPage,
   showConfTxPage: showConfTxPage,
+  confirmSeedWords: confirmSeedWords,
   // config screen
   SHOW_CONFIG_PAGE: 'SHOW_CONFIG_PAGE',
   SET_RPC_TARGET: 'SET_RPC_TARGET',
@@ -55,6 +58,11 @@ var actions = {
   setRpcTarget: setRpcTarget,
   // hacky - need a way to get a reference to account manager
   _setAccountManager: _setAccountManager,
+  // loading overlay
+  SHOW_LOADING: 'SHOW_LOADING_INDICATION',
+  HIDE_LOADING: 'HIDE_LOADING_INDICATION',
+  showLoadingIndication: showLoadingIndication,
+  hideLoadingIndication: hideLoadingIndication,
 }
 
 module.exports = actions
@@ -71,6 +79,7 @@ function tryUnlockMetamask(password) {
   return (dispatch) => {
     dispatch(this.unlockInProgress())
     _accountManager.submitPassword(password, (err) => {
+      dispatch(this.hideLoadingIndication())
       if (err) {
         dispatch(this.unlockFailed())
       } else {
@@ -80,10 +89,10 @@ function tryUnlockMetamask(password) {
   }
 }
 
-function createNewVault(password) {
+function createNewVault(password, entropy) {
   return (dispatch) => {
     dispatch(this.createNewVaultInProgress())
-    _accountManager.createNewVault(password, (err, result) => {
+    _accountManager.createNewVault(password, entropy, (err, result) => {
       dispatch(this.showNewVaultSeed(result))
     })
   }
@@ -92,8 +101,8 @@ function createNewVault(password) {
 function recoverFromSeed(password, seed) {
   return (dispatch) => {
     // dispatch(this.createNewVaultInProgress())
+    dispatch(this.unlockMetamask())
     _accountManager.recoverFromSeed(password, seed, (err, result) => {
-      dispatch(this.unlockMetamask())
       // dispatch(this.showNewVaultSeed(result))
     })
   }
@@ -211,9 +220,13 @@ function updateMetamaskState(newState) {
 }
 
 function lockMetamask() {
-  _accountManager.setLocked()
-  return {
-    type: this.LOCK_METAMASK,
+  return (dispatch) => {
+    _accountManager.setLocked((err) => {
+      dispatch({
+        type: this.LOCK_METAMASK,
+      })
+      dispatch(this.hideLoadingIndication())
+    })
   }
 }
 
@@ -221,6 +234,22 @@ function showAccountDetail(address) {
   return {
     type: this.SHOW_ACCOUNT_DETAIL,
     value: address,
+  }
+}
+
+function clearSeedWordCache() {
+  return {
+    type: this.CLEAR_SEED_WORD_CACHE
+  }
+}
+
+function confirmSeedWords() {
+  return (dispatch) => {
+    dispatch(this.showLoadingIndication())
+    _accountManager.clearSeedWordCache((err) => {
+      dispatch(this.clearSeedWordCache())
+      console.log('Seed word cache cleared.')
+    })
   }
 }
 
@@ -263,5 +292,17 @@ function setRpcTarget(newRpc) {
   return {
     type: this.SET_RPC_TARGET,
     value: newRpc,
+  }
+}
+
+function showLoadingIndication() {
+  return {
+    type: this.SHOW_LOADING,
+  }
+}
+
+function hideLoadingIndication() {
+  return {
+    type: this.HIDE_LOADING,
   }
 }

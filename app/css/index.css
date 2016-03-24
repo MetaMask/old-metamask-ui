@@ -127,7 +127,7 @@ app sections
   border-style: solid;
 }
 
-.initialize-screen input[type="password"] {
+.initialize-screen input[type="password"], .initialize-screen textarea {
   width: 300px;
   padding: 6px;
   border-radius: 6px;
