@@ -10,6 +10,8 @@ var actions = {
   SHOW_NEW_VAULT_SEED: 'SHOW_NEW_VAULT_SEED',
   SHOW_INFO_PAGE: 'SHOW_INFO_PAGE',
   RECOVER_FROM_SEED: 'RECOVER_FROM_SEED',
+  CLEAR_SEED_WORD_CACHE: 'CLEAR_SEED_WORD_CACHE',
+  clearSeedWordCache: clearSeedWordCache,
   recoverFromSeed: recoverFromSeed,
   unlockMetamask: unlockMetamask,
   showCreateVault: showCreateVault,
@@ -77,6 +79,7 @@ function tryUnlockMetamask(password) {
   return (dispatch) => {
     dispatch(this.unlockInProgress())
     _accountManager.submitPassword(password, (err) => {
+      dispatch(this.hideLoadingIndication())
       if (err) {
         dispatch(this.unlockFailed())
       } else {
@@ -217,9 +220,13 @@ function updateMetamaskState(newState) {
 }
 
 function lockMetamask() {
-  _accountManager.setLocked()
-  return {
-    type: this.LOCK_METAMASK,
+  return (dispatch) => {
+    _accountManager.setLocked((err) => {
+      dispatch({
+        type: this.LOCK_METAMASK,
+      })
+      dispatch(this.hideLoadingIndication())
+    })
   }
 }
 
@@ -230,13 +237,18 @@ function showAccountDetail(address) {
   }
 }
 
+function clearSeedWordCache() {
+  return {
+    type: this.CLEAR_SEED_WORD_CACHE
+  }
+}
+
 function confirmSeedWords() {
   return (dispatch) => {
     dispatch(this.showLoadingIndication())
     _accountManager.clearSeedWordCache((err) => {
+      dispatch(this.clearSeedWordCache())
       console.log('Seed word cache cleared.')
-      dispatch(this.hideLoadingIndication())
-      dispatch(this.lockMetamask())
     })
   }
 }

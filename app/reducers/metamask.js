@@ -52,6 +52,13 @@ function reduceMetamask(state, action) {
     }
     return newState
 
+  case actions.CLEAR_SEED_WORD_CACHE:
+    var newState = extend(metamaskState, {
+      isInitialized: true,
+    })
+    delete newState.seedWords
+    return newState
+
   default:
     return metamaskState
 

@@ -195,6 +195,15 @@ function reduceApp(state, action) {
       isLoading: false,
     })
 
+  case actions.CLEAR_SEED_WORD_CACHE:
+    return extend(appState, {
+      transForward: true,
+      currentView: {
+        name: 'accounts',
+      },
+      isLoading: false,
+    })
+
   default:
     return appState
 

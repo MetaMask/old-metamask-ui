@@ -54,8 +54,6 @@ App.prototype.render = function() {
       shouldHaveFooter = false;
     case 'createVaultComplete':
       shouldHaveFooter = false;
-    case 'accounts':
-      break;
   }
 
   return (
