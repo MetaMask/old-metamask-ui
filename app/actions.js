@@ -48,6 +48,7 @@ var actions = {
   showAccountDetail: showAccountDetail,
   showAccountsPage: showAccountsPage,
   showConfTxPage: showConfTxPage,
+  confirmSeedWords: confirmSeedWords,
   // config screen
   SHOW_CONFIG_PAGE: 'SHOW_CONFIG_PAGE',
   SET_RPC_TARGET: 'SET_RPC_TARGET',
@@ -55,6 +56,11 @@ var actions = {
   setRpcTarget: setRpcTarget,
   // hacky - need a way to get a reference to account manager
   _setAccountManager: _setAccountManager,
+  // loading overlay
+  SHOW_LOADING: 'SHOW_LOADING_INDICATION',
+  HIDE_LOADING: 'HIDE_LOADING_INDICATION',
+  showLoadingIndication: showLoadingIndication,
+  hideLoadingIndication: hideLoadingIndication,
 }
 
 module.exports = actions
@@ -80,10 +86,10 @@ function tryUnlockMetamask(password) {
   }
 }
 
-function createNewVault(password) {
+function createNewVault(password, entropy) {
   return (dispatch) => {
     dispatch(this.createNewVaultInProgress())
-    _accountManager.createNewVault(password, (err, result) => {
+    _accountManager.createNewVault(password, entropy, (err, result) => {
       dispatch(this.showNewVaultSeed(result))
     })
   }
@@ -92,8 +98,8 @@ function createNewVault(password) {
 function recoverFromSeed(password, seed) {
   return (dispatch) => {
     // dispatch(this.createNewVaultInProgress())
+    dispatch(this.unlockMetamask())
     _accountManager.recoverFromSeed(password, seed, (err, result) => {
-      dispatch(this.unlockMetamask())
       // dispatch(this.showNewVaultSeed(result))
     })
   }
@@ -224,6 +230,17 @@ function showAccountDetail(address) {
   }
 }
 
+function confirmSeedWords() {
+  return (dispatch) => {
+    dispatch(this.unlockMetamask())
+    dispatch(this.showLoadingIndication())
+    _accountManager.clearSeedWordCache((err) => {
+      console.log('Seed word cache cleared.')
+      dispatch(this.showAccountsPage())
+    })
+  }
+}
+
 function showAccountsPage() {
   return {
     type: this.SHOW_ACCOUNTS_PAGE,
@@ -263,5 +280,17 @@ function setRpcTarget(newRpc) {
   return {
     type: this.SET_RPC_TARGET,
     value: newRpc,
+  }
+}
+
+function showLoadingIndication() {
+  return {
+    type: this.SHOW_LOADING,
+  }
+}
+
+function hideLoadingIndication() {
+  return {
+    type: this.HIDE_LOADING,
   }
 }

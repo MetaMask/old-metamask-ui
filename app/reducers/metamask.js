@@ -17,6 +17,11 @@ function reduceMetamask(state, action) {
 
   switch (action.type) {
 
+  case actions.SHOW_ACCOUNTS_PAGE:
+    var state = extend(metamaskState)
+    delete state.seedWords
+    return state
+
   case actions.UPDATE_METAMASK_STATE:
     return extend(metamaskState, action.value)
 
