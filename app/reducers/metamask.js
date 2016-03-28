@@ -28,6 +28,7 @@ function reduceMetamask(state, action) {
   case actions.UNLOCK_METAMASK:
     return extend(metamaskState, {
       isUnlocked: true,
+      isInitialized: true,
     })
 
   case actions.LOCK_METAMASK:
