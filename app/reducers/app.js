@@ -19,8 +19,9 @@ function reduceApp(state, action) {
   var appState = extend({
     currentView: seedWords ? seedConfView : defaultView,
     currentDomain: 'example.com',
-    transForward: true,
-    isLoading: false,
+    transForward: true, // Used to render transition direction
+    isLoading: false,   // Used to display loading indicator
+    warning: null,      // Used to display error text
   }, state.appState)
 
   switch (action.type) {
@@ -33,6 +34,7 @@ function reduceApp(state, action) {
         name: 'createVault',
       },
       transForward: true,
+      warning: null,
     })
 
   case actions.SHOW_RESTORE_VAULT:
@@ -91,11 +93,13 @@ function reduceApp(state, action) {
     return extend(appState, {
       currentView: defaultView,
       transForward: true,
+      warning: null,
     })
 
   case actions.LOCK_METAMASK:
     return extend(appState, {
       transForward: false,
+      warning: null,
     })
 
   // accounts
@@ -122,6 +126,7 @@ function reduceApp(state, action) {
       },
       transForward: appState.currentView.name == 'locked',
       isLoading: false,
+      warning: null,
     })
 
   case actions.SHOW_CONF_TX_PAGE:
@@ -131,6 +136,7 @@ function reduceApp(state, action) {
         context: 0,
       },
       transForward: true,
+      warning: null,
     })
 
   case actions.COMPLETED_TX:
@@ -141,7 +147,8 @@ function reduceApp(state, action) {
         currentView: {
           name: 'confTx',
           context: 0,
-        }
+        },
+        warning: null,
       })
     } else {
       return extend(appState, {
@@ -151,6 +158,7 @@ function reduceApp(state, action) {
           context: 0,
         },
         transForward: false,
+        warning: null,
       })
     }
 
@@ -159,7 +167,8 @@ function reduceApp(state, action) {
       transForward: true,
       currentView: {
         name: 'confTx',
-        context: ++appState.currentView.context
+        context: ++appState.currentView.context,
+        warning: null,
       }
     })
 
@@ -168,7 +177,8 @@ function reduceApp(state, action) {
       transForward: false,
       currentView: {
         name: 'confTx',
-        context: --appState.currentView.context
+        context: --appState.currentView.context,
+        warning: null,
       }
     })
 
@@ -177,12 +187,12 @@ function reduceApp(state, action) {
       currentView: {
         name: 'confTx',
         errorMessage: 'There was a problem submitting this transaction.',
-      }
+      },
     })
 
   case actions.UNLOCK_FAILED:
     return extend(appState, {
-      passwordError: 'Incorrect password. Try again.'
+      warning: 'Incorrect password. Try again.'
     })
 
   case actions.SHOW_LOADING:
@@ -202,6 +212,11 @@ function reduceApp(state, action) {
         name: 'accounts',
       },
       isLoading: false,
+    })
+
+  case actions.DISPLAY_WARNING:
+    return extend(appState, {
+      warning: action.value,
     })
 
   default:
