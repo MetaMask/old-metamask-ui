@@ -118,9 +118,7 @@ App.prototype.render = function() {
           onClick() { state.dispatch(actions.showInfoPage()) }
         }),
       ]),
-
     ])
-
   )
 }
 

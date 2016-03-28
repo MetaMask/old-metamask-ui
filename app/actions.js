@@ -103,7 +103,7 @@ function recoverFromSeed(password, seed) {
     // dispatch(this.createNewVaultInProgress())
     dispatch(this.unlockMetamask())
     _accountManager.recoverFromSeed(password, seed, (err, result) => {
-      // dispatch(this.showNewVaultSeed(result))
+      dispatch(this.showAccountsPage())
     })
   }
 }
