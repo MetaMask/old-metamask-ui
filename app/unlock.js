@@ -18,13 +18,13 @@ function UnlockScreen() {
 
 function mapStateToProps(state) {
   return {
-    errorMessage: state.appState.passwordError,
+    warning: state.appState.warning,
   }
 }
 
 UnlockScreen.prototype.render = function() {
   const state = this.props
-  const error = state.errorMessage
+  const warning = state.warning
   return (
 
     h('.unlock-screen.flex-column.flex-center.flex-grow', [
@@ -48,9 +48,9 @@ UnlockScreen.prototype.render = function() {
 
       h('.error', {
         style: {
-          display: error ? 'block' : 'none',
+          display: warning ? 'block' : 'none',
         }
-      }, error),
+      }, warning),
 
       h('button.primary.cursor-pointer', {
         onClick: this.onSubmit.bind(this),

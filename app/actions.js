@@ -14,6 +14,7 @@ var actions = {
   clearSeedWordCache: clearSeedWordCache,
   recoverFromSeed: recoverFromSeed,
   unlockMetamask: unlockMetamask,
+  unlockFailed: unlockFailed,
   showCreateVault: showCreateVault,
   showRestoreVault: showRestoreVault,
   showInitializeMenu: showInitializeMenu,
@@ -29,6 +30,9 @@ var actions = {
   tryUnlockMetamask: tryUnlockMetamask,
   lockMetamask: lockMetamask,
   unlockInProgress: unlockInProgress,
+  // error handling
+  displayWarning: displayWarning,
+  DISPLAY_WARNING: 'DISPLAY_WARNING',
   // accounts screen
   SET_SELECTED_ACCOUNT: 'SET_SELECTED_ACCOUNT',
   SHOW_ACCOUNT_DETAIL: 'SHOW_ACCOUNT_DETAIL',
@@ -306,5 +310,12 @@ function showLoadingIndication() {
 function hideLoadingIndication() {
   return {
     type: this.HIDE_LOADING,
+  }
+}
+
+function displayWarning(text) {
+  return {
+    type: this.DISPLAY_WARNING,
+    value: text,
   }
 }

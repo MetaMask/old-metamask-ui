@@ -13,7 +13,9 @@ function RestoreVaultScreen() {
 }
 
 function mapStateToProps(state) {
-  return {}
+  return {
+    warning: state.appState.warning,
+  }
 }
 
 
@@ -58,10 +60,8 @@ RestoreVaultScreen.prototype.render = function() {
         onKeyPress: this.onMaybeCreate.bind(this),
       }),
 
-      (this.warning) && (
-
-        h('span.in-progress-notification', this.warning)
-
+      (state.warning) && (
+        h('span.error.in-progress-notification', state.warning)
       ),
 
       // submit
@@ -91,11 +91,14 @@ RestoreVaultScreen.prototype.restoreVault = function(){
   var passwordConfirmBox = document.getElementById('password-box-confirm')
   var passwordConfirm = passwordConfirmBox.value
   if (password.length < 8) {
-    this.warning = 'password not long enough'
+    this.warning = 'Password not long enough'
+
+    this.props.dispatch(actions.displayWarning(this.warning))
     return
   }
   if (password !== passwordConfirm) {
-    this.warning = 'passwords dont match'
+    this.warning = 'Passwords don\'t match'
+    this.props.dispatch(actions.displayWarning(this.warning))
     return
   }
   // check seed
@@ -103,9 +106,11 @@ RestoreVaultScreen.prototype.restoreVault = function(){
   var seed = seedBox.value
   if (seed.split(' ').length !== 12) {
     this.warning = 'passwords dont match'
+    this.props.dispatch(actions.displayWarning(this.warning))
     return
   }
   // submit
   this.warning = null
+  this.props.dispatch(actions.displayWarning(this.warning))
   this.props.dispatch(actions.recoverFromSeed(password, seed))
 }

@@ -14,7 +14,9 @@ function CreateVaultScreen() {
 }
 
 function mapStateToProps(state) {
-  return {}
+  return {
+    warning: state.appState.warning,
+  }
 }
 
 CreateVaultScreen.prototype.render = function() {
@@ -68,20 +70,15 @@ CreateVaultScreen.prototype.render = function() {
         onClick: this.createNewVault.bind(this),
       }, 'OK'),
 
-      (!state.inProgress && this.warning) && (
-
-        h('span.in-progress-notification', this.warning)
+      (!state.inProgress && state.warning) && (
+        h('span.in-progress-notification', state.warning)
 
       ),
 
       state.inProgress && (
-
         h('span.in-progress-notification', 'Generating Seed...')
-
       ),
-
     ])
-
   )
 }
 
@@ -111,10 +108,12 @@ CreateVaultScreen.prototype.createNewVault = function(){
 
   if (password.length < 8) {
     this.warning = 'password not long enough'
+    this.props.dispatch(actions.displayWarning(this.warning))
     return
   }
   if (password !== passwordConfirm) {
     this.warning = 'passwords dont match'
+    this.props.dispatch(actions.displayWarning(this.warning))
     return
   }
 
