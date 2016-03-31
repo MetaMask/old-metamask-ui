@@ -60,6 +60,12 @@ function reduceMetamask(state, action) {
     delete newState.seedWords
     return newState
 
+  case actions.CREATE_NEW_VAULT_IN_PROGRESS:
+    return extend(metamaskState, {
+      isUnlocked: true,
+      isInitialized: true,
+    })
+
   default:
     return metamaskState
 

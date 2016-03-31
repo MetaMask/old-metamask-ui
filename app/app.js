@@ -151,9 +151,7 @@ App.prototype.renderPrimary = function(state){
     switch (state.currentView.name) {
 
       case 'createVault':
-        return h(CreateVaultScreen, {
-          key: 'createVault',
-        })
+        return h(CreateVaultScreen, {key: 'createVault'})
 
       case 'restoreVault':
         return h(RestoreVaultScreen, {key: 'restoreVault'})
@@ -189,6 +187,9 @@ App.prototype.renderPrimary = function(state){
 
     case 'info':
       return h(InfoScreen, {key: 'info'})
+
+    case 'createVault':
+      return h(CreateVaultScreen, {key: 'createVault'})
 
     default:
       return h(AccountsScreen, {key: 'accounts'})
