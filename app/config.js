@@ -9,6 +9,7 @@ module.exports = connect(mapStateToProps)(ConfigScreen)
 function mapStateToProps(state) {
   return {
     rpc: state.metamask.rpcTarget,
+    metamask: state.metamask,
   }
 }
 
@@ -21,6 +22,7 @@ function ConfigScreen() {
 ConfigScreen.prototype.render = function() {
   var state = this.props
   var rpc = state.rpc
+  var metamaskState = state.metamask
 
   return (
     h('.flex-column.flex-grow', [
@@ -43,10 +45,8 @@ ConfigScreen.prototype.render = function() {
           }
         }, [
 
-          h('div', [
-            h('h3', {style: { fontWeight: 'bold' }}, 'Current RPC'),
-            h('p', rpc)
-          ]),
+          currentProviderDisplay(metamaskState),
+
 
           h('div', [
             h('input', {
@@ -71,13 +71,42 @@ ConfigScreen.prototype.render = function() {
               },
               onClick(event) {
                 event.preventDefault()
+                state.dispatch(actions.useEtherscanProvider())
+              }
+            }, 'Use Main Network (experimental)')
+          ]),
+
+          h('div', [
+            h('button', {
+              style: {
+                alignSelf: 'center',
+              },
+              onClick(event) {
+                event.preventDefault()
                 state.dispatch(actions.setRpcTarget('https://rawtestrpc.metamask.io/'))
               }
-            }, 'Use Default (Test Network)')
-          ])
+            }, 'Use Morden Test Network')
+          ]),
+
         ]),
       ]),
     ])
   )
 }
 
+function currentProviderDisplay(metamaskState) {
+  console.log('metmam')
+  var type = metamaskState.provider.type
+
+  if (type === 'rpc') {
+    var rpc = metamaskState.rpcTarget
+    return h('div', [
+      h('h3', {style: { fontWeight: 'bold' }}, 'Currently using RPC'),
+      h('p', rpc)
+    ])
+  } else {
+    return h('div', [
+      h('h3', {style: { fontWeight: 'bold' }}, 'Currently using Main Network'),
+    ])
+  }
+}

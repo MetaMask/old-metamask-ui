@@ -58,6 +58,8 @@ var actions = {
   // config screen
   SHOW_CONFIG_PAGE: 'SHOW_CONFIG_PAGE',
   SET_RPC_TARGET: 'SET_RPC_TARGET',
+  USE_ETHERSCAN_PROVIDER: 'USE_ETHERSCAN_PROVIDER',
+  useEtherscanProvider: useEtherscanProvider,
   showConfigPage: showConfigPage,
   setRpcTarget: setRpcTarget,
   // hacky - need a way to get a reference to account manager
@@ -298,6 +300,13 @@ function setRpcTarget(newRpc) {
   return {
     type: this.SET_RPC_TARGET,
     value: newRpc,
+  }
+}
+
+function useEtherscanProvider() {
+  _accountManager.useEtherscanProvider()
+  return {
+    type: this.USE_ETHERSCAN_PROVIDER,
   }
 }
 

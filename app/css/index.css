@@ -31,6 +31,13 @@ html, body {
 button {
   outline: none;
   cursor: pointer;
+  margin: 10px;
+  padding: 6px;
+  border: none;
+  border-radius: 3px;
+  background: #F7861C;
+  font-weight: 500;
+  color: white;
 }
 
 button.primary {
