@@ -103,9 +103,9 @@ RestoreVaultScreen.prototype.restoreVault = function(){
   }
   // check seed
   var seedBox = document.querySelector('textarea.twelve-word-phrase')
-  var seed = seedBox.value
+  var seed = seedBox.value.trim()
   if (seed.split(' ').length !== 12) {
-    this.warning = 'passwords dont match'
+    this.warning = 'seed phrases are 12 words long'
     this.props.dispatch(actions.displayWarning(this.warning))
     return
   }
