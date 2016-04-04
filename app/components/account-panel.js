@@ -78,7 +78,12 @@ function balanceOrFaucetingIndication(account, isFauceting) {
 
     return h('.flex-row.flex-space-between', [
       h('label.font-small', 'BALANCE'),
-      h('span.font-small', formatBalance(account.balance)),
+      h('span.font-small', {
+        style: {
+          overflowX: 'hidden',
+          maxWidth: '136px',
+        }
+      }, formatBalance(account.balance)),
     ])
 
   }
