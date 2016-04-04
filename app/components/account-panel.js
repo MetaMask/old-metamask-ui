@@ -17,6 +17,7 @@ AccountPanel.prototype.render = function() {
   var state = this.props
   var identity = state.identity || {}
   var account = state.account || {}
+  var isFauceting = state.isFauceting
 
   return (
 
@@ -43,10 +44,7 @@ AccountPanel.prototype.render = function() {
           h('span.font-small', addressSummary(identity.address)),
         ]),
 
-        h('.flex-row.flex-space-between', [
-          h('label.font-small', 'BALANCE'),
-          h('span.font-small', formatBalance(account.balance)),
-        ]),
+        balanceOrFaucetingIndication(account, isFauceting),
 
         // outlet for inserting additional stuff
         state.children,
@@ -60,8 +58,28 @@ AccountPanel.prototype.render = function() {
         }, [
           h('i.fa.fa-chevron-right.fa-lg'),
         ]),
+    ])
+  )
+}
 
+function balanceOrFaucetingIndication(account, isFauceting) {
+  if (isFauceting) {
+
+    return h('.flex-row.flex-space-between', [
+      h('span.font-small', {
+      }, [
+        'Account is auto-funding,',
+        h('br'),
+        'please wait.'
+      ]),
     ])
 
-  )
+  } else {
+
+    return h('.flex-row.flex-space-between', [
+      h('label.font-small', 'BALANCE'),
+      h('span.font-small', formatBalance(account.balance)),
+    ])
+
+  }
 }

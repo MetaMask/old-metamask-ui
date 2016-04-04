@@ -79,12 +79,15 @@ AccountsScreen.prototype.render = function() {
   )
 
   function renderAccountPanel(identity){
+    var mayBeFauceting = identity.mayBeFauceting
     var isSelected = state.selectedAddress === identity.address
     var account = state.accounts[identity.address]
+    var isFauceting = mayBeFauceting && account.balance === '0x0'
     var componentState = extend(actions, {
       identity: identity,
       account: account,
       isSelected: isSelected,
+      isFauceting: isFauceting,
     })
     return h(AccountPanel, componentState)
   }
