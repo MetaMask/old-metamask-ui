@@ -90,6 +90,7 @@ function tryUnlockMetamask(password) {
         dispatch(this.unlockFailed())
       } else {
         dispatch(this.unlockMetamask())
+        dispatch(this.setSelectedAddress())
       }
     })
   }
@@ -116,6 +117,7 @@ function recoverFromSeed(password, seed) {
       }
 
       dispatch(this.unlockMetamask())
+      dispatch(this.setSelectedAddress())
       dispatch(this.updateMetamaskState(result))
       dispatch(this.hideLoadingIndication())
     })
