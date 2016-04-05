@@ -54,6 +54,7 @@ CreateVaultScreen.prototype.render = function() {
         onKeyPress: this.createVaultOnEnter.bind(this),
       }),
 
+      /* ENTROPY TEXT INPUT CURRENTLY DISABLED
       // entropy
       h('label', {
         htmlFor: 'entropy-text-entry',
@@ -64,6 +65,7 @@ CreateVaultScreen.prototype.render = function() {
         style: { resize: 'none' },
         onKeyPress: this.createVaultOnEnter.bind(this),
       }),
+      */
 
       // submit
       h('button.create-vault.btn-thin', {
@@ -104,7 +106,7 @@ CreateVaultScreen.prototype.createNewVault = function(){
   var password = passwordBox.value
   var passwordConfirmBox = document.getElementById('password-box-confirm')
   var passwordConfirm = passwordConfirmBox.value
-  var entropy = document.getElementById('entropy-text-entry').value
+  // var entropy = document.getElementById('entropy-text-entry').value
 
   if (password.length < 8) {
     this.warning = 'password not long enough'
@@ -117,5 +119,5 @@ CreateVaultScreen.prototype.createNewVault = function(){
     return
   }
 
-  this.props.dispatch(actions.createNewVault(password, entropy))
+  this.props.dispatch(actions.createNewVault(password, ''/*entropy*/))
 }

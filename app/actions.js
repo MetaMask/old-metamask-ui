@@ -265,6 +265,7 @@ function confirmSeedWords() {
     _accountManager.clearSeedWordCache((err) => {
       dispatch(this.clearSeedWordCache())
       console.log('Seed word cache cleared.')
+      dispatch(this.setSelectedAddress())
     })
   }
 }
