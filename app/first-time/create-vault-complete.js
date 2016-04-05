@@ -47,9 +47,7 @@ CreateVaultCompleteScreen.prototype.render = function() {
       h('button.btn-thin', {
         onClick: () => this.confirmSeedWords(),
       }, 'I\'ve copied it somewhere safe.'),
-
     ])
-
   )
 }
 
