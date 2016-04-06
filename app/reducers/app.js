@@ -8,6 +8,7 @@ function reduceApp(state, action) {
   // clone and defaults
   var defaultView = {
     name: 'accounts',
+    detailView: null,
   }
 
   // confirm seed words
@@ -91,13 +92,13 @@ function reduceApp(state, action) {
 
   case actions.UNLOCK_METAMASK:
     return extend(appState, {
-      currentView: defaultView,
       transForward: true,
       warning: null,
     })
 
   case actions.LOCK_METAMASK:
     return extend(appState, {
+      currentView: defaultView,
       transForward: false,
       warning: null,
     })
@@ -114,9 +115,10 @@ function reduceApp(state, action) {
       currentView: {
         name: 'accountDetail',
         context: action.value,
-        accountDetail: {
-          accountExport: 'none',
-        },
+      },
+      accountDetail: {
+        accountExport: 'none',
+        privateKey: '',
       },
       transForward: true,
     })
