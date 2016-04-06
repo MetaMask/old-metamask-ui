@@ -96,9 +96,10 @@
 .cursor-pointer {
   cursor: pointer;
   transform-origin: center center;
+  transition: transform 50ms ease-in-out;
 }
 .cursor-pointer:hover {
-  transform: scale(1.15);
+  transform: scale(1.1);
 }
 .cursor-pointer:active {
   transform: scale(0.95);

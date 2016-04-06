@@ -114,6 +114,9 @@ function reduceApp(state, action) {
       currentView: {
         name: 'accountDetail',
         context: action.value,
+        accountDetail: {
+          accountExport: 'none',
+        },
       },
       transForward: true,
     })
@@ -217,6 +220,28 @@ function reduceApp(state, action) {
   case actions.DISPLAY_WARNING:
     return extend(appState, {
       warning: action.value,
+    })
+
+  case actions.REQUEST_ACCOUNT_EXPORT:
+    return extend(appState, {
+      accountDetail: {
+        accountExport: 'requested',
+      },
+    })
+
+  case  actions.EXPORT_ACCOUNT:
+    return extend(appState, {
+      accountDetail: {
+        accountExport: 'completed',
+      },
+    })
+
+  case  actions.SHOW_PRIVATE_KEY:
+    return extend(appState, {
+      accountDetail: {
+        accountExport: 'completed',
+        privateKey: action.value,
+      },
     })
 
   default:

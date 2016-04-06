@@ -38,6 +38,14 @@ button {
   background: #F7861C;
   font-weight: 500;
   color: white;
+  transform-origin: center center;
+  transition: transform 50ms ease-in;
+}
+button:hover {
+  transform: scale(1.1);
+}
+button:active {
+  transform: scale(0.95);
 }
 
 button.primary {
@@ -48,6 +56,16 @@ button.primary {
   background: #F7861C;
   font-weight: 500;
   color: white;
+}
+
+input, textarea {
+  width: 300px;
+  padding: 6px;
+  border-radius: 6px;
+  border-style: solid;
+  outline: none;
+  border: 1px solid #F5A623;
+  background: #FAF6F0;
 }
 
 a {
@@ -263,6 +281,9 @@ app sections
 
 .identity-panel .arrow-right {
   padding-left: 18px;
+  width: 42px;
+  min-width: 18px;
+  height: 100%;
 }
 
 /* accounts screen */
