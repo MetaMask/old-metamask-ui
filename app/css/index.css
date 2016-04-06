@@ -296,6 +296,10 @@ app sections
 .identity-section .identity-panel {
   background: #E9E9E9;
   border-bottom: 1px solid #B1B1B1;
+  cursor: pointer;
+}
+.identity-section .identity-panel:hover {
+  background: #F9F9F9;
 }
 
 .identity-section .identity-panel.selected {
