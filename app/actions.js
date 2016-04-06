@@ -38,6 +38,12 @@ var actions = {
   SHOW_ACCOUNT_DETAIL: 'SHOW_ACCOUNT_DETAIL',
   SHOW_ACCOUNTS_PAGE: 'SHOW_ACCOUNTS_PAGE',
   SHOW_CONF_TX_PAGE: 'SHOW_CONF_TX_PAGE',
+  REQUEST_ACCOUNT_EXPORT: 'REQUEST_ACCOUNT_EXPORT',
+  requestExportAccount: requestExportAccount,
+  EXPORT_ACCOUNT: 'EXPORT_ACCOUNT',
+  exportAccount: exportAccount,
+  SHOW_PRIVATE_KEY: 'SHOW_PRIVATE_KEY',
+  showPrivateKey: showPrivateKey,
   // tx conf screen
   COMPLETED_TX: 'COMPLETED_TX',
   TRANSACTION_ERROR: 'TRANSACTION_ERROR',
@@ -335,5 +341,37 @@ function displayWarning(text) {
   return {
     type: this.DISPLAY_WARNING,
     value: text,
+  }
+}
+
+function requestExportAccount() {
+  return {
+    type: this.REQUEST_ACCOUNT_EXPORT,
+  }
+}
+
+function exportAccount(address) {
+  var self = this
+
+  return function(dispatch) {
+    dispatch(self.showLoadingIndication())
+
+    _accountManager.exportAccount(address, function(err, result) {
+      dispatch(self.hideLoadingIndication())
+
+      if (err) {
+        console.error(err)
+        return dispatch(self.displayWarning('Had a problem exporting the account.'))
+      }
+
+      dispatch(self.showPrivateKey(result))
+    })
+  }
+}
+
+function showPrivateKey(key) {
+  return {
+    type: this.SHOW_PRIVATE_KEY,
+    value: key,
   }
 }
