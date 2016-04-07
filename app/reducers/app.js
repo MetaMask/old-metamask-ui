@@ -88,6 +88,16 @@ function reduceApp(state, action) {
       isLoading: false,
     })
 
+  case actions.SHOW_SEND_PAGE:
+    return extend(appState, {
+      currentView: {
+        name: 'sendTransaction',
+        context: appState.currentView.context,
+      },
+      transForward: true,
+      warning: null,
+    })
+
   // unlock
 
   case actions.UNLOCK_METAMASK:
@@ -121,6 +131,19 @@ function reduceApp(state, action) {
         privateKey: '',
       },
       transForward: true,
+    })
+
+  case actions.BACK_TO_ACCOUNT_DETAIL:
+    return extend(appState, {
+      currentView: {
+        name: 'accountDetail',
+        context: action.value,
+      },
+      accountDetail: {
+        accountExport: 'none',
+        privateKey: '',
+      },
+      transForward: false,
     })
 
   case actions.SHOW_ACCOUNTS_PAGE:
@@ -222,6 +245,11 @@ function reduceApp(state, action) {
   case actions.DISPLAY_WARNING:
     return extend(appState, {
       warning: action.value,
+    })
+
+  case actions.HIDE_WARNING:
+    return extend(appState, {
+      warning: undefined,
     })
 
   case actions.REQUEST_ACCOUNT_EXPORT:

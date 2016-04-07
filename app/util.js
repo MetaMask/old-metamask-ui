@@ -3,6 +3,7 @@ const ethUtil = require('ethereumjs-util')
 module.exports = {
   valuesFor: valuesFor,
   addressSummary: addressSummary,
+  numericBalance: numericBalance,
   formatBalance: formatBalance,
   dataSize: dataSize,
   readableDate: readableDate,
@@ -19,10 +20,15 @@ function addressSummary(address) {
   return address ? address.slice(0,2+8)+'...'+address.slice(-4) : '...'
 }
 
+function numericBalance(balance) {
+  if (!balance) return 0
+  var num = parseInt(balance)
+  return num
+}
+
 function formatBalance(balance) {
   if (!balance) return 'None'
-  var num = parseInt(balance)/1e18
-  return num.toFixed(6)+' ETH'
+  return (numericBalance(balance) / 1e18).toFixed(6) + ' ETH'
 }
 
 function dataSize(data) {

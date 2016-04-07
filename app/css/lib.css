@@ -124,3 +124,20 @@
 .font-small {
   font-size: 12px;
 }
+
+/* Send Screen */
+.send-screen {
+  margin: 0 20px;
+}
+.send-screen section {
+  margin: 7px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.send-screen details {
+  width: 100%;
+}
+.send-screen section input {
+  width: 100%;
+}

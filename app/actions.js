@@ -33,11 +33,16 @@ var actions = {
   // error handling
   displayWarning: displayWarning,
   DISPLAY_WARNING: 'DISPLAY_WARNING',
+  HIDE_WARNING: 'HIDE_WARNING',
+  hideWarning: hideWarning,
   // accounts screen
   SET_SELECTED_ACCOUNT: 'SET_SELECTED_ACCOUNT',
   SHOW_ACCOUNT_DETAIL: 'SHOW_ACCOUNT_DETAIL',
   SHOW_ACCOUNTS_PAGE: 'SHOW_ACCOUNTS_PAGE',
   SHOW_CONF_TX_PAGE: 'SHOW_CONF_TX_PAGE',
+  // account detail screen
+  SHOW_SEND_PAGE: 'SHOW_SEND_PAGE',
+  showSendPage: showSendPage,
   REQUEST_ACCOUNT_EXPORT: 'REQUEST_ACCOUNT_EXPORT',
   requestExportAccount: requestExportAccount,
   EXPORT_ACCOUNT: 'EXPORT_ACCOUNT',
@@ -58,6 +63,8 @@ var actions = {
   previousTx: previousTx,
   // app messages
   showAccountDetail: showAccountDetail,
+  BACK_TO_ACCOUNT_DETAIL: 'BACK_TO_ACCOUNT_DETAIL',
+  backToAccountDetail: backToAccountDetail,
   showAccountsPage: showAccountsPage,
   showConfTxPage: showConfTxPage,
   confirmSeedWords: confirmSeedWords,
@@ -259,6 +266,12 @@ function showAccountDetail(address) {
   }
 }
 
+function backToAccountDetail(address) {
+  return {
+    type: this.BACK_TO_ACCOUNT_DETAIL,
+    value: address,
+  }
+}
 function clearSeedWordCache() {
   return {
     type: this.CLEAR_SEED_WORD_CACHE
@@ -344,6 +357,12 @@ function displayWarning(text) {
   }
 }
 
+function hideWarning() {
+  return {
+    type: this.HIDE_WARNING,
+  }
+}
+
 function requestExportAccount() {
   return {
     type: this.REQUEST_ACCOUNT_EXPORT,
@@ -373,5 +392,11 @@ function showPrivateKey(key) {
   return {
     type: this.SHOW_PRIVATE_KEY,
     value: key,
+  }
+}
+
+function showSendPage() {
+  return {
+    type: this.SHOW_SEND_PAGE,
   }
 }
