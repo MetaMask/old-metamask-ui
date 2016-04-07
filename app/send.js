@@ -5,6 +5,7 @@ const connect = require('react-redux').connect
 const actions = require('./actions')
 const numericBalance = require('./util').numericBalance
 const AccountPanel = require('./components/account-panel')
+const ethUtil = require('ethereumjs-util')
 
 module.exports = connect(mapStateToProps)(SendTransactionScreen)
 
@@ -119,6 +120,32 @@ SendTransactionScreen.prototype.onSubmit = function(event) {
   }
 
   this.props.dispatch(actions.hideWarning())
+  this.props.dispatch(actions.showLoadingIndication())
+
+  var txParams = {
+    to: recipient,
+    from: this.props.address,
+    value: value,
+ }
+ if (txData) txParams.data = txData
+
+ web3.eth.estimateGas(txParams, function (err, result) {
+   if (err) {
+     console.error(err)
+     this.props.dispatch(actions.hideLoadingIndication())
+     this.props.dispatch(actions.showWarning(err))
+     return
+   }
+
+   console.log('estimate gas result!')
+   console.dir(result)
+ })
+
+ /*
+    gasLimit: 420, // HOW DO WE REALLY GET THIS?
+    nonce: 4, // HOW DO WE REALLY GET THIS?
+*/
+
 }
 
 function normalizeToWei(amount, currency) {
