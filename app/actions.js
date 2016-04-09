@@ -126,6 +126,7 @@ function recoverFromSeed(password, seed) {
       dispatch(this.setSelectedAddress())
       dispatch(this.updateMetamaskState(result))
       dispatch(this.hideLoadingIndication())
+      dispatch(this.showAccountsPage())
     })
   }
 }
