@@ -95,18 +95,9 @@ ConfigScreen.prototype.render = function() {
 }
 
 function currentProviderDisplay(metamaskState) {
-  console.log('metmam')
-  var type = metamaskState.provider.type
-
-  if (type === 'rpc') {
-    var rpc = metamaskState.rpcTarget
-    return h('div', [
-      h('h3', {style: { fontWeight: 'bold' }}, 'Currently using RPC'),
-      h('p', rpc)
-    ])
-  } else {
-    return h('div', [
-      h('h3', {style: { fontWeight: 'bold' }}, 'Currently using Main Network'),
-    ])
-  }
+  var rpc = metamaskState.rpcTarget
+  return h('div', [
+    h('h3', {style: { fontWeight: 'bold' }}, 'Currently using RPC'),
+    h('p', rpc)
+  ])
 }
