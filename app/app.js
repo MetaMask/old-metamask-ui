@@ -59,7 +59,13 @@ App.prototype.render = function() {
 
   return (
 
-    h('.flex-column.flex-grow.full-height', [
+    h('.flex-column.flex-grow.full-height', {
+      style: {
+        // Windows was showing a vertical scroll bar:
+        overflowY: hidden;
+      }
+    },
+    [
 
       h(LoadingIndicator),
 

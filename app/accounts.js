@@ -41,12 +41,17 @@ AccountsScreen.prototype.render = function() {
       // subtitle and nav
       h('.section-title.flex-column.flex-center', [
         h('h2.page-subtitle', 'Accounts'),
-        h('h3', 'Selected Address is visible to website below'),
       ]),
 
       // current domain
+      /* AUDIT
+       * Temporarily removed
+       * since accounts are currently injected
+       * regardless of the current domain.
+       */
       h('.current-domain-panel.flex-center.font-small', [
-        h('span', state.currentDomain),
+        h('spam', 'Selected address is visible to all current sites'),
+        // h('span', state.currentDomain),
       ]),
 
       // identity selection
