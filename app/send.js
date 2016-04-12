@@ -3,6 +3,7 @@ const Component = require('react').Component
 const h = require('react-hyperscript')
 const connect = require('react-redux').connect
 const actions = require('./actions')
+const util = require('./util')
 const numericBalance = require('./util').numericBalance
 const AccountPanel = require('./components/account-panel')
 const ethUtil = require('ethereumjs-util')
@@ -107,15 +108,19 @@ SendTransactionScreen.prototype.back = function() {
 
 SendTransactionScreen.prototype.onSubmit = function(event) {
   var recipient = document.querySelector('input.address').value
-  var amount = parseFloat(document.querySelector('input.ether').value)
+  var amount = new ethUtil.BN(document.querySelector('input.ether').value, 10)
   var currency = document.querySelector('select.currency').value
   var txData = document.querySelector('textarea.txData').value
 
-  var value = normalizeToWei(amount, currency)
+  var value = util.normalizeToWei(amount, currency)
   var balance = this.props.balance
 
-  if (value > balance) {
+  if (value.gt(balance)) {
     var message = 'Insufficient funds.'
+    return this.props.dispatch(actions.displayWarning(message))
+  }
+  if (recipient.length !== 42) {
+    var message = 'Recipient address is the incorrect length.'
     return this.props.dispatch(actions.displayWarning(message))
   }
 
@@ -125,34 +130,10 @@ SendTransactionScreen.prototype.onSubmit = function(event) {
   var txParams = {
     to: recipient,
     from: this.props.address,
-    value: value,
- }
- if (txData) txParams.data = txData
-
- web3.eth.estimateGas(txParams, function (err, result) {
-   if (err) {
-     console.error(err)
-     this.props.dispatch(actions.hideLoadingIndication())
-     this.props.dispatch(actions.showWarning(err))
-     return
-   }
-
-   console.log('estimate gas result!')
-   console.dir(result)
- })
-
- /*
-    gasLimit: 420, // HOW DO WE REALLY GET THIS?
-    nonce: 4, // HOW DO WE REALLY GET THIS?
-*/
-
-}
-
-function normalizeToWei(amount, currency) {
-  switch(currency) {
-    case 'wei':
-      return amount
-    case 'ether':
-      return amount * Math.pow(10, 18)
+    value: '0x' + value.toString(16),
   }
+  if (txData) txParams.data = txData
+
+  this.props.dispatch(actions.signTx(txParams))
 }
+

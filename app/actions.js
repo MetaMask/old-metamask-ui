@@ -55,6 +55,7 @@ var actions = {
   NEXT_TX: 'NEXT_TX',
   PREVIOUS_TX: 'PREV_TX',
   setSelectedAddress: setSelectedAddress,
+  signTx: signTx,
   sendTx: sendTx,
   cancelTx: cancelTx,
   completedTx: completedTx,
@@ -147,6 +148,20 @@ function showInfoPage() {
 function setSelectedAddress(address) {
   return (dispatch) => {
     _accountManager.setSelectedAddress(address)
+  }
+}
+
+function signTx(txData) {
+  return (dispatch) => {
+    dispatch(this.showLoadingIndication())
+
+    web3.eth.sendTransaction(txData, (err, data) => {
+      dispatch(this.hideLoadingIndication())
+
+      if (err) return dispatch(this.displayWarning(err.message))
+      dispatch(this.hideWarning())
+      dispatch(this.showAccountsPage())
+    })
   }
 }
 
