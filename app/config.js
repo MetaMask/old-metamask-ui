@@ -71,9 +71,9 @@ ConfigScreen.prototype.render = function() {
               },
               onClick(event) {
                 event.preventDefault()
-                state.dispatch(actions.useEtherscanProvider())
+                state.dispatch(actions.setRpcTarget('https://rpc.metamask.io/'))
               }
-            }, 'Use Main Network (experimental)')
+            }, 'Use Main Network')
           ]),
 
           h('div', [
@@ -83,7 +83,7 @@ ConfigScreen.prototype.render = function() {
               },
               onClick(event) {
                 event.preventDefault()
-                state.dispatch(actions.setRpcTarget('https://rawtestrpc.metamask.io/'))
+                state.dispatch(actions.setRpcTarget('https://testrpc.metamask.io/'))
               }
             }, 'Use Morden Test Network')
           ]),
