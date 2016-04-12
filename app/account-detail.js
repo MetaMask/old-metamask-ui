@@ -50,11 +50,19 @@ AccountDetailScreen.prototype.render = function() {
       }, [
         h('.flex-row.flex-space-around', [
           // h('button', 'GET ETH'), DISABLED UNTIL WORKING
+
           h('button', {
             onClick: () => {
               copyToClipboard(identity.address)
             },
           }, 'COPY ADDR'),
+
+          h('button', {
+            onClick: () => {
+              this.props.dispatch(actions.showSendPage())
+            },
+          }, 'SEND'),
+
           h('button', {
             onClick: () => {
               this.requestAccountExport(identity.address)

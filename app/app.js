@@ -17,6 +17,7 @@ const UnlockScreen = require('./unlock')
 // accounts
 const AccountsScreen = require('./accounts')
 const AccountDetailScreen = require('./account-detail')
+const SendTransactionScreen = require('./send')
 const ConfirmTxScreen = require('./conf-tx')
 // other views
 const ConfigScreen = require('./config')
@@ -178,6 +179,9 @@ App.prototype.renderPrimary = function(state){
 
     case 'accountDetail':
       return h(AccountDetailScreen, {key: 'account-detail'})
+
+    case 'sendTransaction':
+      return h(SendTransactionScreen, {key: 'send-transaction'})
 
     case 'confTx':
       return h(ConfirmTxScreen, {key: 'confirm-tx'})
