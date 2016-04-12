@@ -83,7 +83,7 @@ ConfigScreen.prototype.render = function() {
               },
               onClick(event) {
                 event.preventDefault()
-                state.dispatch(actions.setRpcTarget('https://rawtestrpc.metamask.io/'))
+                state.dispatch(actions.setRpcTarget('https://testrpc.metamask.io/'))
               }
             }, 'Use Morden Test Network')
           ]),
